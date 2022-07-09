@@ -1,3 +1,7 @@
+--[[
+    Conversion Utils
+]]
+
 local Conversion = { }
 
 -- Converts a given SteamID 3 to SteamID 64

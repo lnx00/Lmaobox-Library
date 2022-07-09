@@ -1,3 +1,7 @@
+--[[
+    Filesystem Utils
+]]
+
 local IO = { }
 
 -- Reads a file and returns its contents
