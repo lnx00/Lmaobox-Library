@@ -34,9 +34,20 @@ end
 
 --[[ Wrapper functions ]]
 
+-- Returns whether the player is on the ground
 function WPlayer:IsOnGround()
     local pFlags = self.Entity:GetPropInt("m_fFlags")
     return (pFlags & FL_ONGROUND) == 1
+end
+
+-- Returns the active weapon
+function WPlayer:GetActiveWeapon()
+    return self.Entity:GetPropEntity("m_hActiveWeapon")
+end
+
+-- Returns the spectated target
+function WPlayer:GetObservedTarget()
+    return self.Entity:GetPropEntity("m_hObserverTarget")
 end
 
 return WPlayer

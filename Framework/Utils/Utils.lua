@@ -3,6 +3,7 @@ local Utils = {
     IO = require(LNXF_PATH .. "Utils/IO"),
     Misc = require(LNXF_PATH .. "Utils/Misc"),
     KeyHelper = require(LNXF_PATH .. "Utils/KeyHelper"),
+    Timer = require(LNXF_PATH .. "Utils/Timer"),
 }
 
 return Utils

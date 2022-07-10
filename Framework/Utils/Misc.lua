@@ -2,7 +2,8 @@ local Misc = { }
 
 -- Sanitizes a given string
 function Misc.Sanitize(str)
-    str:gsub("a", "b")
+    str:gsub("\"", "'")
+    str:gsub("\n", "")
     return str
 end
 

@@ -19,6 +19,10 @@ end
 
 --[[ Wrapper functions ]]
 
+function WEntity:Unwrap()
+    return self.Entity
+end
+
 -- Returns the position of the hitbox as a Vector3
 function WEntity:GetHitboxPos(nHitbox)
     local hitbox = self.Entity:GetHitboxes()[nHitbox]
