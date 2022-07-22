@@ -22,4 +22,12 @@ function IO.WriteFile(path, content)
     return true
 end
 
+-- Returns whether the given file exists
+function IO.FileExists(path)
+    local file = io.open(path, "rb")
+    if not file then return false end
+    file:close()
+    return true
+end
+
 return IO
