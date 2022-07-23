@@ -9,4 +9,8 @@ local Main = {
     Utils = require(LNXF_PATH .. "Utils/Utils"),
 }
 
+function Main:GetVersion()
+    return 0.1
+end
+
 return Main

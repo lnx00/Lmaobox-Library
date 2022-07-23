@@ -3,6 +3,7 @@
 ]]
 
 local IO = { }
+local WorkDir = engine.GetGameDir() .. "/../LNXF/"
 
 -- Reads a file and returns its contents
 function IO.ReadFile(path)
@@ -22,12 +23,20 @@ function IO.WriteFile(path, content)
     return true
 end
 
--- Returns whether the given file exists
-function IO.FileExists(path)
+-- Returns whether the given file/directory exists
+function IO.Exists(path)
     local file = io.open(path, "rb")
-    if not file then return false end
-    file:close()
-    return true
+    if file then file:close() end
+    return file ~= nil
+end
+
+-- Returns the working directory
+function IO.GetWorkDir()
+    if not IO.Exists(WorkDir) then
+        filesystem.CreateDirectory(WorkDir)
+    end
+
+    return WorkDir
 end
 
 return IO
