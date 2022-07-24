@@ -4,7 +4,7 @@
 
 local WEntity = require(LNXF_PATH .. "TF2/Wrappers/WEntity")
 
----@class WPlayer
+---@class WPlayer : WEntity
 local WPlayer = {
     Entity = nil
 }
@@ -14,9 +14,12 @@ setmetatable(WPlayer, WEntity)
 --[[ Constructors ]]
 
 -- Creates a WPlayer from a given native Entity
+---@param entity any
+---@return WPlayer
 function WPlayer.FromEntity(entity)
     assert(entity:IsPlayer(), "WPlayer.FromEntity: entity is not a player")
 
+    ---@type self
     local self = setmetatable({ }, WPlayer)
     self.Entity = entity
 
@@ -24,11 +27,14 @@ function WPlayer.FromEntity(entity)
 end
 
 -- Returns a WPlayer of the local player
+---@return WPlayer
 function WPlayer.GetLocalPlayer()
     return WPlayer.FromEntity(entities.GetLocalPlayer())
 end
 
 -- Creates a WPlayer from a given WEntity
+---@param wEntity WEntity
+---@return WPlayer
 function WPlayer.FromWEntity(wEntity)
     return WPlayer.FromEntity(wEntity.Entity)
 end
@@ -36,6 +42,7 @@ end
 --[[ Wrapper functions ]]
 
 -- Returns whether the player is on the ground
+---@return boolean
 function WPlayer:IsOnGround()
     local pFlags = self.Entity:GetPropInt("m_fFlags")
     return (pFlags & FL_ONGROUND) == 1

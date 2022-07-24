@@ -1,4 +1,7 @@
 ---@class Component
+---@field public Visible boolean
+---@field public Parent Component
+---@field public Children table<Component>
 local Component = {
     Visible = true,
     Parent = nil,
@@ -7,7 +10,9 @@ local Component = {
 Component.__index = Component
 setmetatable(Component, Component)
 
+---@return Component
 function Component.new()
+    ---@type self
     local self = setmetatable({ }, Component)
     self.Visible = true
     self.Parent = nil

@@ -1,23 +1,31 @@
+---@class Timer
+---@field private _LastTime number
 local Timer = {
-    LastTime = 0
+    _LastTime = 0
 }
 Timer.__index = Timer
 setmetatable(Timer, Timer)
 
-function Timer.New()
+---@return Timer
+function Timer.new()
+    ---@type self
     local self = setmetatable({ }, Timer)
-    self.LastTime = 0
+    self._LastTime = 0
 
     return self
 end
 
+---@param delta number
+---@return boolean
 function Timer:_Check(delta)
-    return globals.CurTime() - self.LastTime >= delta
+    return globals.CurTime() - self._LastTime >= delta
 end
 
+---@param interval number
+---@return boolean
 function Timer:Run(interval)
     if (self:_Check(interval)) then
-        self.LastTime = globals.CurTime()
+        self._LastTime = globals.CurTime()
         return true
     end
 
