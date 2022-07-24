@@ -4,6 +4,7 @@
 
 local WEntity = require(LNXF_PATH .. "TF2/Wrappers/WEntity")
 
+---@class WPlayer
 local WPlayer = {
     Entity = nil
 }

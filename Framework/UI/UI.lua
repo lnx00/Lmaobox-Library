@@ -1,5 +1,5 @@
 local UI = {
-    Gradient = require(LNXF_PATH .. "UI/Gradient")
+    Textures = require(LNXF_PATH .. "UI/Textures")
 }
 
 return UI

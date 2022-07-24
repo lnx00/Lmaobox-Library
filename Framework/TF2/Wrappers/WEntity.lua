@@ -2,6 +2,7 @@
     Wrapper Class for Entities
 ]]
 
+---@class WEntity
 local WEntity = {
     Entity = nil
 }
