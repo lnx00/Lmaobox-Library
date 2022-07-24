@@ -14,7 +14,7 @@ setmetatable(WPlayer, WEntity)
 --[[ Constructors ]]
 
 -- Creates a WPlayer from a given native Entity
----@param entity any
+---@param entity Entity
 ---@return WPlayer
 function WPlayer.FromEntity(entity)
     assert(entity:IsPlayer(), "WPlayer.FromEntity: entity is not a player")

@@ -10,7 +10,7 @@ WEntity.__index = WEntity
 --[[ Constructors ]]
 
 -- Creates a WEntity from a given native Entity
----@param entity any
+---@param entity Entity
 ---@return WEntity
 function WEntity.FromEntity(entity)
     ---@type self

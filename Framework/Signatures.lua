@@ -65,6 +65,9 @@ function Entity:GetTeamNumber() return nil end
 ---@return boolean
 function Entity:IsWeapon() return nil end
 
+---@return boolean
+function Entity:IsPlayer() return nil end
+
 ---@return Vector3[][]
 function Entity:GetHitboxes() return { } end
 
