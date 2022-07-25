@@ -1,7 +1,7 @@
 ---@class Component
 ---@field public Visible boolean
 ---@field public Parent Component
----@field public Children table<Component>
+---@field public Children Component[]
 local Component = {
     Visible = true,
     Parent = nil,

@@ -16,6 +16,8 @@ function Conversion.ID64_to_ID3(pID64)
 end
 
 -- Converts a given Hex Color to RGB
+---@param pHex string
+---@return table<number>
 function Conversion.Hex_to_RGB(pHex)
     local r = tonumber(string.sub(pHex, 1, 2), 16)
     local g = tonumber(string.sub(pHex, 3, 4), 16)
@@ -24,6 +26,8 @@ function Conversion.Hex_to_RGB(pHex)
 end
 
 -- Converts a given RGB Color to Hex
+---@param pRGB table<number>
+---@return string
 function Conversion.RGB_to_Hex(pRGB)
     local r = string.format("%x", pRGB[1])
     local g = string.format("%x", pRGB[2])
