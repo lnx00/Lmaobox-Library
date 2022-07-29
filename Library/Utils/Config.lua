@@ -1,5 +1,5 @@
-local IO = require(LNXF_PATH .. "Utils/IO")
-local Json = require(LNXF_PATH .. "Libs/json")
+local IO = require(LIB_PATH .. "Utils/IO")
+local Json = require(LIB_PATH .. "Libs/json")
 
 ---@class Config
 ---@field private _Name string

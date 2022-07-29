@@ -1,4 +1,4 @@
-local Component = require(LNXF_PATH .. "Menu/Components/Component")
+local Component = require(LIB_PATH .. "Menu/Components/Component")
 
 ---@class Window
 local Window = {

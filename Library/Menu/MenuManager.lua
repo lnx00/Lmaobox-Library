@@ -1,9 +1,9 @@
-local Menu = require(LNXF_PATH .. "Menu/Menu")
+local Menu = require(LIB_PATH .. "Menu/Menu")
 
 ---@class MenuManager
 local MenuManager = {
-    Window = require(LNXF_PATH .. "Menu/Components/Window"),
-    Panel = require(LNXF_PATH .. "Menu/Components/Panel"),
+    Window = require(LIB_PATH .. "Menu/Components/Window"),
+    Panel = require(LIB_PATH .. "Menu/Components/Panel"),
 
     Menus = { },
 }

@@ -2,7 +2,7 @@
     Wrapper Class for Wepaon Entities
 ]]
 
-local WEntity = require(LNXF_PATH .. "TF2/Wrappers/WEntity")
+local WEntity = require(LIB_PATH .. "TF2/Wrappers/WEntity")
 
 ---@class WWeapon : WEntity
 local WWeapon = { }
