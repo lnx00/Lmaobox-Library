@@ -36,21 +36,21 @@ local Trace = {}
 
 --[[ UserCmd ]]
 ---@class UserCmd
----@field public command_number number
----@field public tick_count number
----@field public viewangles EulerAngles
----@field public forwardmove number
----@field public sidemove number
----@field public upmove number
----@field public buttons number
----@field public impulse number
----@field public weaponselect number
----@field public weaponsubtype number
----@field public random_seed number
----@field public mousedx number
----@field public mousedy number
----@field public hasbeenpredicted boolean
----@field public sendpacket boolean
+---@field command_number number
+---@field tick_count number
+---@field viewangles EulerAngles
+---@field forwardmove number
+---@field sidemove number
+---@field upmove number
+---@field buttons number
+---@field impulse number
+---@field weaponselect number
+---@field weaponsubtype number
+---@field random_seed number
+---@field mousedx number
+---@field mousedy number
+---@field hasbeenpredicted boolean
+---@field sendpacket boolean
 local UserCmd = { }
 
 --[[ Entity ]]
@@ -200,6 +200,7 @@ function filesystem.GetFileAttributes(path) return nil end
 function filesystem.SetFileAttributes(path, attributes) end
 
 --[[ Steam ]]
+---@class steam
 steam = { }
 
 ---@return string
