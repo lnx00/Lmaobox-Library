@@ -1,2 +1,2 @@
-# LNX's Lmaobox Framework
-An Utility Framework for Lmaobox LUA.
+# LNX's Lmaobox Library
+An Utility Library for Lmaobox LUA
