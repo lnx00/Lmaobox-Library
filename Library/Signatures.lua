@@ -139,13 +139,10 @@ function Entity:GetCritTokenBucket() return nil end
 callbacks = { }
 
 ---@param id string
----@param callback function
-function callbacks.Register(id, callback) end
-
----@param id string
 ---@param unique string
 ---@param callback function
-function callbacks.Register(id, unique, callback) end
+---@overload fun(id: string, unique: string, callback: function)
+function callbacks.Register(id, callback) end
 
 ---@param id string
 ---@param unique string
