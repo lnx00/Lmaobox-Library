@@ -3,19 +3,18 @@
 ]]
 
 ---@class Globals
----@field public LastUserCmd UserCmd
----@field public CurrentUserCmd UserCmd
+---@field public LastCommandNumber number
+---@field public CommandNumber number
 local Globals = {
-    ---@type UserCmd
-    LastUserCmd = nil,
+    LastCommandNumber = 0,
+    CommandNumber = 0,
 
-    ---@type UserCmd
-    CurrentUserCmd = nil,
+    DefaultFont = draw.CreateFont("Verdana", 14, 510),
 }
 
 function Globals._OnCreateMove(userCmd)
-    Globals.LastUserCmd = Globals.CurrentUserCmd
-    Globals.CurrentUserCmd = userCmd
+    Globals.LastCommandNumber = Globals.CommandNumber
+    Globals.CommandNumber = userCmd.command_number
 end
 
 return Globals

@@ -28,6 +28,12 @@ function IO.WriteFile(path, content)
     return true
 end
 
+-- Deletes the file at the given path
+---@param path string
+function IO.DeleteFile(path)
+    os.remove(path)
+end
+
 -- Returns whether the given file/directory exists
 ---@param path string
 ---@return boolean

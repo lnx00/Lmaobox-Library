@@ -26,7 +26,7 @@ local function OnCreateMove(userCmd)
 end
 
 local function OnDraw()
-
+    Main.TF2._OnDraw()
 end
 
 callbacks.Unregister("CreateMove", "LBL_CreateMove")

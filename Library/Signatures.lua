@@ -138,9 +138,7 @@ function Entity:GetCritTokenBucket() return nil end
 ---@class callbacks
 callbacks = { }
 
----@param id string
----@param unique string
----@param callback function
+---@overload fun(id: string, callback: function)
 ---@overload fun(id: string, unique: string, callback: function)
 function callbacks.Register(id, callback) end
 
@@ -175,6 +173,48 @@ function draw.FilledRect(x1, y1, x2, y2) end
 ---@param x2 number
 ---@param y2 number
 function draw.OutlinedRect(x1, y1, x2, y2) end
+
+---@param text string
+---@return table<number, number>
+function draw.GetTextSize(text) return nil end
+
+---@param x number
+---@param y number
+---@param text string
+function draw.Text(x, y, text) end
+
+---@overload fun(name: string, height: number, weight: number)
+---@overload fun(name: string, height: number, weight: number, fontFlags: number)
+---@return number
+function draw.CreateFont(name, height, weight) return nil end
+
+---@param pathTTF string
+function draw.AddFontResource(pathTTF) end
+
+---@param font number
+function draw.SetFont(font) end
+
+--[[ Entities ]]
+---@class entities
+entities = { }
+
+---@param class string
+---@return Entity[]
+function entities.FindByClass(class) return { } end
+
+---@return Entity
+function entities.GetLocalPlayer() return nil end
+
+---@param index number
+---@return Entity
+function entities.GetByIndex(index) return nil end
+
+---@param userID number
+---@return Entity
+function entities.GetByUserID(userID) return nil end
+
+---@return Entity
+function entities.GetPlayerResources() return nil end
 
 --[[ FileSystem ]]
 ---@class filesystem
