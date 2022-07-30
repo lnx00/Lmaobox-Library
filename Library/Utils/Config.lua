@@ -1,4 +1,7 @@
+---@type IO
 local IO = require(LIB_PATH .. "Utils/IO")
+
+---@type Json
 local Json = require(LIB_PATH .. "Libs/json")
 
 ---@class Config
@@ -47,6 +50,14 @@ function Config:Load()
 
     local content = IO.ReadFile(self:GetPath())
     self._Content = Json.decode(content)
+end
+
+function Config:Delete()
+    local configPath = self:GetPath()
+    if not IO.Exists(configPath) then return end
+
+    IO.DeleteFile(configPath)
+    self._Content = { }
 end
 
 function Config:Save()

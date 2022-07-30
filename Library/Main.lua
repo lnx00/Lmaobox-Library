@@ -11,6 +11,7 @@ local Main = {
     TF2 = require(LIB_PATH .. "TF2/TF2"),
     UI = require(LIB_PATH .. "UI/UI"),
     Utils = require(LIB_PATH .. "Utils/Utils"),
+    Enums = require(LIB_PATH .. "Enums/Enums"),
 }
 
 ---@return number

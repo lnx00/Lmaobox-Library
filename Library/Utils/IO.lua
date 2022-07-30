@@ -2,6 +2,7 @@
     Filesystem Utils
 ]]
 
+---@class IO
 local IO = { }
 local WorkDir = engine.GetGameDir() .. "/../LNXF/"
 

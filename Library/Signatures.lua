@@ -133,6 +133,44 @@ local Trace = {}
 ---@field sendpacket boolean
 local UserCmd = { }
 
+---@param pitch
+---@param yaw
+---@param roll
+function UserCmd:SetViewAngles(pitch, yaw, roll) end
+
+---@return table<number>
+function UserCmd:GetViewAngles() return nil end
+
+---@param sendPacket boolean
+function UserCmd:SetSendPacket(sendPacket) end
+
+---@return boolean
+function UserCmd:GetSendPacket() return nil end
+
+---@param buttons number
+function UserCmd:SetButtons(buttons) end
+
+---@return number
+function UserCmd:GetButtons() return nil end
+
+---@param factor number
+function UserCmd:SetForwardMove(factor) end
+
+---@return number
+function UserCmd:GetForwardMove() return nil end
+
+---@param factor number
+function UserCmd:SetSideMove(factor) end
+
+---@return number
+function UserCmd:GetSideMove() return nil end
+
+---@param factor number
+function UserCmd:SetUpMove(factor) end
+
+---@return number
+function UserCmd:GetUpMove() return nil end
+
 --[[ Entity ]]
 ---@class Entity
 local Entity = { }
@@ -151,6 +189,12 @@ function Entity:GetIndex() return nil end
 
 ---@return number
 function Entity:GetTeamNumber() return nil end
+
+---@return Vector3
+function Entity:GetAbsOrigin() return nil end
+
+---@param vec Vector3
+function Entity:SetAbsOrigin(vec) end
 
 ---@return boolean
 function Entity:IsWeapon() return nil end
