@@ -14,17 +14,22 @@ local LastTeamList = {}
 ---@type Entity[]
 local LastEnemyList = {}
 
+local LastCheck = 0
+
 -- Updates the Entity Cache for every UserCmd | TODO: Use FSN?
 local function UpdateCache()
-    if Globals.CommandNumber == Globals.LastCommandNumber then
+    -- Check if we've recently cached the player list
+    if Globals.CommandNumber == LastCheck then
         return
     end
 
+    -- Get all Players
+    LastCheck = Globals.CommandNumber
     LastPlayerList = entities.FindByClass("CTFPlayer")
     local localPlayer = entities.GetLocalPlayer()
     table.remove(LastPlayerList, localPlayer:GetIndex())
 
-    -- Iterate through all players of LastPlayerList
+    -- Filter players by team
     for _, player in pairs(LastPlayerList) do
         if player:GetTeamNumber() == localPlayer:GetTeamNumber() then
             table.insert(LastTeamList, player)

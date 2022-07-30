@@ -2,7 +2,7 @@
 local IO = require(LIB_PATH .. "Utils/IO")
 
 ---@type Json
-local Json = require(LIB_PATH .. "Libs/json")
+local Json = require(LIB_PATH .. "Libs/dkjson")
 
 ---@class Config
 ---@field private _Name string
@@ -49,7 +49,7 @@ function Config:Load()
     if not IO.Exists(configPath) then return end
 
     local content = IO.ReadFile(self:GetPath())
-    self._Content = Json.decode(content)
+    self._Content = Json.decode(content, 1, nil)
 end
 
 function Config:Delete()
@@ -61,7 +61,7 @@ function Config:Delete()
 end
 
 function Config:Save()
-    local content = Json.encode(self._Content)
+    local content = Json.encode(self._Content, { indent = true })
     IO.WriteFile(self:GetPath(), content)
 end
 
