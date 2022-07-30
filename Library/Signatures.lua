@@ -6,12 +6,21 @@
 print("You tried to run the Signatures file. This was a very bad idea!")
 do return end
 
---[[ Vector3 ]]
----@class Vector3
----@field x number
----@field y number
----@field z number
-local Vector3 = { }
+---@param r number
+---@param g number
+---@param b number
+---@param a number
+---@param msg string
+function printc(r, g, b, a, msg, ...) end
+
+---@param scriptFile string
+function LoadScript(scriptFile) end
+
+---@param scriptFile string
+function UnloadScript(scriptFile) end
+
+---@return string
+function GetScriptName() return nil end
 
 ---[[ EulerAngles ]]
 ---@class EulerAngles
@@ -19,6 +28,77 @@ local Vector3 = { }
 ---@field y number
 ---@field z number
 local EulerAngles = { }
+
+---@param pitch number
+---@param yaw number
+---@param roll number
+---@return EulerAngles
+function EulerAngles(pitch, yaw, roll) return nil end
+
+---@return table<number>
+function EulerAngles:Unpack() return nil end
+
+function EulerAngles:Clear() end
+
+function EulerAngles:Normalize() end
+
+---@return Vector3
+function EulerAngles:Forward() return nil end
+
+---@return Vector3
+function EulerAngles:Right() return nil end
+
+---@return Vector3
+function EulerAngles:Up() return nil end
+
+--[[ Vector3 ]]
+---@class Vector3
+---@field x number
+---@field y number
+---@field z number
+local Vector3 = { }
+
+---@param x number
+---@param y number
+---@param z number
+---@return Vector3
+function Vector3(x, y, z) return nil end
+
+---@return table<number>
+function Vector3:Unpack() return nil end
+
+---@return number
+function Vector3:Length() return nil end
+
+---@return number
+function Vector3:LengthSqr() return nil end
+
+---@return number
+function Vector3:Length2D() return nil end
+
+---@return number
+function Vector3:Length2DSqr() return nil end
+
+---@param vec Vector3
+---@return number
+function Vector3:Dot(vec) return nil end
+
+---@param vec Vector3
+---@return Vector3
+function Vector3:Cross(vec) return nil end
+
+function Vector3:Clear() return nil end
+
+function Vector3:Normalize() return nil end
+
+---@return Vector3
+function Vector3:Right() return nil end
+
+---@return Vector3
+function Vector3:Up() return nil end
+
+---@return EulerAngles
+function Vector3:Angles() return nil end
 
 ---[[ Trace ]]
 ---@class Trace

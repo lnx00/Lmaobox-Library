@@ -12,6 +12,8 @@ local Globals = {
     DefaultFont = draw.CreateFont("Verdana", 14, 510),
 }
 
+-- Updates the global variables
+---@param userCmd UserCmd
 function Globals._OnCreateMove(userCmd)
     Globals.LastCommandNumber = Globals.CommandNumber
     Globals.CommandNumber = userCmd.command_number

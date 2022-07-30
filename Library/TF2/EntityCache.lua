@@ -14,6 +14,7 @@ local LastTeamList = {}
 ---@type Entity[]
 local LastEnemyList = {}
 
+-- Updates the Entity Cache for every UserCmd | TODO: Use FSN?
 local function UpdateCache()
     if Globals.CommandNumber == Globals.LastCommandNumber then
         return
@@ -36,18 +37,21 @@ end
 ---@class EntityCache
 local EntityCache = { }
 
+-- Returns all players in the game
 ---@return Entity[]
 function EntityCache.GetPlayers()
     UpdateCache()
     return LastPlayerList
 end
 
+-- Returns all players in your team
 ---@return Entity[]
 function EntityCache.GetTeam()
     UpdateCache()
     return LastTeamList
 end
 
+-- Returns all players that are not in your team
 ---@return Entity[]
 function EntityCache.GetEnemies()
     UpdateCache()
