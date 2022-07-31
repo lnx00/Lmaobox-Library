@@ -15,8 +15,8 @@ local Main = {
 }
 
 ---@return number
-function Main:GetVersion()
-    return 0.1
+function Main.GetVersion()
+    return 0.2
 end
 
 --[[ Callbacks ]]
@@ -34,6 +34,21 @@ callbacks.Unregister("CreateMove", "LBL_CreateMove")
 callbacks.Register("CreateMove", "LBL_CreateMove", OnCreateMove)
 
 callbacks.Unregister("Draw", "LBL_Draw")
-callbacks.Register("Draw", OnDraw)
+callbacks.Register("Draw", "LBL_Draw", OnDraw)
 
+--[[ Debugging ]]
+
+-- Unloads the entire library. Useful for debugging
+function UnloadLib()
+    for name, pck in pairs(package.loaded) do
+        if name:find("Lmaobox-Library", 1, true) then
+            printc(195, 55, 20, 255, "Unloading: " .. name)
+            package.loaded[name] = nil
+        end
+    end
+
+    printc(230, 65, 25, 255, "Lmaobox-Library unloaded.")
+end
+
+printc(75, 210, 55, 255, "Lmaobox-Library v" .. Main.GetVersion() .. " loaded.")
 return Main
