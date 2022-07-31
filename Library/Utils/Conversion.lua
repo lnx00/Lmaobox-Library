@@ -4,15 +4,33 @@
 
 local Conversion = { }
 
--- Converts a given SteamID 3 to SteamID 64
+-- Converts a given SteamID 3 to SteamID 64 [Credits: Link2006]
 function Conversion.ID3_to_ID64(steamID3)
-    local id = string.sub(steamID3, 6, #steamID3 - 1)
-    return tonumber(id) + 0x110000100000000
+    if not steamID3:match("(%[U:1:%d+%])") and not tonumber(steamID3) then
+        return false, "Invalid SteamID"
+    end
+
+    if tonumber(steamID3) then
+        -- XXX format
+        return tostring(tonumber(steamID3) + 0x110000100000000)
+    else
+        -- [U:1:XXX] format
+        return tostring(tonumber(steamID3:match("%[U:1:(%d+)%]")) + 0x110000100000000)
+    end
 end
 
--- Converts a given SteamID 64 to a SteamID 3
-function Conversion.ID64_to_ID3(pID64)
-    return "[U:1:" .. (tonumber(pID64) ^ 0x110000100000000) .. "]"
+-- Converts a given SteamID 64 to a SteamID 3 [Credits: Link2006]
+function Conversion.ID64_to_ID3(steamID64)
+    if not tonumber(steamID64) then
+        return false, "Invalid SteamID"
+    end
+
+    steamID = tonumber(steamID64)
+    if (steamID - 0x110000100000000) < 0 then
+        return false, "Not a SteamID64"
+    end
+
+    return ("[U:1:%d]"):format(steamID - 0x110000100000000)
 end
 
 -- Converts a given Hex Color to RGB
@@ -47,12 +65,18 @@ function Conversion.HSVtoRGB(h, s, v)
 
     i = i % 6
 
-    if i == 0 then r, g, b = v, t, p
-    elseif i == 1 then r, g, b = q, v, p
-    elseif i == 2 then r, g, b = p, v, t
-    elseif i == 3 then r, g, b = p, q, v
-    elseif i == 4 then r, g, b = t, p, v
-    elseif i == 5 then r, g, b = v, p, q
+    if i == 0 then
+        r, g, b = v, t, p
+    elseif i == 1 then
+        r, g, b = q, v, p
+    elseif i == 2 then
+        r, g, b = p, v, t
+    elseif i == 3 then
+        r, g, b = p, q, v
+    elseif i == 4 then
+        r, g, b = t, p, v
+    elseif i == 5 then
+        r, g, b = v, p, q
     end
 
     return math.floor(r * 255), math.floor(g * 255), math.floor(b * 255)
@@ -66,16 +90,24 @@ function Conversion.RGBtoHSV(r, g, b)
     v = max
 
     local d = max - min
-    if max == 0 then s = 0 else s = d / max end
+    if max == 0 then
+        s = 0
+    else
+        s = d / max
+    end
 
     if max == min then
         h = 0
     else
         if max == r then
             h = (g - b) / d
-            if g < b then h = h + 6 end
-        elseif max == g then h = (b - r) / d + 2
-        elseif max == b then h = (r - g) / d + 4
+            if g < b then
+                h = h + 6
+            end
+        elseif max == g then
+            h = (b - r) / d + 2
+        elseif max == b then
+            h = (r - g) / d + 4
         end
         h = h / 6
     end
