@@ -75,19 +75,22 @@ function Notify._OnDraw()
         if globals.RealTime() - note.StartTime > note.Duration then
             Notify.Notifications[i] = nil
         else
+            local deltaTime = globals.RealTime() - note.StartTime
+            local durStep = deltaTime / note.Duration
+            local fadeAlpha = math.floor(math.min(255, deltaTime * 4 * 255))
+
             -- Background
-            draw.Color(35, 50, 60, 255)
+            draw.Color(35, 50, 60, fadeAlpha)
             draw.FilledRect(Offset.X, currentY, Offset.X + Size.W, currentY + Size.H)
-            draw.Color(255, 255, 255, 255)
 
             -- Duration indicator
-            local durStep = (globals.RealTime() - note.StartTime) / note.Duration
             local barWidth = math.floor(Size.W * durStep)
-            draw.Color(255, 255, 255, 100)
+            draw.Color(255, 255, 255, 150)
             draw.FilledRect(Offset.X, currentY, Offset.X + barWidth, currentY + 5)
 
+            draw.Color(245, 245, 245, fadeAlpha)
+
             -- Title Text
-            draw.Color(245, 245, 245, 255)
             draw.SetFont(Fonts.SegoeTitle)
             if note.Title then
                 draw.Text(Offset.X + Padding.X, currentY + Padding.Y, note.Title)

@@ -2,6 +2,7 @@
 
 -- Get the current folder for relative require
 LIB_PATH = debug.getinfo(1, "S").source:sub(2):match("(.*/)")
+require(LIB_PATH .. "Extensions")
 
 --[[ Main ]]
 
