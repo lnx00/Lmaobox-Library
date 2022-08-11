@@ -7,6 +7,7 @@ LIB_PATH = debug.getinfo(1, "S").source:sub(2):match("(.*/)")
 
 ---@class Main
 ---@field public TF2 TF2
+---@field public UI UI
 local Main = {
     TF2 = require(LIB_PATH .. "TF2/TF2"),
     UI = require(LIB_PATH .. "UI/UI"),
@@ -28,6 +29,7 @@ end
 
 local function OnDraw()
     Main.TF2._OnDraw()
+    Main.UI._OnDraw()
 end
 
 callbacks.Unregister("CreateMove", "LBL_CreateMove")
@@ -50,5 +52,8 @@ function UnloadLib()
     printc(230, 65, 25, 255, "Lmaobox-Library unloaded.")
 end
 
+-- Library loaded
 printc(75, 210, 55, 255, "Lmaobox-Library v" .. Main.GetVersion() .. " loaded.")
+Main.UI.Notify.Simple("Library Loaded", "Version: " .. Main.GetVersion())
+
 return Main

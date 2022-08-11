@@ -1,3 +1,4 @@
+---@class Utils
 local Utils = {
     Conversion = require(LIB_PATH .. "Utils/Conversion"),
     IO = require(LIB_PATH .. "Utils/IO"),

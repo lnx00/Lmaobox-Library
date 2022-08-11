@@ -360,6 +360,34 @@ function filesystem.GetFileAttributes(path) return nil end
 ---@param attributes number
 function filesystem.SetFileAttributes(path, attributes) end
 
+--[[ Globals ]]
+---@class globals
+globals = { }
+
+---@return number
+function globals.TickInterval() return nil end
+
+---@return number
+function globals.TickCount() return nil end
+
+---@return number
+function globals.RealTime() return nil end
+
+---@return number
+function globals.CurTime() return nil end
+
+---@return number
+function globals.FrameCount() return nil end
+
+---@return number
+function globals.FrameTime() return nil end
+
+---@return number
+function globals.AbsoluteFrameTime() return nil end
+
+---@return number
+function globals.MaxClients() return nil end
+
 --[[ Steam ]]
 ---@class steam
 steam = { }

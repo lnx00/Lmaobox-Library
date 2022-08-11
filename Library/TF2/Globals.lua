@@ -10,6 +10,7 @@ local Globals = {
     CommandNumber = 0,
 
     DefaultFont = draw.CreateFont("Verdana", 14, 510),
+    TitleFont = draw.CreateFont("Verdana", 24, 700),
 }
 
 -- Updates the global variables
