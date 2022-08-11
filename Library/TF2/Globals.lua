@@ -7,10 +7,7 @@
 ---@field public CommandNumber number
 local Globals = {
     LastCommandNumber = 0,
-    CommandNumber = 0,
-
-    DefaultFont = draw.CreateFont("Verdana", 14, 510),
-    TitleFont = draw.CreateFont("Verdana", 24, 700),
+    CommandNumber = 0
 }
 
 -- Updates the global variables

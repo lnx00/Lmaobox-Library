@@ -5,10 +5,16 @@
     Title, Content, Duration
 ]]
 
----@type Globals
-local Globals = require(LIB_PATH .. "TF2/Globals")
+---@type Fonts
+local Fonts = require(LIB_PATH .. "UI/Fonts")
+
+local Size = { W = 300, H = 60 }
+local Offset = { X = 10, Y = 10 }
+local Padding = { X = 10, Y = 10 }
 
 ---@class Notify
+---@field private Width number
+---@field private Height number
 ---@field private Notifications table
 ---@field private CurrentID number
 local Notify = {
@@ -27,7 +33,7 @@ function Notify.Push(data)
 
     -- Set default duration if not set
     if not data.Duration then
-        data.Duration = 5
+        data.Duration = 3
     end
 
    data.StartTime = globals.RealTime()
@@ -63,35 +69,37 @@ function Notify.Pop(id)
 end
 
 function Notify._OnDraw()
-    local lastY = 10
+    local currentY = Offset.Y
 
     for i, note in pairs(Notify.Notifications) do
         if globals.RealTime() - note.StartTime > note.Duration then
             Notify.Notifications[i] = nil
         else
             -- Background
-            draw.Color(25, 25, 35, 250)
-            draw.FilledRect(10, lastY, 10 + 250, lastY + 60)
+            draw.Color(35, 50, 60, 255)
+            draw.FilledRect(Offset.X, currentY, Offset.X + Size.W, currentY + Size.H)
             draw.Color(255, 255, 255, 255)
 
             -- Duration indicator
-            local duration = note.Duration - (globals.RealTime() - note.StartTime)
-            local barWidth = math.floor(250 * (duration / note.Duration))
+            local durStep = (globals.RealTime() - note.StartTime) / note.Duration
+            local barWidth = math.floor(Size.W * durStep)
             draw.Color(255, 255, 255, 100)
-            draw.FilledRect(10, lastY, 10 + barWidth, lastY + 5)
+            draw.FilledRect(Offset.X, currentY, Offset.X + barWidth, currentY + 5)
 
+            -- Title Text
             draw.Color(245, 245, 245, 255)
-            draw.SetFont(Globals.TitleFont)
+            draw.SetFont(Fonts.SegoeTitle)
             if note.Title then
-                draw.Text(20, lastY + 10, note.Title)
+                draw.Text(Offset.X + Padding.X, currentY + Padding.Y, note.Title)
             end
 
-            draw.SetFont(Globals.DefaultFont)
+            -- Content Text
+            draw.SetFont(Fonts.Segoe)
             if note.Content then
-                draw.Text(20, lastY + 35, note.Content)
+                draw.Text(Offset.X + Padding.X, currentY + Padding.Y + 20, note.Content)
             end
 
-            lastY = lastY + 70
+            currentY = currentY + Size.H + Offset.Y
         end
     end
 end
