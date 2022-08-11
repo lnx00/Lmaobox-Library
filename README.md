@@ -8,7 +8,7 @@ An Utility Library for Lmaobox LUA
 - [X] TF2 Wrappers (Extends the existing TF2 Entity classes)
 - [X] Entity Cache (Allows you to get various entity groups)
 - [X] Timer
-- [ ] UI Notifications
+- [X] UI Notifications
 - [ ] Menu Library
 
 ## Included Libraries
