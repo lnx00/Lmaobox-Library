@@ -1,8 +1,8 @@
 ---@type IO
-local IO = require(LIB_PATH .. "Utils/IO")
+local IO = require("Library/Utils/IO")
 
 ---@type Json
-local Json = require(LIB_PATH .. "Libs/dkjson")
+local Json = require("Library/Libs/dkjson")
 
 ---@class Config
 ---@field private _Name string

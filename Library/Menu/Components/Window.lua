@@ -1,4 +1,4 @@
-local Component = require(LIB_PATH .. "Menu/Components/Component")
+local Component = require("Library/Menu/Components/Component")
 
 ---@class Window
 local Window = {

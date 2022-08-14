@@ -1,9 +1,9 @@
-local Menu = require(LIB_PATH .. "Menu/Menu")
+local Menu = require("Library/Menu/Menu")
 
 ---@class MenuManager
 local MenuManager = {
-    Window = require(LIB_PATH .. "Menu/Components/Window"),
-    Panel = require(LIB_PATH .. "Menu/Components/Panel"),
+    Window = require("Library/Menu/Components/Window"),
+    Panel = require("Library/Menu/Components/Panel"),
 
     Menus = { },
 }

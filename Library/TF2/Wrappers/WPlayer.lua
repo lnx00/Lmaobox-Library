@@ -2,7 +2,7 @@
     Wrapper Class for Player Entities
 ]]
 
-local WEntity = require(LIB_PATH .. "TF2/Wrappers/WEntity")
+local WEntity = require("Library/TF2/Wrappers/WEntity")
 
 ---@class WPlayer : WEntity
 local WPlayer = {

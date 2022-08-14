@@ -3,9 +3,9 @@
 ---@field public Textures Textures
 ---@field public Notify Notify
 local UI = {
-    Fonts = require(LIB_PATH .. "UI/Fonts"),
-    Textures = require(LIB_PATH .. "UI/Textures"),
-    Notify = require(LIB_PATH .. "UI/Notify")
+    Fonts = require("Library/UI/Fonts"),
+    Textures = require("Library/UI/Textures"),
+    Notify = require("Library/UI/Notify")
 }
 
 function UI._OnDraw()

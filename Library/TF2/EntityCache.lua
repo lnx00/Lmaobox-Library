@@ -3,7 +3,7 @@
 ]]
 
 ---@type Globals
-local Globals = require(LIB_PATH .. "TF2/Globals")
+local Globals = require("Library/TF2/Globals")
 
 ---@type Entity[]
 local LastPlayerList = {}

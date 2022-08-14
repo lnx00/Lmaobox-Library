@@ -1,5 +1,4 @@
 -- Module options:
-local always_use_lpeg = false
 local register_global_module_table = false
 local global_module_name = 'json'
 
@@ -58,11 +57,7 @@ local json = { version = "dkjson 2.6" }
 local jsonlpeg = {}
 
 if register_global_module_table then
-  if always_use_lpeg then
-    _G[global_module_name] = jsonlpeg
-  else
-    _G[global_module_name] = json
-  end
+  _G[global_module_name] = json
 end
 
 local _ENV = nil -- blocking globals in Lua 5.2 and later
@@ -70,8 +65,8 @@ local _ENV = nil -- blocking globals in Lua 5.2 and later
 pcall (function()
   -- Enable access to blocked metatables.
   -- Don't worry, this module doesn't change anything in them.
-  local debmeta = require "debug".getmetatable
-  if debmeta then getmetatable = debmeta end
+  --local debmeta = require "debug".getmetatable
+  --if debmeta then getmetatable = debmeta end
 end)
 
 json.null = setmetatable ({}, {
@@ -602,147 +597,6 @@ end
 function json.decode (str, pos, nullval, ...)
   local objectmeta, arraymeta = optionalmetatables(...)
   return scanvalue (str, pos, nullval, objectmeta, arraymeta)
-end
-
-function json.use_lpeg ()
-  local g = require ("lpeg")
-
-  if g.version() == "0.11" then
-    error "due to a bug in LPeg 0.11, it cannot be used for JSON matching"
-  end
-
-  local pegmatch = g.match
-  local P, S, R = g.P, g.S, g.R
-
-  local function ErrorCall (str, pos, msg, state)
-    if not state.msg then
-      state.msg = msg .. " at " .. loc (str, pos)
-      state.pos = pos
-    end
-    return false
-  end
-
-  local function Err (msg)
-    return g.Cmt (g.Cc (msg) * g.Carg (2), ErrorCall)
-  end
-
-  local function ErrorUnterminatedCall (str, pos, what, state)
-    return ErrorCall (str, pos - 1, "unterminated " .. what, state)
-  end
-
-  local SingleLineComment = P"//" * (1 - S"\n\r")^0
-  local MultiLineComment = P"/*" * (1 - P"*/")^0 * P"*/"
-  local Space = (S" \n\r\t" + P"\239\187\191" + SingleLineComment + MultiLineComment)^0
-
-  local function ErrUnterminated (what)
-    return g.Cmt (g.Cc (what) * g.Carg (2), ErrorUnterminatedCall)
-  end
-
-  local PlainChar = 1 - S"\"\\\n\r"
-  local EscapeSequence = (P"\\" * g.C (S"\"\\/bfnrt" + Err "unsupported escape sequence")) / escapechars
-  local HexDigit = R("09", "af", "AF")
-  local function UTF16Surrogate (match, pos, high, low)
-    high, low = tonumber (high, 16), tonumber (low, 16)
-    if 0xD800 <= high and high <= 0xDBff and 0xDC00 <= low and low <= 0xDFFF then
-      return true, unichar ((high - 0xD800)  * 0x400 + (low - 0xDC00) + 0x10000)
-    else
-      return false
-    end
-  end
-  local function UTF16BMP (hex)
-    return unichar (tonumber (hex, 16))
-  end
-  local U16Sequence = (P"\\u" * g.C (HexDigit * HexDigit * HexDigit * HexDigit))
-  local UnicodeEscape = g.Cmt (U16Sequence * U16Sequence, UTF16Surrogate) + U16Sequence/UTF16BMP
-  local Char = UnicodeEscape + EscapeSequence + PlainChar
-  local String = P"\"" * (g.Cs (Char ^ 0) * P"\"" + ErrUnterminated "string")
-  local Integer = P"-"^(-1) * (P"0" + (R"19" * R"09"^0))
-  local Fractal = P"." * R"09"^0
-  local Exponent = (S"eE") * (S"+-")^(-1) * R"09"^1
-  local Number = (Integer * Fractal^(-1) * Exponent^(-1))/str2num
-  local Constant = P"true" * g.Cc (true) + P"false" * g.Cc (false) + P"null" * g.Carg (1)
-  local SimpleValue = Number + String + Constant
-  local ArrayContent, ObjectContent
-
-  -- The functions parsearray and parseobject parse only a single value/pair
-  -- at a time and store them directly to avoid hitting the LPeg limits.
-  local function parsearray (str, pos, nullval, state)
-    local obj, cont
-    local start = pos
-    local npos
-    local t, nt = {}, 0
-    repeat
-      obj, cont, npos = pegmatch (ArrayContent, str, pos, nullval, state)
-      if cont == 'end' then
-        return ErrorUnterminatedCall (str, start, "array", state)
-      end
-      pos = npos
-      if cont == 'cont' or cont == 'last' then
-        nt = nt + 1
-        t[nt] = obj
-      end
-    until cont ~= 'cont'
-    return pos, setmetatable (t, state.arraymeta)
-  end
-
-  local function parseobject (str, pos, nullval, state)
-    local obj, key, cont
-    local start = pos
-    local npos
-    local t = {}
-    repeat
-      key, obj, cont, npos = pegmatch (ObjectContent, str, pos, nullval, state)
-      if cont == 'end' then
-        return ErrorUnterminatedCall (str, start, "object", state)
-      end
-      pos = npos
-      if cont == 'cont' or cont == 'last' then
-        t[key] = obj
-      end
-    until cont ~= 'cont'
-    return pos, setmetatable (t, state.objectmeta)
-  end
-
-  local Array = P"[" * g.Cmt (g.Carg(1) * g.Carg(2), parsearray)
-  local Object = P"{" * g.Cmt (g.Carg(1) * g.Carg(2), parseobject)
-  local Value = Space * (Array + Object + SimpleValue)
-  local ExpectedValue = Value + Space * Err "value expected"
-  local ExpectedKey = String + Err "key expected"
-  local End = P(-1) * g.Cc'end'
-  local ErrInvalid = Err "invalid JSON"
-  ArrayContent = (Value * Space * (P"," * g.Cc'cont' + P"]" * g.Cc'last'+ End + ErrInvalid)  + g.Cc(nil) * (P"]" * g.Cc'empty' + End  + ErrInvalid)) * g.Cp()
-  local Pair = g.Cg (Space * ExpectedKey * Space * (P":" + Err "colon expected") * ExpectedValue)
-  ObjectContent = (g.Cc(nil) * g.Cc(nil) * P"}" * g.Cc'empty' + End + (Pair * Space * (P"," * g.Cc'cont' + P"}" * g.Cc'last' + End + ErrInvalid) + ErrInvalid)) * g.Cp()
-  local DecodeValue = ExpectedValue * g.Cp ()
-
-  jsonlpeg.version = json.version
-  jsonlpeg.encode = json.encode
-  jsonlpeg.null = json.null
-  jsonlpeg.quotestring = json.quotestring
-  jsonlpeg.addnewline = json.addnewline
-  jsonlpeg.encodeexception = json.encodeexception
-  jsonlpeg.using_lpeg = true
-
-  function jsonlpeg.decode (str, pos, nullval, ...)
-    local state = {}
-    state.objectmeta, state.arraymeta = optionalmetatables(...)
-    local obj, retpos = pegmatch (DecodeValue, str, pos, nullval, state)
-    if state.msg then
-      return nil, state.pos, state.msg
-    else
-      return obj, retpos
-    end
-  end
-
-  -- cache result of this function:
-  json.use_lpeg = function () return jsonlpeg end
-  jsonlpeg.use_lpeg = json.use_lpeg
-
-  return jsonlpeg
-end
-
-if always_use_lpeg then
-  return json.use_lpeg()
 end
 
 return json

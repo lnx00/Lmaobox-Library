@@ -6,7 +6,7 @@
 ]]
 
 ---@type Fonts
-local Fonts = require(LIB_PATH .. "UI/Fonts")
+local Fonts = require("Library/UI/Fonts")
 
 local Size = { W = 300, H = 60 }
 local Offset = { X = 10, Y = 10 }

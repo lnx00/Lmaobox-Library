@@ -5,13 +5,13 @@
 ---@field public WEntity WEntity
 ---@field public WWeapon WWeapon
 local TF2 = {
-    Helpers = require(LIB_PATH .. "TF2/Helpers"),
-    Globals = require(LIB_PATH .. "TF2/Globals"),
-    EntityCache = require(LIB_PATH .. "TF2/EntityCache"),
+    Helpers = require("Library/TF2/Helpers"),
+    Globals = require("Library/TF2/Globals"),
+    EntityCache = require("Library/TF2/EntityCache"),
 
-    WPlayer = require(LIB_PATH .. "TF2/Wrappers/WPlayer"),
-    WEntity = require(LIB_PATH .. "TF2/Wrappers/WEntity"),
-    WWeapon = require(LIB_PATH .. "TF2/Wrappers/WWeapon"),
+    WPlayer = require("Library/TF2/Wrappers/WPlayer"),
+    WEntity = require("Library/TF2/Wrappers/WEntity"),
+    WWeapon = require("Library/TF2/Wrappers/WWeapon"),
 }
 
 function TF2.Exit()
