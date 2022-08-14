@@ -71,4 +71,25 @@ Enums.SignonState = {
     ChangeLevel = 7
 }
 
+-- Chat Colors for ChatPrintf
+Enums.ChatColor = {
+    White = "\x01",
+    Old = "\x02",
+    Player = "\x03",
+    Location = "\x04",
+    Achievement = "\x05",
+    Black = "\x06",
+    Custom = "\x07",
+    Alpha = "\x08",
+    Red = "\x07FF0000",
+    Green = "\x0700FF00",
+    Blue = "\x070000FF",
+    Yellow = "\x07FFFF00",
+    Cyan = "\x0700FFFF",
+    Magenta = "\x07FF00FF",
+    Orange = "\x07FFA500",
+    Brown = "\x07A52A2A",
+    Gray = "\x07808080",
+}
+
 return Enums

@@ -1,7 +1,3 @@
---[[ Globals ]]
-
--- Get the current folder for relative require
-LIB_PATH = debug.getinfo(1, "S").source:sub(2):match("(.*/)")
 require("Library/Extensions")
 
 --[[ Main ]]
@@ -9,6 +5,8 @@ require("Library/Extensions")
 ---@class Main
 ---@field public TF2 TF2
 ---@field public UI UI
+---@field public Utils Utils
+---@field public Enums Enums
 local Main = {
     TF2 = require("Library/TF2/TF2"),
     UI = require("Library/UI/UI"),
@@ -43,16 +41,12 @@ callbacks.Register("Draw", "LBL_Draw", OnDraw)
 
 -- Unloads the entire library. Useful for debugging
 function UnloadLib()
-    -- Unload unbundles files
     for name, pck in pairs(package.loaded) do
-        if name:find("Lmaobox-Library", 1, true) then
+        if name:find("Lmaobox-Library", 1, true) or name:find("LNX-Library", 1, true) then
             printc(195, 55, 20, 255, "Unloading: " .. name)
             package.loaded[name] = nil
         end
     end
-
-    -- Unload bundle
-    package.loaded['LNX-Library'] = nil
 
     printc(230, 65, 25, 255, "Lmaobox-Library unloaded.")
 end
