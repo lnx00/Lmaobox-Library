@@ -7,7 +7,7 @@ Timer.__index = Timer
 setmetatable(Timer, Timer)
 
 ---@return Timer
-function Timer.New()
+function Timer.new()
     ---@type self
     local self = setmetatable({ }, Timer)
     self._LastTime = 0

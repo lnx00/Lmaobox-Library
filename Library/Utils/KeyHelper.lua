@@ -10,7 +10,7 @@ setmetatable(KeyHelper, KeyHelper)
 
 ---@param key number
 ---@return KeyHelper
-function KeyHelper.FromKey(key)
+function KeyHelper.new(key)
     ---@type self
     local self = setmetatable({ }, KeyHelper)
     self.Key = key

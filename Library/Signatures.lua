@@ -299,7 +299,7 @@ function draw.FilledRect(x1, y1, x2, y2) end
 function draw.OutlinedRect(x1, y1, x2, y2) end
 
 ---@param text string
----@return table<number, number>
+---@return number, number
 function draw.GetTextSize(text) return nil end
 
 ---@param x number
