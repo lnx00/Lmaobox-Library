@@ -8,9 +8,10 @@
 ---@type Fonts
 local Fonts = require("Library/UI/Fonts")
 
-local Size = { W = 300, H = 60 }
+local Size = { W = 300, H = 50 }
 local Offset = { X = 10, Y = 10 }
 local Padding = { X = 10, Y = 10 }
+local FadeSpeed = 5
 
 ---@class Notify
 ---@field private Width number
@@ -77,7 +78,7 @@ function Notify._OnDraw()
         else
             local deltaTime = globals.RealTime() - note.StartTime
             local durStep = (deltaTime / note.Duration)
-            local fadeStep = math.min(1, 3 - math.abs(6 * math.min(1, durStep) - 3))
+            local fadeStep = math.min(1, FadeSpeed - math.abs(2 * FadeSpeed * math.min(1, durStep) - FadeSpeed))
             local fadeAlpha = math.floor(fadeStep * 255)
             currentY = currentY - math.floor((1 - fadeStep) * Size.H)
 
