@@ -76,8 +76,10 @@ function Notify._OnDraw()
             Notify.Notifications[i] = nil
         else
             local deltaTime = globals.RealTime() - note.StartTime
-            local durStep = deltaTime / note.Duration
-            local fadeAlpha = math.floor(math.min(255, deltaTime * 4 * 255))
+            local durStep = (deltaTime / note.Duration)
+            local fadeStep = math.min(1, 3 - math.abs(6 * math.min(1, durStep) - 3))
+            local fadeAlpha = math.floor(fadeStep * 255)
+            currentY = currentY - math.floor((1 - fadeStep) * Size.H)
 
             -- Background
             draw.Color(35, 50, 60, fadeAlpha)
