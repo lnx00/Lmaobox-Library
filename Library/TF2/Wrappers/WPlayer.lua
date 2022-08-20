@@ -9,7 +9,14 @@ local WPlayer = {
     Entity = nil
 }
 WPlayer.__index = WPlayer
-setmetatable(WPlayer, WEntity)
+setmetatable(WPlayer, {
+    __index = function(self, key, ...)
+        return function(self, ...)
+            local entity = rawget(self, "Entity")
+            return entity[key](entity, ...)
+        end
+    end
+})
 
 --[[ Constructors ]]
 
