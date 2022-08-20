@@ -5,18 +5,9 @@
 local WEntity = require("Library/TF2/Wrappers/WEntity")
 
 ---@class WPlayer : WEntity
-local WPlayer = {
-    Entity = nil
-}
+local WPlayer = { }
 WPlayer.__index = WPlayer
-setmetatable(WPlayer, {
-    __index = function(self, key, ...)
-        return function(self, ...)
-            local entity = rawget(self, "Entity")
-            return entity[key](entity, ...)
-        end
-    end
-})
+setmetatable(WPlayer, WEntity)
 
 --[[ Constructors ]]
 
@@ -51,18 +42,27 @@ end
 -- Returns whether the player is on the ground
 ---@return boolean
 function WPlayer:IsOnGround()
-    local pFlags = self.Entity:GetPropInt("m_fFlags")
+    local pFlags = self:GetPropInt("m_fFlags")
     return (pFlags & FL_ONGROUND) == 1
 end
 
 -- Returns the active weapon
 function WPlayer:GetActiveWeapon()
-    return self.Entity:GetPropEntity("m_hActiveWeapon")
+    return self:GetPropEntity("m_hActiveWeapon")
 end
 
 -- Returns the spectated target
 function WPlayer:GetObservedTarget()
-    return self.Entity:GetPropEntity("m_hObserverTarget")
+    return self:GetPropEntity("m_hObserverTarget")
+end
+
+-- Returns the position of the hitbox as a Vector3
+---@param hitbox number
+function WEntity:GetHitboxPos(hitbox)
+    local hitbox = self:GetHitboxes()[hitbox]
+    if not hitbox then return end
+
+    return (hitbox[1] + hitbox[2]) * 0.5
 end
 
 return WPlayer

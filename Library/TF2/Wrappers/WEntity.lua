@@ -2,10 +2,20 @@
     Wrapper Class for Entities
 ]]
 
----@class WEntity
----@field public Entity Entity
-local WEntity = { }
+---@class WEntity : Entity
+---@field private Entity Entity
+local WEntity = {
+    Entity = nil
+}
 WEntity.__index = WEntity
+setmetatable(WEntity, {
+    __index = function(self, key, ...)
+        return function(self, ...)
+            local entity = rawget(self, "Entity")
+            return entity[key](entity, ...)
+        end
+    end
+})
 
 --[[ Constructors ]]
 
@@ -18,22 +28,6 @@ function WEntity.FromEntity(entity)
     self.Entity = entity
 
     return self
-end
-
---[[ Wrapper functions ]]
-
--- Returns the native base entity
-function WEntity:Unwrap()
-    return self.Entity
-end
-
--- Returns the position of the hitbox as a Vector3
----@param hitbox number
-function WEntity:GetHitboxPos(hitbox)
-    local hitbox = self.Entity:GetHitboxes()[hitbox]
-    if not hitbox then return end
-
-    return (hitbox[1] + hitbox[2]) * 0.5
 end
 
 return WEntity
