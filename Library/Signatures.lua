@@ -58,11 +58,9 @@ function EulerAngles:Up() return nil end
 ---@field z number
 local Vector3 = { }
 
----@param x number
----@param y number
----@param z number
+---@overload fun(x: number, y: number, z: number)
 ---@return Vector3
-function Vector3(x, y, z) return nil end
+function Vector3() return nil end
 
 ---@return table<number>
 function Vector3:Unpack() return nil end
@@ -207,8 +205,6 @@ function Entity:GetHitboxes() return { } end
 
 -- Entity netvars/props
 
--- Prop Data Tables
-
 ---@param prop string
 ---@return number
 function Entity:GetPropFloat(prop, ...) return nil end
@@ -232,6 +228,20 @@ function Entity:GetPropVector(prop, ...) return nil end
 ---@param prop string
 ---@return Entity
 function Entity:GetPropEntity(prop, ...) return nil end
+
+-- Prop Data Tables
+
+---@param prop string
+---@return number[]
+function Entity:GetPropDataTableFloat(prop, ...) return nil end
+
+---@param prop string
+---@return number[]
+function Entity:GetPropDataTableInt(prop, ...) return nil end
+
+---@param prop string
+---@return Entity[]
+function Entity:GetPropDataTableEntity(prop, ...) return nil end
 
 -- Player entity methods
 

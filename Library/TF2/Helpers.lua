@@ -36,4 +36,18 @@ function Helpers.WalkTo(userCmd, localPlayer, destination)
     pCmd:SetSideMove(result.y)
 end
 
+-- Returns if the weapon can shoot
+---@param weapon Entity
+---@return boolean
+function Helpers.CanShoot(weapon)
+    local lPlayer = entities.GetLocalPlayer()
+    if weapon:IsMeleeWeapon() then return false end
+
+    local nextPrimaryAttack = weapon:GetPropFloat("LocalActiveWeaponData", "m_flNextPrimaryAttack")
+    local nextAttack = lPlayer:GetPropFloat("bcc_localdata", "m_flNextAttack")
+    if (not nextPrimaryAttack) or (not nextAttack) then return false end
+
+    return (nextPrimaryAttack <= globals.CurTime()) and (nextAttack <= globals.CurTime())
+end
+
 return Helpers

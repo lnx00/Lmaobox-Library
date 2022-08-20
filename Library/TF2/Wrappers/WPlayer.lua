@@ -3,6 +3,7 @@
 ]]
 
 local WEntity = require("Library/TF2/Wrappers/WEntity")
+local WWeapon = require("Library/TF2/Wrappers/WWeapon")
 
 ---@class WPlayer : WEntity
 local WPlayer = { }
@@ -30,13 +31,6 @@ function WPlayer.GetLocalPlayer()
     return WPlayer.FromEntity(entities.GetLocalPlayer())
 end
 
--- Creates a WPlayer from a given WEntity
----@param wEntity WEntity
----@return WPlayer
-function WPlayer.FromWEntity(wEntity)
-    return WPlayer.FromEntity(wEntity.Entity)
-end
-
 --[[ Wrapper functions ]]
 
 -- Returns whether the player is on the ground
@@ -47,20 +41,23 @@ function WPlayer:IsOnGround()
 end
 
 -- Returns the active weapon
+---@return WWeapon
 function WPlayer:GetActiveWeapon()
-    return self:GetPropEntity("m_hActiveWeapon")
+    return WWeapon.FromEntity(self:GetPropEntity("m_hActiveWeapon"))
 end
 
 -- Returns the spectated target
+---@return WPlayer
 function WPlayer:GetObservedTarget()
-    return self:GetPropEntity("m_hObserverTarget")
+    return WPlayer.FromEntity(self:GetPropEntity("m_hObserverTarget"))
 end
 
 -- Returns the position of the hitbox as a Vector3
 ---@param hitbox number
+---@return Vector3
 function WEntity:GetHitboxPos(hitbox)
     local hitbox = self:GetHitboxes()[hitbox]
-    if not hitbox then return end
+    if not hitbox then return Vector3() end
 
     return (hitbox[1] + hitbox[2]) * 0.5
 end
