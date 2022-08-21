@@ -57,7 +57,7 @@ end
 ---@return Vector3
 function WEntity:GetHitboxPos(hitbox)
     local hitbox = self:GetHitboxes()[hitbox]
-    if not hitbox then return Vector3() end
+    if not hitbox then return Vector3(0, 0, 0) end
 
     return (hitbox[1] + hitbox[2]) * 0.5
 end

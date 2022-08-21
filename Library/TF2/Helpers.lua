@@ -50,4 +50,13 @@ function Helpers.CanShoot(weapon)
     return (nextPrimaryAttack <= globals.CurTime()) and (nextAttack <= globals.CurTime())
 end
 
+---@param target Entity
+---@param from Vector3
+---@param to Vector3
+---@return boolean
+function Helpers.VisPos(target, from, to)
+    local trace = engine.TraceLine(from, to, MASK_SHOT | CONTENTS_GRATE)
+    return ((trace.entity and trace.entity == target) or (trace.fraction > 0.99))
+end
+
 return Helpers

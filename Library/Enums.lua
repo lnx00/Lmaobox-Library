@@ -71,6 +71,28 @@ Enums.SignonState = {
     ChangeLevel = 7
 }
 
+Enums.Hitbox = {
+    Head = 0,
+    Pelvis = 1,
+    Spine0 = 2,
+    Spine1 = 3,
+    Spine2 = 4,
+    Spine3 = 5,
+    UpperarmL = 6,
+    LowerarmL = 7,
+    HandL = 8,
+    UpperarmR = 9,
+    LowerarmR = 10,
+    HandR = 11,
+    HipL = 12,
+    KneeL = 13,
+    FootL = 14,
+    HipR = 15,
+    KneeR = 16,
+    FootR = 17,
+    Max = 18
+}
+
 -- Chat Colors for ChatPrintf
 Enums.ChatColor = {
     White = "\x01",
