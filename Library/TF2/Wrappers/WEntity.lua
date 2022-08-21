@@ -30,4 +30,10 @@ function WEntity.FromEntity(entity)
     return self
 end
 
+-- Returns the native entity
+---@return Entity
+function WEntity:Unwrap()
+    return self.Entity
+end
+
 return WEntity
