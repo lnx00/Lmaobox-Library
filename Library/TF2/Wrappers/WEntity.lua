@@ -36,4 +36,9 @@ function WEntity:Unwrap()
     return self.Entity
 end
 
+---@return number
+function WEntity:GetSimulationTime()
+    return self:GetPropFloat("m_flSimulationTime")
+end
+
 return WEntity

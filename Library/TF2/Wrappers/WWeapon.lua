@@ -26,8 +26,14 @@ end
 
 --[[ Wrapper functions ]]
 
+---@return Entity
 function WWeapon:GetOwner()
     return self:GetPropEntity("m_hOwner")
+end
+
+---@return number
+function WWeapon:GetDefIndex()
+    return self:GetPropInt("m_iItemDefinitionIndex")
 end
 
 return WWeapon
