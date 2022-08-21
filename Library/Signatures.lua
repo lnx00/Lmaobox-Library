@@ -373,6 +373,37 @@ function engine.GetServerIP() return nil end
 ---@return Vector3
 function engine.GetViewAngles() return nil end
 
+---@param angles EulerAngles
+function engine.SetViewAngles(angles) end
+
+---@param soundPath string
+function engine.PlaySound(soundPath) end
+
+---@return string
+function engine.GetGameDir() return nil end
+
+---@param keyValues string
+function engine.SendKeyValues(keyValues) end
+
+---@overload fun(title: string)
+---@overload fun(title: string, longText: string)
+function engine.Notification(title) end
+
+---@param seed number
+function engine.RandomSeed(seed) end
+
+---@overload fun(min: number)
+---@overload fun(min: number, max: number)
+function engine.RandomFloat(min) end
+
+---@overload fun(min: number)
+---@overload fun(min: number, max: number)
+function engine.RandomInt(min) end
+
+---@overload fun(min: number, max: number)
+---@overload fun(min: number, max: number, exponent: number)
+function engine.RandomFloatExp(min, max) end
+
 --[[ Entities ]]
 ---@class entities
 entities = { }

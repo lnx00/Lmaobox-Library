@@ -9,7 +9,7 @@ local WorkDir = engine.GetGameDir() .. "/../LNXF/"
 -- Reads a file and returns its contents
 ---@param path string
 ---@return any
-function IO.ReadFile(path)
+function IO.Read(path)
     local file = io.open(path, "rb") -- r read mode and b binary mode
     if not file then return nil end
     local content = file:read "*a" -- *a or *all reads the whole file
@@ -21,7 +21,7 @@ end
 ---@param path string
 ---@param content any
 ---@return boolean
-function IO.WriteFile(path, content)
+function IO.Write(path, content)
     local file = io.open(path, "wb") -- w write mode and b binary mode
     if not file then return false end
     file:write(content)
@@ -31,7 +31,7 @@ end
 
 -- Deletes the file at the given path
 ---@param path string
-function IO.DeleteFile(path)
+function IO.Delete(path)
     os.remove(path)
 end
 

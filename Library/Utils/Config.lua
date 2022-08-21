@@ -48,7 +48,7 @@ function Config:Load()
     local configPath = self:GetPath()
     if not IO.Exists(configPath) then return end
 
-    local content = IO.ReadFile(self:GetPath())
+    local content = IO.Read(self:GetPath())
     self._Content = Json.decode(content, 1, nil)
 end
 
@@ -56,13 +56,13 @@ function Config:Delete()
     local configPath = self:GetPath()
     if not IO.Exists(configPath) then return end
 
-    IO.DeleteFile(configPath)
+    IO.Delete(configPath)
     self._Content = { }
 end
 
 function Config:Save()
     local content = Json.encode(self._Content, { indent = true })
-    IO.WriteFile(self:GetPath(), content)
+    IO.Write(self:GetPath(), content)
 end
 
 ---@param key string
