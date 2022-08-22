@@ -1,13 +1,13 @@
 ---@class Utils
 ---@field public Conversion Conversion
----@field public IO IO
+---@field public FS FS
 ---@field public Web Web
 ---@field public KeyHelper KeyHelper
 ---@field public Timer Timer
 ---@field public Config Config
 local Utils = {
     Conversion = require("Library/Utils/Conversion"),
-    IO = require("Library/Utils/IO"),
+    FS = require("Library/Utils/FileSystem"),
     Web = require("Library/Utils/Web"),
     KeyHelper = require("Library/Utils/KeyHelper"),
     Timer = require("Library/Utils/Timer"),

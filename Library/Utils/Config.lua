@@ -1,5 +1,5 @@
----@type IO
-local IO = require("Library/Utils/IO")
+---@type FS
+local FS = require("Library/Utils/FileSystem")
 
 ---@type Json
 local Json = require("Library/Libs/dkjson")
@@ -19,7 +19,7 @@ Config.__index = Config
 setmetatable(Config, Config)
 
 local ConfigExtension = ".cfg"
-local ConfigFolder = IO.GetWorkDir() .. "/Configs/"
+local ConfigFolder = FS.GetWorkDir() .. "/Configs/"
 
 ---@return Config
 function Config.new(name)
@@ -37,7 +37,7 @@ end
 
 ---@return string
 function Config:GetPath()
-    if not IO.Exists(ConfigFolder) then
+    if not FS.Exists(ConfigFolder) then
         filesystem.CreateDirectory(ConfigFolder)
     end
 
@@ -46,23 +46,23 @@ end
 
 function Config:Load()
     local configPath = self:GetPath()
-    if not IO.Exists(configPath) then return end
+    if not FS.Exists(configPath) then return end
 
-    local content = IO.Read(self:GetPath())
+    local content = FS.Read(self:GetPath())
     self._Content = Json.decode(content, 1, nil)
 end
 
 function Config:Delete()
     local configPath = self:GetPath()
-    if not IO.Exists(configPath) then return end
+    if not FS.Exists(configPath) then return end
 
-    IO.Delete(configPath)
+    FS.Delete(configPath)
     self._Content = { }
 end
 
 function Config:Save()
     local content = Json.encode(self._Content, { indent = true })
-    IO.Write(self:GetPath(), content)
+    FS.Write(self:GetPath(), content)
 end
 
 ---@param key string
