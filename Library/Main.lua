@@ -12,14 +12,14 @@ require("Library/Constants")
 local Main = {
     TF2 = require("Library/TF2/TF2"),
     UI = require("Library/UI/UI"),
-    Menu = require("Library/Menu/Menu"),
+    Menu = require("Library/Menu/MenuManager"),
     Utils = require("Library/Utils/Utils"),
     Enums = require("Library/Enums"),
 }
 
 ---@return number
 function Main.GetVersion()
-    return 0.42
+    return 0.50
 end
 
 --[[ Callbacks ]]

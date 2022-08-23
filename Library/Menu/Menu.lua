@@ -1,53 +1,46 @@
-local Window = require("Library/Menu/Components/Window")
-
----@type Menu[]
-local MenuList = {}
+local Window = require("Library/Menu/Window")
 
 ---@class Menu
----@field public ID string
 ---@field public Windows Window[]
 local Menu = {
-    ID = "",
     Windows = { }
 }
 Menu.__index = Menu
 setmetatable(Menu, Menu)
 
----@param id string
+---@param name string
 ---@return Menu
-function Menu.new(id)
+function Menu.new(name)
     ---@type self
     local self = setmetatable({ }, Menu)
-    self.ID = id
+    self.Windows = { }
 
-    MenuList[id] = self
     return self
 end
 
-function Menu:Remove()
-    MenuList[self.ID] = nil
+function Menu:AddWindow(data)
+    local newWindow = Window.new(self, data)
+    table.insert(self.Windows, newWindow)
+
+    return newWindow
 end
 
----@param data table
----@return Window
-function Menu:CreateWindow(data)
-    assert(type(data) == "table", "Menu:CreateWindow: data must be a table")
-
-    local window = Window.new(data)
-    table.insert(self.Windows, window)
-
-    return window
-end
-
-function Menu:Render()
-    for i, window in pairs(self.Windows) do
-        window:Render()
+function Menu:RemoveWindow(window)
+    for i, v in pairs(self.Windows) do
+        if v == window then
+            table.remove(self.Windows, i)
+            break
+        end
     end
 end
 
-function Menu._OnDraw()
-    for i, menu in pairs(MenuList) do
-        menu:Render()
+function Menu:Clear()
+    self.Windows = { }
+end
+
+function Menu:_OnDraw()
+    for i, window in pairs(self.Windows) do
+        window:Render()
     end
 end
 
