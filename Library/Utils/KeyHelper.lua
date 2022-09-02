@@ -23,7 +23,6 @@ end
 ---@return boolean
 function KeyHelper:Down()
     local isDown = input.IsButtonDown(self.Key)
-    self._LastState = isDown
     return isDown
 end
 
@@ -31,14 +30,16 @@ end
 ---@return boolean
 function KeyHelper:Pressed()
     local shouldCheck = self._LastState == false
-    return self:Down() and shouldCheck
+    self._LastState = self:Down()
+    return self._LastState and shouldCheck
 end
 
 -- Was the button just released? This will only be true once.
 ---@return boolean
 function KeyHelper:Released()
     local shouldCheck = self._LastState == true
-    return self:Down() == false and shouldCheck
+    self._LastState = self:Down()
+    return self._LastState == false and shouldCheck
 end
 
 return KeyHelper

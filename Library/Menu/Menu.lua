@@ -85,7 +85,7 @@ function Menu.Button(text)
     local width, height = txtWidth + Style.Padding * 2, txtHeight + Style.Padding * 2
     local x, y = Menu.Cursor.X, Menu.Cursor.Y
     local hovered = MouseInBound(x, y, width, height)
-    local clicked = MouseHelper:Pressed()
+    local clicked = hovered and MouseHelper:Pressed()
 
     -- Background
     if hovered then
