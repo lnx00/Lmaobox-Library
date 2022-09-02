@@ -19,7 +19,7 @@ local Main = {
 
 ---@return number
 function Main.GetVersion()
-    return 0.53
+    return 0.55
 end
 
 --[[ Callbacks ]]
