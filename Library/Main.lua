@@ -1,5 +1,5 @@
-require("Library/Extensions")
-require("Library/Constants")
+-- Globals
+require("Library/Global/Global")
 
 --[[ Main ]]
 
@@ -12,14 +12,14 @@ require("Library/Constants")
 local Main = {
     TF2 = require("Library/TF2/TF2"),
     UI = require("Library/UI/UI"),
-    Menu = require("Library/Menu/MenuManager"),
+    Menu = require("Library/Menu/Menu"),
     Utils = require("Library/Utils/Utils"),
     Enums = require("Library/Enums"),
 }
 
 ---@return number
 function Main.GetVersion()
-    return 0.50
+    return 0.53
 end
 
 --[[ Callbacks ]]
@@ -32,7 +32,6 @@ end
 local function OnDraw()
     Main.TF2._OnDraw()
     Main.UI._OnDraw()
-    Main.Menu._OnDraw()
 end
 
 callbacks.Unregister("CreateMove", "LBL_CreateMove")

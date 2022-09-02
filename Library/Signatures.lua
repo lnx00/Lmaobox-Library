@@ -474,6 +474,31 @@ function globals.AbsoluteFrameTime() return nil end
 ---@return number
 function globals.MaxClients() return nil end
 
+--[[ input ]]
+---@class input
+input = { }
+
+---@return table<number, number>
+function input.GetMousePos() return nil end
+
+---@param button any
+---@return boolean
+function input.IsButtonDown(button) return nil end
+
+---@param button any
+---@return boolean
+function input.IsButtonPressed(button) return nil end
+
+---@param button any
+---@return boolean
+function input.IsButtonReleased(button) return nil end
+
+---@return boolean
+function input.IsMouseInputEnabled() return nil end
+
+---@param enabled boolean
+function input.SetMouseInputEnabled(enabled) end
+
 --[[ Steam ]]
 ---@class steam
 steam = { }
