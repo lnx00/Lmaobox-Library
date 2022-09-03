@@ -98,6 +98,7 @@ function Menu.Begin(title)
 
     -- Title bar
     draw.Color(table.unpack(Style.TitleColor))
+    draw.OutlinedRect(window.X, window.Y, window.X + window.Width, window.Y + window.Height)
     draw.FilledRect(window.X, window.Y, window.X + window.Width, window.Y + titleHeight)
 
     -- Title text
@@ -130,7 +131,7 @@ function Menu.Button(text)
     local clicked, active = GetInteraction(hovered)
 
     -- Background
-    SetItemColor(hovered, down)
+    SetItemColor(hovered, active)
     draw.FilledRect(x, y, x + width, y + height)
 
     -- Text
