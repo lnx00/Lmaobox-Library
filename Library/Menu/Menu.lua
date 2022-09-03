@@ -32,6 +32,7 @@ local Style = {
     ItemActiveColor = { 70, 70, 70, 255 },
     HighlightColor = { 255, 255, 255, 150 },
 }
+local StyleStack = Stack.new()
 
 function MouseInBound(x, y, w, h)
     local mX, mY = table.unpack(input.GetMousePos())
@@ -58,6 +59,16 @@ end
 function UpdateCursor(width, height)
     Menu.Cursor.Y = Menu.Cursor.Y + height + Style.Spacing
     LastSize.W, LastSize.H = width, height
+end
+
+function Menu.PushStyle(key, value)
+    StyleStack:push({ Key = key, Value = Style[key] })
+    Style[key] = value
+end
+
+function Menu.PopStyle()
+    local style = StyleStack:pop()
+    Style[style.Key] = style.Value
 end
 
 function Menu.Begin(title)
