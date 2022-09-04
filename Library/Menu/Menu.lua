@@ -40,6 +40,7 @@ local Style = {
 }
 local StyleStack = Stack.new()
 
+---@return boolean
 function MouseInBound(x, y, w, h)
     local mX, mY = table.unpack(input.GetMousePos())
     return mX >= x and mX <= x + w and mY >= y and mY <= y + h
@@ -74,12 +75,17 @@ function Menu.InteractionColor(hovered, active)
 end
 
 -- Returns whether the element is clicked or active
----@param hovered boolean
-function Menu.GetInteraction(hovered)
+---@param x number
+---@param y number
+---@param width number
+---@param height number
+---@return boolean, boolean, boolean
+function Menu.GetInteraction(x, y, width, height)
+    local hovered = MouseInBound(x, y, width, height)
     local clicked = hovered and (MouseHelper:Pressed() or EnterHelper:Pressed())
     local active = hovered and (MouseHelper:Down() or EnterHelper:Down())
 
-    return clicked, active
+    return hovered, clicked, active
 end
 
 -- Update the cursor after drawing a component
@@ -161,8 +167,8 @@ function Menu.End()
 end
 
 function Menu.Text(text)
-    local width, height = draw.GetTextSize(text)
     local x, y = Menu.Cursor.X + Style.Spacing, Menu.Cursor.Y
+    local width, height = draw.GetTextSize(text)
 
     draw.Color(table.unpack(Colors.Text))
     draw.Text(x, y, text)
@@ -171,11 +177,10 @@ function Menu.Text(text)
 end
 
 function Menu.Button(text)
+    local x, y = Menu.Cursor.X + Style.Spacing, Menu.Cursor.Y
     local txtWidth, txtHeight = draw.GetTextSize(text)
     local width, height = txtWidth + Style.Spacing * 2, txtHeight + Style.Spacing * 2
-    local x, y = Menu.Cursor.X + Style.Spacing, Menu.Cursor.Y
-    local hovered = MouseInBound(x, y, width, height)
-    local clicked, active = Menu.GetInteraction(hovered)
+    local hovered, clicked, active = Menu.GetInteraction(x, y, width, height)
 
     -- Background
     Menu.InteractionColor(hovered, active)
@@ -194,30 +199,31 @@ end
 ---@param state boolean
 ---@return boolean, boolean
 function Menu.Checkbox(text, state)
-    local txtWidth, txtHeight = draw.GetTextSize(text)
     local x, y = Menu.Cursor.X + Style.Spacing, Menu.Cursor.Y
-    local hovered = MouseInBound(x, y, Style.ItemSize, Style.ItemSize)
-    local clicked, active = Menu.GetInteraction(hovered)
+    local txtWidth, txtHeight = draw.GetTextSize(text)
+    local boxSize = txtHeight + Style.Spacing * 2
+    local width, height = boxSize + Style.Spacing + txtWidth, boxSize
+    local hovered, clicked, active = Menu.GetInteraction(x, y, width, height)
 
     -- Box
     Menu.InteractionColor(hovered, active)
-    draw.FilledRect(x, y, x + Style.ItemSize, y + Style.ItemSize)
+    draw.FilledRect(x, y, x + boxSize, y + boxSize)
 
     if state then
-        draw.Color(table.unpack(Colors.Highlight))
-        draw.FilledRect(x + Style.Spacing, y + Style.Spacing, x + (Style.ItemSize - Style.Spacing), y + (Style.ItemSize - Style.Spacing))
+        Menu.SetNextColor(Colors.Highlight)
+        draw.FilledRect(x + Style.Spacing, y + Style.Spacing, x + (boxSize - Style.Spacing), y + (boxSize - Style.Spacing))
     end
 
     -- Text
-    draw.Color(table.unpack(Colors.Text))
-    draw.Text(x + Style.ItemSize + Style.Spacing, math.floor(y + (Style.ItemSize / 2) - (txtHeight / 2)), text)
+    Menu.SetNextColor(Colors.Text)
+    draw.Text(x + boxSize + Style.Spacing, math.floor(y + (height / 2) - (txtHeight / 2)), text)
 
     -- Update State
     if clicked then
         state = not state
     end
 
-    Menu.UpdateCursor(20 + txtWidth, math.max(20, txtHeight))
+    Menu.UpdateCursor(width, height)
     return state, clicked
 end
 
