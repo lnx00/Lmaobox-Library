@@ -29,7 +29,8 @@ local Colors = {
     Item = { 50, 50, 50, 255 },
     ItemHover = { 60, 60, 60, 255 },
     ItemActive = { 70, 70, 70, 255 },
-    Highlight = { 255, 255, 255, 150 },
+    Highlight = { 180, 180, 180, 100 },
+    HighlightActive = { 240, 240, 240, 140 },
 }
 local ColorStack = Stack.new()
 
@@ -37,6 +38,7 @@ local ColorStack = Stack.new()
 local Style = {
     Spacing = 5,
     ItemSize = 20,
+    SameLine = false
 }
 local StyleStack = Stack.new()
 
@@ -52,6 +54,10 @@ end
 
 function Menu.GetColors()
     return Colors
+end
+
+function Menu.GetCurrentWindow()
+    return WindowStack:peek()
 end
 
 -- Sets the next color to be used
@@ -225,6 +231,43 @@ function Menu.Checkbox(text, state)
 
     Menu.UpdateCursor(width, height)
     return state, clicked
+end
+
+-- Draws a slider that changes a value
+---@param text string
+---@param value number
+---@param min number
+---@param max number
+function Menu.Slider(text, value, min, max)
+    local x, y = Menu.Cursor.X + Style.Spacing, Menu.Cursor.Y
+    local valText = text .. ": " .. tostring(value)
+    local txtWidth, txtHeight = draw.GetTextSize(valText)
+    local window = Menu.GetCurrentWindow()
+    local width, height = window.Width - Style.Spacing * 2, txtHeight + Style.Spacing * 2
+    local sliderWidth = math.floor((width - Style.Spacing * 2) * ((value - min) / (max - min)))
+    local hovered, clicked, active = Menu.GetInteraction(x, y, width, height)
+
+    -- Background
+    Menu.InteractionColor(hovered, active)
+    draw.FilledRect(x, y, x + width, y + height)
+
+    -- Slider
+    Menu.SetNextColor(Colors.Highlight)
+    draw.FilledRect(x + Style.Spacing, y + Style.Spacing, x + Style.Spacing + sliderWidth, y + height - Style.Spacing)
+
+    -- Text
+    Menu.SetNextColor(Colors.Text)
+    draw.Text(math.floor(x + (width / 2) - (txtWidth / 2)), math.floor(y + (height / 2) - (txtHeight / 2)), valText)
+
+    -- Update Value
+    if active then
+        local mX, mY = table.unpack(input.GetMousePos())
+        local percent = (mX - x) / width * 100
+        value = math.floor((max - min) * (percent / 100) + min)
+    end
+
+    Menu.UpdateCursor(width, height)
+    return value
 end
 
 ---@param size number
