@@ -6,8 +6,10 @@ local KeyHelper = require("Library/Utils/KeyHelper")
 
 ---@class Menu
 ---@field public Cursor table
+---@field public ActiveElement string
 local Menu = {
     Cursor = { X = 0, Y = 0 },
+    ActiveElement = nil
 }
 
 local MouseHelper = KeyHelper.new(MOUSE_LEFT)
@@ -86,10 +88,25 @@ end
 ---@param width number
 ---@param height number
 ---@return boolean, boolean, boolean
-function Menu.GetInteraction(x, y, width, height)
-    local hovered = MouseInBound(x, y, width, height)
+function Menu.GetInteraction(x, y, width, height, id)
+    local hovered = MouseInBound(x, y, width, height) or id == Menu.ActiveElement
     local clicked = hovered and (MouseHelper:Pressed() or EnterHelper:Pressed())
     local active = hovered and (MouseHelper:Down() or EnterHelper:Down())
+
+    -- Is a different element active?
+    if Menu.ActiveElement ~= nil and Menu.ActiveElement ~= id then
+        return hovered, false, false
+    end
+
+    -- Should this element be active?
+    if active and Menu.ActiveElement == nil then
+        Menu.ActiveElement = id
+    end
+
+    -- Is this element no longer active?
+    if Menu.ActiveElement == id and not active then
+        Menu.ActiveElement = nil
+    end
 
     return hovered, clicked, active
 end
@@ -148,9 +165,10 @@ function Menu.Begin(title)
     draw.SetFont(Fonts.Verdana)
     local txtWidth, txtHeight = draw.GetTextSize(title)
     local titleHeight = txtHeight + Style.Spacing
+    local hovered, clicked, active = Menu.GetInteraction(window.X, window.Y, window.Width, titleHeight, title)
 
     -- Mouse drag
-    if MouseInBound(window.X, window.Y, window.Width, titleHeight) and MouseHelper:Down() then
+    if active then
         local mX, mY = table.unpack(input.GetMousePos())
 
         window.X = math.floor(mX - (window.Width / 2))
@@ -195,7 +213,7 @@ function Menu.Button(text)
     local x, y = Menu.Cursor.X + Style.Spacing, Menu.Cursor.Y
     local txtWidth, txtHeight = draw.GetTextSize(text)
     local width, height = txtWidth + Style.Spacing * 2, txtHeight + Style.Spacing * 2
-    local hovered, clicked, active = Menu.GetInteraction(x, y, width, height)
+    local hovered, clicked, active = Menu.GetInteraction(x, y, width, height, text)
 
     -- Background
     Menu.InteractionColor(hovered, active)
@@ -218,7 +236,7 @@ function Menu.Checkbox(text, state)
     local txtWidth, txtHeight = draw.GetTextSize(text)
     local boxSize = txtHeight + Style.Spacing * 2
     local width, height = boxSize + Style.Spacing + txtWidth, boxSize
-    local hovered, clicked, active = Menu.GetInteraction(x, y, width, height)
+    local hovered, clicked, active = Menu.GetInteraction(x, y, width, height, text)
 
     -- Box
     Menu.InteractionColor(hovered, active)
@@ -254,7 +272,7 @@ function Menu.Slider(text, value, min, max)
     local window = Menu.GetCurrentWindow()
     local width, height = window.Width - Style.Spacing * 2, txtHeight + Style.Spacing * 2
     local sliderWidth = math.floor((width - Style.Spacing * 2) * ((value - min) / (max - min)))
-    local hovered, clicked, active = Menu.GetInteraction(x, y, width, height)
+    local hovered, clicked, active = Menu.GetInteraction(x, y, width, height, text)
 
     -- Background
     Menu.InteractionColor(hovered, active)
