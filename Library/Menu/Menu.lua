@@ -130,6 +130,15 @@ function Menu.PopColor(amount)
     end
 end
 
+function Menu.DrawText(x, y, text)
+    for label in text:gmatch("(.+)###(.+)") do
+        draw.Text(x, y, label)
+        return
+    end
+
+    draw.Text(x, y, text)
+end
+
 function Menu.Begin(title)
     if not Windows[title] then
         Windows[title] = { X = 50, Y = 50, Width = 250, Height = 250 }
@@ -162,7 +171,7 @@ function Menu.Begin(title)
 
     -- Title text
     draw.Color(table.unpack(Colors.Text))
-    draw.Text(math.floor(window.X + (window.Width / 2) - (txtWidth / 2)), window.Y + math.floor((20 / 2) - (txtHeight / 2)), title)
+    Menu.DrawText(math.floor(window.X + (window.Width / 2) - (txtWidth / 2)), window.Y + math.floor((20 / 2) - (txtHeight / 2)), title)
 
     WindowStack:push(window)
 end
@@ -177,7 +186,7 @@ function Menu.Text(text)
     local width, height = draw.GetTextSize(text)
 
     draw.Color(table.unpack(Colors.Text))
-    draw.Text(x, y, text)
+    Menu.DrawText(x, y, text)
 
     Menu.UpdateCursor(width, height)
 end
@@ -194,7 +203,7 @@ function Menu.Button(text)
 
     -- Text
     draw.Color(table.unpack(Colors.Text))
-    draw.Text(math.floor(x + (width / 2) - (txtWidth / 2)), math.floor(y + (height / 2) - (txtHeight / 2)), text)
+    Menu.DrawText(math.floor(x + (width / 2) - (txtWidth / 2)), math.floor(y + (height / 2) - (txtHeight / 2)), text)
 
     Menu.UpdateCursor(width, height)
     return hovered and clicked, active
@@ -222,7 +231,7 @@ function Menu.Checkbox(text, state)
 
     -- Text
     Menu.SetNextColor(Colors.Text)
-    draw.Text(x + boxSize + Style.Spacing, math.floor(y + (height / 2) - (txtHeight / 2)), text)
+    Menu.DrawText(x + boxSize + Style.Spacing, math.floor(y + (height / 2) - (txtHeight / 2)), text)
 
     -- Update State
     if clicked then
@@ -257,7 +266,7 @@ function Menu.Slider(text, value, min, max)
 
     -- Text
     Menu.SetNextColor(Colors.Text)
-    draw.Text(math.floor(x + (width / 2) - (txtWidth / 2)), math.floor(y + (height / 2) - (txtHeight / 2)), valText)
+    Menu.DrawText(math.floor(x + (width / 2) - (txtWidth / 2)), math.floor(y + (height / 2) - (txtHeight / 2)), valText)
 
     -- Update Value
     if active then
