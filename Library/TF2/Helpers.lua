@@ -32,8 +32,8 @@ function Helpers.WalkTo(userCmd, localPlayer, destination)
     local localPos = localPlayer:GetAbsOrigin()
     local result = Helpers.ComputeMove(userCmd, localPos, destination)
 
-    pCmd:SetForwardMove(result.x)
-    pCmd:SetSideMove(result.y)
+    userCmd:SetForwardMove(result.x)
+    userCmd:SetSideMove(result.y)
 end
 
 -- Returns if the weapon can shoot

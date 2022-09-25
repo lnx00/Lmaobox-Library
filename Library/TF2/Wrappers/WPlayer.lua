@@ -27,7 +27,7 @@ end
 
 -- Returns a WPlayer of the local player
 ---@return WPlayer
-function WPlayer.GetLocalPlayer()
+function WPlayer.GetLocal()
     return WPlayer.FromEntity(entities.GetLocalPlayer())
 end
 
@@ -77,9 +77,20 @@ function WPlayer:GetEyePos()
     return self:GetAbsOrigin() + self:GetViewOffset()
 end
 
----@return Vector3
+---@return EulerAngles
 function WPlayer:GetEyeAngles()
-    return self:GetPropVector("tfnonlocaldata", "m_angEyeAngles")
+    local angles = self:GetPropVector("tfnonlocaldata", "m_angEyeAngles[0]")
+    return EulerAngles(angles.x, angles.y, angles.z)
+end
+
+-- Returns the position the player is looking at
+---@return Vector3
+function WPlayer:GetViewPos()
+    local eyePos = self:GetEyePos()
+    local targetPos = eyePos + self:GetEyeAngles():Forward() * 8192
+    local trace = engine.TraceLine(eyePos, targetPos, MASK_SHOT)
+
+    return trace.endpos
 end
 
 return WPlayer

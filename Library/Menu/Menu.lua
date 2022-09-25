@@ -87,6 +87,7 @@ end
 ---@param y number
 ---@param width number
 ---@param height number
+---@param id string
 ---@return boolean, boolean, boolean
 function Menu.GetInteraction(x, y, width, height, id)
     local hovered = MouseInBound(x, y, width, height) or id == Menu.ActiveElement

@@ -346,7 +346,7 @@ function engine.IsTakingScreenshot() return nil end
 
 ---@param src Vector3
 ---@param dst Vector3
----@param mask number
+---@param mask any
 ---@return Trace
 function engine.TraceLine(src, dst, mask) return nil end
 
@@ -354,7 +354,7 @@ function engine.TraceLine(src, dst, mask) return nil end
 ---@param dst Vector3
 ---@param mins Vector3
 ---@param maxs Vector3
----@param mask number
+---@param mask any
 ---@return Trace
 function engine.TraceHull(src, dst, mins, maxs, mask) return nil end
 
