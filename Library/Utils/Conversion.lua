@@ -116,4 +116,12 @@ function Conversion.RGBtoHSV(r, g, b)
     return h, s, v
 end
 
+function Conversion.TimeToTicks(time)
+    return math.floor(0.5 + time / globals.TickInterval())
+end
+
+function Conversion.TicksToTime(ticks)
+    return ticks * globals.TickInterval()
+end
+
 return Conversion
