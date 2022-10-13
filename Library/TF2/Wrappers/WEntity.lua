@@ -2,6 +2,9 @@
     Wrapper Class for Entities
 ]]
 
+---@type Helpers
+local Helpers = require("Library/TF2/Helpers")
+
 ---@class WEntity : Entity
 ---@field private Entity Entity
 local WEntity = {
@@ -39,6 +42,12 @@ end
 ---@return number
 function WEntity:GetSimulationTime()
     return self:GetPropFloat("m_flSimulationTime")
+end
+
+-- Returns whether the entity can be seen from the given entity
+---@param fromEntity Entity
+function WEntity:IsVisible(fromEntity)
+    return Helpers.VisPos(self, fromEntity:GetAbsOrigin(), self:GetAbsOrigin())
 end
 
 return WEntity

@@ -2,7 +2,10 @@
     Wrapper Class for Player Entities
 ]]
 
+---@type WEntity
 local WEntity = require("Library/TF2/Wrappers/WEntity")
+
+---@type WWeapon
 local WWeapon = require("Library/TF2/Wrappers/WWeapon")
 
 ---@class WPlayer : WEntity

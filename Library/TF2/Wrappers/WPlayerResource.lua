@@ -2,6 +2,7 @@
     Wrapper Class for Wepaon Entities
 ]]
 
+---@type WEntity
 local WEntity = require("Library/TF2/Wrappers/WEntity")
 
 ---@class WPlayerResource : WEntity

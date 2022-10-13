@@ -19,7 +19,7 @@ local Main = {
 
 ---@return number
 function Main.GetVersion()
-    return 0.72
+    return 0.74
 end
 
 --[[ Callbacks ]]
@@ -44,7 +44,7 @@ callbacks.Register("Draw", "LBL_Draw", OnDraw)
 
 -- Unloads the entire library. Useful for debugging
 function UnloadLib()
-    for name, pck in pairs(package.loaded) do
+    for name, _ in pairs(package.loaded) do
         if name:find("Lmaobox-Library", 1, true) or name:find("LNX-Library", 1, true) then
             printc(195, 55, 20, 255, "Unloading: " .. name)
             package.loaded[name] = nil

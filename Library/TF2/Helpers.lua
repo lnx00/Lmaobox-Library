@@ -2,6 +2,7 @@
     Helpers
 ]]
 
+---@class Helpers
 local Helpers = { }
 
 ---@param userCmd UserCmd
@@ -56,7 +57,7 @@ end
 ---@return boolean
 function Helpers.VisPos(target, from, to)
     local trace = engine.TraceLine(from, to, MASK_SHOT | CONTENTS_GRATE)
-    return ((trace.entity and trace.entity == target) or (trace.fraction > 0.99))
+    return (trace.entity == target) or (trace.fraction > 0.99)
 end
 
 return Helpers
