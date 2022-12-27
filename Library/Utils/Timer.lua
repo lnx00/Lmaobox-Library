@@ -17,6 +17,7 @@ end
 
 ---@param delta number
 ---@return boolean
+---@private
 function Timer:_Check(delta)
     return globals.CurTime() - self._LastTime >= delta
 end

@@ -1,6 +1,6 @@
 ---@class KeyHelper
 ---@field public Key number
----@field public _LastState boolean
+---@field private _LastState boolean
 local KeyHelper = {
     Key = 0,
     _LastState = false

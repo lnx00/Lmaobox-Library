@@ -6,7 +6,7 @@ local KeyHelper = require("Library/Utils/KeyHelper")
 
 ---@class Menu
 ---@field public Cursor table
----@field public ActiveElement string
+---@field public ActiveElement string | nil
 local Menu = {
     Cursor = { X = 0, Y = 0 },
     ActiveElement = nil
@@ -14,8 +14,6 @@ local Menu = {
 
 local MouseHelper = KeyHelper.new(MOUSE_LEFT)
 local EnterHelper = KeyHelper.new(KEY_ENTER)
-
-local CursorStack = Stack.new()
 
 local Windows = { }
 local WindowStack = Stack.new()
@@ -44,6 +42,10 @@ local Style = {
 }
 local StyleStack = Stack.new()
 
+---@param x integer
+---@param y integer
+---@param w integer
+---@param h integer
 ---@return boolean
 function MouseInBound(x, y, w, h)
     local mX, mY = table.unpack(input.GetMousePos())

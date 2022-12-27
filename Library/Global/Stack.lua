@@ -1,16 +1,17 @@
 ---@class Stack
 ---@field private _items table
 Stack = {
-    _items = { }
+    _items = {}
 }
 Stack.__index = Stack
 setmetatable(Stack, Stack)
 
+-- Creates a new stack. | TODO: Add a constructor
 ---@return Stack
 function Stack.new()
     ---@type Stack
-    local self = setmetatable({ }, Stack)
-    self._items = { }
+    local self = setmetatable({}, Stack)
+    self._items = {}
 
     return self
 end
@@ -36,7 +37,7 @@ function Stack:empty()
 end
 
 function Stack:clear()
-    self._items = { }
+    self._items = {}
 end
 
 ---@return number

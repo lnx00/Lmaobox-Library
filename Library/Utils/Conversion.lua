@@ -21,12 +21,13 @@ function Conversion.ID3_to_ID64(steamID3)
 end
 
 -- Converts a given SteamID 64 to a SteamID 3 [Credits: Link2006]
+---@return boolean | string, string?
 function Conversion.ID64_to_ID3(steamID64)
     if not tonumber(steamID64) then
         return false, "Invalid SteamID"
     end
 
-    steamID = tonumber(steamID64)
+    local steamID = tonumber(steamID64)
     if (steamID - 0x110000100000000) < 0 then
         return false, "Not a SteamID64"
     end
@@ -36,26 +37,29 @@ end
 
 -- Converts a given Hex Color to RGB
 ---@param pHex string
----@return table<number>
+---@return number, number, number
 function Conversion.Hex_to_RGB(pHex)
     local r = tonumber(string.sub(pHex, 1, 2), 16)
     local g = tonumber(string.sub(pHex, 3, 4), 16)
     local b = tonumber(string.sub(pHex, 5, 6), 16)
-    return { r, g, b }
+    return r, g, b
 end
 
 -- Converts a given RGB Color to Hex
----@param pRGB table<number>
+---@param r integer
+---@param g integer
+---@param b integer
 ---@return string
-function Conversion.RGB_to_Hex(pRGB)
-    local r = string.format("%x", pRGB[1])
-    local g = string.format("%x", pRGB[2])
-    local b = string.format("%x", pRGB[3])
-    return r .. g .. b
+function Conversion.RGB_to_Hex(r, g, b)
+    return string.format("%02x%02x%02x", r, g, b)
 end
 
 -- Converts a given HSV Color to RGB
-function Conversion.HSVtoRGB(h, s, v)
+---@param h number
+---@param s number
+---@param v number
+---@return number, number, number
+function Conversion.HSV_to_RGB(h, s, v)
     local r, g, b
 
     local i = math.floor(h * 6);
@@ -84,7 +88,7 @@ function Conversion.HSVtoRGB(h, s, v)
 end
 
 -- Converts a given RGB Color to HSV
-function Conversion.RGBtoHSV(r, g, b)
+function Conversion.RGB_to_HSV(r, g, b)
     r, g, b = r / 255, g / 255, b / 255
     local max, min = math.max(r, g, b), math.min(r, g, b)
     local h, s, v
@@ -116,10 +120,14 @@ function Conversion.RGBtoHSV(r, g, b)
     return h, s, v
 end
 
+---@param time number
+---@return integer
 function Conversion.TimeToTicks(time)
     return math.floor(0.5 + time / globals.TickInterval())
 end
 
+---@param ticks integer
+---@return number
 function Conversion.TicksToTime(ticks)
     return ticks * globals.TickInterval()
 end
