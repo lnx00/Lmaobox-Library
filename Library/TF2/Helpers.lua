@@ -5,11 +5,12 @@
 ---@class Helpers
 local Helpers = { }
 
+-- Computes the move vector between two points
 ---@param userCmd UserCmd
 ---@param a Vector3
 ---@param b Vector3
 ---@return Vector3
-function Helpers.ComputeMove(userCmd, a, b)
+local function ComputeMove(userCmd, a, b)
     local diff = (b - a)
     if diff:Length() == 0 then return Vector3(0, 0, 0) end
 
@@ -26,12 +27,13 @@ function Helpers.ComputeMove(userCmd, a, b)
     return move
 end
 
+-- Walks to the destination
 ---@param userCmd UserCmd
 ---@param localPlayer Entity
 ---@param destination Vector3
 function Helpers.WalkTo(userCmd, localPlayer, destination)
     local localPos = localPlayer:GetAbsOrigin()
-    local result = Helpers.ComputeMove(userCmd, localPos, destination)
+    local result = ComputeMove(userCmd, localPos, destination)
 
     userCmd:SetForwardMove(result.x)
     userCmd:SetSideMove(result.y)
@@ -51,6 +53,7 @@ function Helpers.CanShoot(weapon)
     return (nextPrimaryAttack <= globals.CurTime()) and (nextAttack <= globals.CurTime())
 end
 
+-- Returns if the player is visible
 ---@param target Entity
 ---@param from Vector3
 ---@param to Vector3
@@ -58,6 +61,24 @@ end
 function Helpers.VisPos(target, from, to)
     local trace = engine.TraceLine(from, to, MASK_SHOT | CONTENTS_GRATE)
     return (trace.entity == target) or (trace.fraction > 0.99)
+end
+
+-- Returns the screen bounding box of the player (or nil if the player is not visible)
+---@param player WPlayer
+---@return {x:number, y:number, w:number, h:number}|nil
+function Helpers.GetBBox(player)
+    local padding = Vector3(0, 0, 10)
+    local headPos = player:GetEyePos() + padding
+    local feetPos = player:GetAbsOrigin() - padding
+
+    local headScreenPos = client.WorldToScreen(headPos)
+    local feetScreenPos = client.WorldToScreen(feetPos)
+    if (not headScreenPos) or (not feetScreenPos) then return nil end
+
+    local height = math.abs(headScreenPos[2] - feetScreenPos[2])
+    local width = height * 0.6
+
+    return { x = math.floor(headScreenPos[1] - width * 0.5), y = math.floor(headScreenPos[2]), w = math.floor(width), h = math.floor(height) }
 end
 
 return Helpers

@@ -3,35 +3,33 @@ require("Library/Global/Global")
 
 --[[ Main ]]
 
----@class Main
+---@class LNXlib
 ---@field public TF2 TF2
 ---@field public UI UI
----@field public Menu Menu
 ---@field public Utils Utils
 ---@field public Enums Enums
-local Main = {
+local LNXlib = {
     TF2 = require("Library/TF2/TF2"),
     UI = require("Library/UI/UI"),
-    Menu = require("Library/Menu/Menu"),
     Utils = require("Library/Utils/Utils"),
     Enums = require("Library/Enums"),
 }
 
 ---@return number
-function Main.GetVersion()
-    return 0.75
+function LNXlib.GetVersion()
+    return 0.80
 end
 
 --[[ Callbacks ]]
 
 ---@param userCmd UserCmd
 local function OnCreateMove(userCmd)
-    Main.TF2._OnCreateMove(userCmd)
+    LNXlib.TF2._OnCreateMove(userCmd)
 end
 
 local function OnDraw()
-    Main.TF2._OnDraw()
-    Main.UI._OnDraw()
+    LNXlib.TF2._OnDraw()
+    LNXlib.UI._OnDraw()
 end
 
 callbacks.Unregister("CreateMove", "LBL_CreateMove")
@@ -55,7 +53,7 @@ function UnloadLib()
 end
 
 -- Library loaded
-printc(75, 210, 55, 255, "Lmaobox-Library v" .. Main.GetVersion() .. " loaded.")
-Main.UI.Notify.Simple("Library Loaded", "Version: " .. Main.GetVersion())
+printc(75, 210, 55, 255, "LNXlib v" .. LNXlib.GetVersion() .. " loaded.")
+LNXlib.UI.Notify.Simple("Library Loaded", "Version: " .. LNXlib.GetVersion())
 
-return Main
+return LNXlib
