@@ -62,7 +62,7 @@ end
 
 --[[ String ]]
 
--- Splits a string into a table of substrings based on a specified delimiter.
+-- Splits a string into a table of substrings based on a specified delimiter
 ---@param str string
 ---@param delimiter string
 ---@return string[]

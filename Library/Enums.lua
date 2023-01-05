@@ -5,6 +5,7 @@
 ---@class Enums
 local Enums = { }
 
+---@enum HexColor
 Enums.HexColor = table.readOnly {
     Red = 0xFF0000,
     Green = 0x00FF00,
@@ -20,6 +21,7 @@ Enums.HexColor = table.readOnly {
 }
 
 -- Chat Colors for ChatPrintf
+---@enum ChatColor
 Enums.ChatColor = table.readOnly {
     White = "\x01",
     Old = "\x02",
