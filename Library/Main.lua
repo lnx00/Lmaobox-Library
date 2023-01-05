@@ -43,17 +43,17 @@ callbacks.Register("Draw", "LBL_Draw", OnDraw)
 -- Unloads the entire library. Useful for debugging
 function UnloadLib()
     for name, _ in pairs(package.loaded) do
-        if name:find("Lmaobox-Library", 1, true) or name:find("LNX-Library", 1, true) then
+        if name:find("Lmaobox-Library", 1, true) or name:find("LNXlib", 1, true) then
             printc(195, 55, 20, 255, "Unloading: " .. name)
             package.loaded[name] = nil
         end
     end
 
-    printc(230, 65, 25, 255, "Lmaobox-Library unloaded.")
+    printc(230, 65, 25, 255, "LNXlib unloaded.")
 end
 
 -- Library loaded
 printc(75, 210, 55, 255, "LNXlib v" .. LNXlib.GetVersion() .. " loaded.")
-LNXlib.UI.Notify.Simple("Library Loaded", "Version: " .. LNXlib.GetVersion())
+LNXlib.UI.Notify.Simple("LNXlib Loaded", "Version: " .. LNXlib.GetVersion())
 
 return LNXlib
