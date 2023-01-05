@@ -1,3 +1,7 @@
+--[[
+    LNXlib - A utility library for Lmaobox
+]]
+
 -- Globals
 require("Library/Global/Global")
 
@@ -17,7 +21,7 @@ local LNXlib = {
 
 ---@return number
 function LNXlib.GetVersion()
-    return 0.81
+    return 0.84
 end
 
 --[[ Callbacks ]]
@@ -28,6 +32,9 @@ local function OnCreateMove(userCmd)
 end
 
 local function OnDraw()
+    draw.Color(255, 255, 255, 255)
+    draw.SetFont(LNXlib.UI.Fonts.Verdana)
+
     LNXlib.TF2._OnDraw()
     LNXlib.UI._OnDraw()
 end
@@ -54,6 +61,6 @@ end
 
 -- Library loaded
 printc(75, 210, 55, 255, string.format("LNXlib Loaded (v%.2f)", LNXlib.GetVersion()))
-LNXlib.UI.Notify.Simple("LNXlib Loaded", string.format("Version: %.2f", LNXlib.GetVersion()))
+LNXlib.UI.Notify.Simple("LNXlib loaded", string.format("Version: %.2f", LNXlib.GetVersion()))
 
 return LNXlib

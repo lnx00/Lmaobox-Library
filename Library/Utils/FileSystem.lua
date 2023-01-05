@@ -4,7 +4,7 @@
 
 ---@class FS
 local FS = { }
-local WorkDir = engine.GetGameDir() .. "/../LNXF/"
+local WorkDir = engine.GetGameDir() .. "/../LNXlib/"
 
 -- Reads a file and returns its contents
 ---@param path string

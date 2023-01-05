@@ -6,7 +6,7 @@
 local Helpers = require("Library/TF2/Helpers")
 
 ---@class WEntity : Entity
----@field private Entity Entity
+---@field private Entity Entity|nil
 local WEntity = {
     Entity = nil
 }

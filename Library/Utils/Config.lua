@@ -16,7 +16,11 @@ local Config = {
     AutoLoad = false
 }
 Config.__index = Config
-setmetatable(Config, Config)
+setmetatable(Config, {
+    __call = function(_, ...)
+        return Config.new(...)
+    end
+})
 
 local ConfigExtension = ".cfg"
 local ConfigFolder = FS.GetWorkDir() .. "/Configs/"

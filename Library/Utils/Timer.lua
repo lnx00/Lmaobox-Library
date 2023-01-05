@@ -4,8 +4,13 @@ local Timer = {
     _LastTime = 0
 }
 Timer.__index = Timer
-setmetatable(Timer, Timer)
+setmetatable(Timer, {
+    __call = function(_, ...)
+        return Timer.new()
+    end
+})
 
+-- Creates a new timer.
 ---@return Timer
 function Timer.new()
     ---@type self
@@ -22,6 +27,7 @@ function Timer:_Check(delta)
     return globals.CurTime() - self._LastTime >= delta
 end
 
+-- Checks if the timer has passed the interval.
 ---@param interval number
 ---@return boolean
 function Timer:Run(interval)

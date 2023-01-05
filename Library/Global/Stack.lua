@@ -4,14 +4,19 @@ Stack = {
     _items = {}
 }
 Stack.__index = Stack
-setmetatable(Stack, Stack)
+setmetatable(Stack, {
+    __call = function(_, ...)
+        return Stack.new(...)
+    end
+})
 
 -- Creates a new stack. | TODO: Add a constructor
+---@param items? any[]
 ---@return Stack
-function Stack.new()
+function Stack.new(items)
     ---@type Stack
     local self = setmetatable({}, Stack)
-    self._items = {}
+    self._items = items or {}
 
     return self
 end
