@@ -17,7 +17,7 @@ local LNXlib = {
 
 ---@return number
 function LNXlib.GetVersion()
-    return 0.80
+    return 0.81
 end
 
 --[[ Callbacks ]]
@@ -53,7 +53,7 @@ function UnloadLib()
 end
 
 -- Library loaded
-printc(75, 210, 55, 255, "LNXlib v" .. LNXlib.GetVersion() .. " loaded.")
-LNXlib.UI.Notify.Simple("LNXlib Loaded", "Version: " .. LNXlib.GetVersion())
+printc(75, 210, 55, 255, string.format("LNXlib Loaded (v%.2f)", LNXlib.GetVersion()))
+LNXlib.UI.Notify.Simple("LNXlib Loaded", string.format("Version: %.2f", LNXlib.GetVersion()))
 
 return LNXlib
