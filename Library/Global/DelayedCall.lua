@@ -2,7 +2,7 @@
     Delayed Calls
 ]]
 
-local delayedCalls = { }
+local delayedCalls = {}
 
 -- Calls the given function after the given delay
 ---@param delay number

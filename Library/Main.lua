@@ -21,7 +21,7 @@ local LNXlib = {
 
 ---@return number
 function LNXlib.GetVersion()
-    return 0.84
+    return 0.85
 end
 
 --[[ Callbacks ]]
@@ -35,7 +35,6 @@ local function OnDraw()
     draw.Color(255, 255, 255, 255)
     draw.SetFont(LNXlib.UI.Fonts.Verdana)
 
-    LNXlib.TF2._OnDraw()
     LNXlib.UI._OnDraw()
 end
 

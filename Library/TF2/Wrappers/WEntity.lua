@@ -27,7 +27,7 @@ setmetatable(WEntity, {
 ---@return WEntity
 function WEntity.FromEntity(entity)
     ---@type self
-    local self = setmetatable({ }, WEntity)
+    local self = setmetatable({}, WEntity)
     self.Entity = entity
 
     return self

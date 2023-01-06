@@ -38,7 +38,7 @@ function table.readOnly(t)
     local proxy = {}
     setmetatable(proxy, {
         __index = t,
-        __newindex = function(t, k, v)
+        __newindex = function(u, k, v)
             error("Attempt to modify read-only table", 2)
         end
     })
@@ -52,9 +52,7 @@ end
 ---@return any
 function table.find(t, value)
     for k, v in pairs(t) do
-        if v == value then
-            return k
-        end
+        if v == value then return k end
     end
 
     return nil

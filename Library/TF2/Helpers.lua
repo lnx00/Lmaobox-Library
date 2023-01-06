@@ -3,7 +3,7 @@
 ]]
 
 ---@class Helpers
-local Helpers = { }
+local Helpers = {}
 
 -- Computes the move vector between two points
 ---@param userCmd UserCmd
@@ -78,7 +78,12 @@ function Helpers.GetBBox(player)
     local height = math.abs(headScreenPos[2] - feetScreenPos[2])
     local width = height * 0.6
 
-    return { x = math.floor(headScreenPos[1] - width * 0.5), y = math.floor(headScreenPos[2]), w = math.floor(width), h = math.floor(height) }
+    return {
+        x = math.floor(headScreenPos[1] - width * 0.5),
+        y = math.floor(headScreenPos[2]),
+        w = math.floor(width),
+        h = math.floor(height)
+    }
 end
 
 return Helpers

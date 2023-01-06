@@ -22,8 +22,4 @@ function TF2._OnCreateMove(userCmd)
     TF2.Globals._OnCreateMove(userCmd)
 end
 
-function TF2._OnDraw()
-
-end
-
 return TF2

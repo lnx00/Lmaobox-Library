@@ -3,7 +3,7 @@
 ]]
 
 ---@class FS
-local FS = { }
+local FS = {}
 local WorkDir = engine.GetGameDir() .. "/../LNXlib/"
 
 -- Reads a file and returns its contents
@@ -31,8 +31,9 @@ end
 
 -- Deletes the file at the given path
 ---@param path string
+---@return boolean
 function FS.Delete(path)
-    os.remove(path)
+    return os.remove(path)
 end
 
 -- Returns whether the given file/directory exists

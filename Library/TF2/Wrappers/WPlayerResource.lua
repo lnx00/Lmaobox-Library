@@ -6,7 +6,7 @@
 local WEntity = require("Library/TF2/Wrappers/WEntity")
 
 ---@class WPlayerResource : WEntity
-local WPlayerResource = { }
+local WPlayerResource = {}
 WPlayerResource.__index = WPlayerResource
 setmetatable(WPlayerResource, WEntity)
 
@@ -17,7 +17,7 @@ setmetatable(WPlayerResource, WEntity)
 ---@return WPlayerResource
 function WPlayerResource.FromEntity(entity)
     ---@type self
-    local self = setmetatable({ }, WPlayerResource)
+    local self = setmetatable({}, WPlayerResource)
     self.Entity = entity
 
     return self

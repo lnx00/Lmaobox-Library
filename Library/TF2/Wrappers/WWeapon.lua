@@ -6,7 +6,7 @@
 local WEntity = require("Library/TF2/Wrappers/WEntity")
 
 ---@class WWeapon : WEntity
-local WWeapon = { }
+local WWeapon = {}
 WWeapon.__index = WWeapon
 setmetatable(WWeapon, WEntity)
 
@@ -19,7 +19,7 @@ function WWeapon.FromEntity(entity)
     assert(entity:IsWeapon(), "WWeapon.FromEntity: entity is not a weapon")
 
     ---@type self
-    local self = setmetatable({ }, WWeapon)
+    local self = setmetatable({}, WWeapon)
     self.Entity = entity
 
     return self

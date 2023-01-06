@@ -9,7 +9,7 @@ local WEntity = require("Library/TF2/Wrappers/WEntity")
 local WWeapon = require("Library/TF2/Wrappers/WWeapon")
 
 ---@class WPlayer : WEntity
-local WPlayer = { }
+local WPlayer = {}
 WPlayer.__index = WPlayer
 setmetatable(WPlayer, WEntity)
 
@@ -22,7 +22,7 @@ function WPlayer.FromEntity(entity)
     assert(entity:IsPlayer(), "WPlayer.FromEntity: entity is not a player")
 
     ---@type self
-    local self = setmetatable({ }, WPlayer)
+    local self = setmetatable({}, WPlayer)
     self.Entity = entity
 
     return self

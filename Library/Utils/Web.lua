@@ -7,7 +7,7 @@ local function S(str)
 end
 
 ---@class Web
-local Web = { }
+local Web = {}
 
 -- Downloads the given file/url
 ---@param url string

@@ -19,11 +19,13 @@ local FadeTime = 0.3
 ---@field private Notifications table
 ---@field private CurrentID number
 local Notify = {
-    Notifications = { },
+    Notifications = {},
     CurrentID = 0
 }
 
+-- Advanced notification with custom data
 ---@param data table
+---@return integer
 function Notify.Push(data)
     assert(type(data) == "table", "Notify.Push: data must be a table")
 
@@ -37,14 +39,19 @@ function Notify.Push(data)
     return data.ID
 end
 
+-- Simple notification with a title
+---@param title string
+---@return integer
 function Notify.Alert(title)
-    Notify.Push({
+    return Notify.Push({
         Title = title
     })
 end
 
+-- Simple notification with a title and a message
 ---@param title string
 ---@param msg string
+---@return integer
 function Notify.Simple(title, msg)
     return Notify.Push({
         Title = title,

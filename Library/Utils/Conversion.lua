@@ -3,9 +3,11 @@
 ]]
 
 ---@class Conversion
-local Conversion = { }
+local Conversion = {}
 
 -- Converts a given SteamID 3 to SteamID 64 [Credits: Link2006]
+---@param steamID3 any
+---@return string | boolean, string?
 function Conversion.ID3_to_ID64(steamID3)
     if not steamID3:match("(%[U:1:%d+%])") and not tonumber(steamID3) then
         return false, "Invalid SteamID"
@@ -21,7 +23,7 @@ function Conversion.ID3_to_ID64(steamID3)
 end
 
 -- Converts a given SteamID 64 to a SteamID 3 [Credits: Link2006]
----@return boolean | string, string?
+---@return string | boolean, string?
 function Conversion.ID64_to_ID3(steamID64)
     if not tonumber(steamID64) then
         return false, "Invalid SteamID"
@@ -88,6 +90,10 @@ function Conversion.HSV_to_RGB(h, s, v)
 end
 
 -- Converts a given RGB Color to HSV
+---@param r integer
+---@param g integer
+---@param b integer
+---@return number, number, number
 function Conversion.RGB_to_HSV(r, g, b)
     r, g, b = r / 255, g / 255, b / 255
     local max, min = math.max(r, g, b), math.min(r, g, b)
@@ -120,12 +126,14 @@ function Conversion.RGB_to_HSV(r, g, b)
     return h, s, v
 end
 
+-- Converts time to game ticks
 ---@param time number
 ---@return integer
 function Conversion.TimeToTicks(time)
     return math.floor(0.5 + time / globals.TickInterval())
 end
 
+-- Converts game ticks to time
 ---@param ticks integer
 ---@return number
 function Conversion.TicksToTime(ticks)

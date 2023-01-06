@@ -14,6 +14,7 @@ local Utils = {
     Config = require("Library/Utils/Config"),
 }
 
+-- Removes all special characters from a string
 ---@param str string
 ---@return string
 function Utils.Sanitize(str)
@@ -22,6 +23,7 @@ function Utils.Sanitize(str)
     return str
 end
 
+-- Generates a rainbow color
 ---@param offset number
 ---@return number, number, number
 function Utils.Rainbow(offset)

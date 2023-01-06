@@ -1,5 +1,5 @@
 ---@class Textures
-local Textures = { }
+local Textures = {}
 
 --[[
     Creates gradients in the RGBA8888 format as RGBA binary data.
@@ -19,7 +19,7 @@ function Textures.LinearGradient(startColor, endColor, size)
     local height = size[2] or 255
 
     local data = ""
-    local step = { }
+    local step = {}
     local stepX = (endColor[1] - startColor[1]) / width
     local stepY = (endColor[2] - startColor[2]) / height
     local stepZ = (endColor[3] - startColor[3]) / width
@@ -44,7 +44,7 @@ function Textures.Circle(radius, color)
     color[4] = color[4] or 255
 
     local data = ""
-    local step = { }
+    local step = {}
     local stepX = 0
     local stepY = 0
     local stepZ = 0

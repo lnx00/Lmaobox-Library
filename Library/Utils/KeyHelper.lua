@@ -12,11 +12,12 @@ setmetatable(KeyHelper, {
     end
 })
 
+-- Creates a new key helper
 ---@param key number
 ---@return KeyHelper
 function KeyHelper.new(key)
     ---@type self
-    local self = setmetatable({ }, KeyHelper)
+    local self = setmetatable({}, KeyHelper)
     self.Key = key
     self._LastState = false
 

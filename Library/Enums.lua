@@ -3,7 +3,7 @@
 ]]
 
 ---@class Enums
-local Enums = { }
+local Enums = {}
 
 ---@enum HexColor
 Enums.HexColor = table.readOnly {
