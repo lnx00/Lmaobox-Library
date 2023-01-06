@@ -4,11 +4,7 @@ local Timer = {
     _LastTime = 0
 }
 Timer.__index = Timer
-setmetatable(Timer, {
-    __call = function(_, ...)
-        return Timer.new()
-    end
-})
+setmetatable(Timer, Timer)
 
 -- Creates a new timer.
 ---@return Timer

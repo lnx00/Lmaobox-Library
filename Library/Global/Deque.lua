@@ -9,11 +9,7 @@ Deque = {
     _items = {}
 }
 Deque.__index = Deque
-setmetatable(Deque, {
-    __call = function(_, ...)
-        return Deque.new(...)
-    end
-})
+setmetatable(Deque, Deque)
 
 -- Creates a new deque.
 ---@param items? any[]

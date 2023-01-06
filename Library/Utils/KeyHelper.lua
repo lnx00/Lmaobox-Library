@@ -6,11 +6,7 @@ local KeyHelper = {
     _LastState = false
 }
 KeyHelper.__index = KeyHelper
-setmetatable(KeyHelper, {
-    __call = function(_, ...)
-        return KeyHelper.new(...)
-    end
-})
+setmetatable(KeyHelper, KeyHelper)
 
 -- Creates a new key helper
 ---@param key number

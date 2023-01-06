@@ -8,11 +8,7 @@ Stack = {
     _items = {}
 }
 Stack.__index = Stack
-setmetatable(Stack, {
-    __call = function(_, ...)
-        return Stack.new(...)
-    end
-})
+setmetatable(Stack, Stack)
 
 -- Creates a new stack.
 ---@param items? any[]
