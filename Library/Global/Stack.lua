@@ -1,3 +1,7 @@
+--[[
+    Stack data structure
+]]
+
 ---@class Stack
 ---@field private _items table
 Stack = {
@@ -10,7 +14,7 @@ setmetatable(Stack, {
     end
 })
 
--- Creates a new stack. | TODO: Add a constructor
+-- Creates a new stack.
 ---@param items? any[]
 ---@return Stack
 function Stack.new(items)
@@ -45,7 +49,13 @@ function Stack:clear()
     self._items = {}
 end
 
----@return number
+---@return integer
 function Stack:size()
     return #self._items
+end
+
+-- Returns the items in the stack
+---@return any[]
+function Stack:items()
+    return table.readOnly(self._items)
 end

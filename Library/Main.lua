@@ -21,7 +21,7 @@ local LNXlib = {
 
 ---@return number
 function LNXlib.GetVersion()
-    return 0.85
+    return 0.87
 end
 
 --[[ Callbacks ]]

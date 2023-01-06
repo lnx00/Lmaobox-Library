@@ -12,6 +12,7 @@ local Utils = {
     KeyHelper = require("Library/Utils/KeyHelper"),
     Timer = require("Library/Utils/Timer"),
     Config = require("Library/Utils/Config"),
+    Commands = require("Library/Utils/Commands")
 }
 
 -- Removes all special characters from a string
