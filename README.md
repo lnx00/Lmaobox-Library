@@ -17,6 +17,7 @@ _Optionally, you can also download the minified version of the library `LNXlib.m
 - [x] Config Helper (Easily save and load options for your script)
 - [x] Key Helper (Easily check key states)
 - [x] Wrappers (Extends the existing TF2 Entity classes)
+- [x] Custom Console Commands
 - [x] Timer & Delayed Calls
 - [x] UI Notifications
 - [x] Helpers & Utilities
