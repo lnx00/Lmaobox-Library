@@ -1,3 +1,4 @@
+require("Library/Global/Internal")
 require("Library/Global/Extensions")
 require("Library/Global/Stack")
 require("Library/Global/Deque")

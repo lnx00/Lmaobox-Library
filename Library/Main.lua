@@ -21,7 +21,7 @@ local LNXlib = {
 
 ---@return number
 function LNXlib.GetVersion()
-    return 0.87
+    return 0.88
 end
 
 --[[ Callbacks ]]
@@ -38,11 +38,8 @@ local function OnDraw()
     LNXlib.UI._OnDraw()
 end
 
-callbacks.Unregister("CreateMove", "LBL_CreateMove")
-callbacks.Register("CreateMove", "LBL_CreateMove", OnCreateMove)
-
-callbacks.Unregister("Draw", "LBL_Draw")
-callbacks.Register("Draw", "LBL_Draw", OnDraw)
+Internal.RegisterCallback("CreateMove", OnCreateMove, "Main")
+Internal.RegisterCallback("Draw", OnDraw, "Main")
 
 --[[ Debugging ]]
 
@@ -62,4 +59,5 @@ end
 printc(75, 210, 55, 255, string.format("LNXlib Loaded (v%.2f)", LNXlib.GetVersion()))
 LNXlib.UI.Notify.Simple("LNXlib loaded", string.format("Version: %.2f", LNXlib.GetVersion()))
 
+Internal.Cleanup()
 return LNXlib

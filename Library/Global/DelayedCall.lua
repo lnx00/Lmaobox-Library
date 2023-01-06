@@ -26,5 +26,4 @@ local function OnDraw()
     end
 end
 
-callbacks.Unregister("Draw", "LBL_DC_Draw")
-callbacks.Register("Draw", "LBL_DC_Draw", OnDraw)
+Internal.RegisterCallback("Draw", OnDraw, "DelayedCall")

@@ -33,7 +33,6 @@ local function OnStringCmd(stringCmd)
     end
 end
 
-callbacks.Unregister("SendStringCmd", "LNXlib.Utils.Commands")
-callbacks.Register("SendStringCmd", "LNXlib.Utils.Commands", OnStringCmd)
+Internal.RegisterCallback("SendStringCmd", OnStringCmd, "Utils", "Commands")
 
 return Commands
