@@ -58,6 +58,14 @@ function table.find(t, value)
     return nil
 end
 
+-- Checks if the given table contains the given value
+---@param t table
+---@param value any
+---@return boolean
+function table.contains(t, value)
+    return table.find(t, value) ~= nil
+end
+
 --[[ String ]]
 
 -- Splits a string into a table of substrings based on a specified delimiter
