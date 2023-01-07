@@ -46,7 +46,7 @@ function table.readOnly(t)
     return proxy
 end
 
--- Searches for the given value in the given table and returns its key
+-- Performans a linear search on a table and returns the key of the given value
 ---@param t table
 ---@param value any
 ---@return any
