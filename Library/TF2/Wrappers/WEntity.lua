@@ -39,6 +39,11 @@ function WEntity:Unwrap()
     return self.Entity
 end
 
+---@param b WEntity|Entity
+function WEntity:Equals(b)
+    return self:GetIndex() == b:GetIndex()
+end
+
 ---@return number
 function WEntity:GetSimulationTime()
     return self:GetPropFloat("m_flSimulationTime")
