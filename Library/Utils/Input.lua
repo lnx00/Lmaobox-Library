@@ -63,21 +63,21 @@ for i = 11, 36 do KeyNames[i], KeyValues[i] = D(string.char(i + 54)) end -- A - 
 for i = 37, 46 do KeyNames[i], KeyValues[i] = "KP_" .. (i - 37), tostring(i - 37) end -- KP_0 - KP_9
 for i = 92, 103 do KeyNames[i] = "F" .. (i - 91) end
 
--- Returns the name of a key
+-- Returns the name of a keycode
 ---@param key integer
 ---@return string|nil
 function Input.GetKeyName(key)
     return KeyNames[key]
 end
 
--- Returns the string value of a key
+-- Returns the string value of a keycode
 ---@param key integer
 ---@return string|nil
 function Input.KeyToChar(key)
     return KeyValues[key]
 end
 
--- Returns the key of a string value
+-- Returns the keycode of a string value
 ---@param char string
 ---@return integer|nil
 function Input.CharToKey(char)
@@ -98,7 +98,7 @@ end
 ---@return integer[]
 function Input.GetPressedKeys()
     local keys = {}
-    for i = 0, 106 do
+    for i = KEY_FIRST, KEY_LAST do
         if input.IsButtonDown(i) then table.insert(keys, i) end
     end
 
