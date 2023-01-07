@@ -1,14 +1,17 @@
 ---@class Utils
 ---@field public Conversion Conversion
----@field public FS FS
+---@field public FileSystem FileSystem
 ---@field public Web Web
+---@field public Input Input
 ---@field public KeyHelper KeyHelper
 ---@field public Timer Timer
 ---@field public Config Config
+---@field public Commands Commands
 local Utils = {
     Conversion = require("Library/Utils/Conversion"),
-    FS = require("Library/Utils/FileSystem"),
+    FileSystem = require("Library/Utils/FileSystem"),
     Web = require("Library/Utils/Web"),
+    Input = require("Library/Utils/Input"),
     KeyHelper = require("Library/Utils/KeyHelper"),
     Timer = require("Library/Utils/Timer"),
     Config = require("Library/Utils/Config"),

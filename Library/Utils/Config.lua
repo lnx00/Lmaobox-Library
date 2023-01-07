@@ -1,5 +1,5 @@
----@type FS
-local FS = require("Library/Utils/FileSystem")
+---@type FileSystem
+local FileSystem = require("Library/Utils/FileSystem")
 
 ---@type Json
 local Json = require("Library/Libs/dkjson")
@@ -19,7 +19,7 @@ Config.__index = Config
 setmetatable(Config, Config)
 
 local ConfigExtension = ".cfg"
-local ConfigFolder = FS.GetWorkDir() .. "/Configs/"
+local ConfigFolder = FileSystem.GetWorkDir() .. "/Configs/"
 
 -- Creates a new config
 ---@return Config
@@ -39,7 +39,7 @@ end
 -- Returns the path of the config file
 ---@return string
 function Config:GetPath()
-    if not FS.Exists(ConfigFolder) then
+    if not FileSystem.Exists(ConfigFolder) then
         filesystem.CreateDirectory(ConfigFolder)
     end
 
@@ -50,9 +50,9 @@ end
 ---@return boolean
 function Config:Load()
     local configPath = self:GetPath()
-    if not FS.Exists(configPath) then return end
+    if not FileSystem.Exists(configPath) then return false end
 
-    local content = FS.Read(self:GetPath())
+    local content = FileSystem.Read(self:GetPath())
     self._Content = Json.decode(content, 1, nil)
     return self._Content ~= nil
 end
@@ -61,17 +61,17 @@ end
 ---@return boolean
 function Config:Delete()
     local configPath = self:GetPath()
-    if not FS.Exists(configPath) then return false end
+    if not FileSystem.Exists(configPath) then return false end
 
     self._Content = {}
-    return FS.Delete(configPath)
+    return FileSystem.Delete(configPath)
 end
 
 -- Saves the config file
 ---@return boolean
 function Config:Save()
     local content = Json.encode(self._Content, { indent = true })
-    return FS.Write(self:GetPath(), content)
+    return FileSystem.Write(self:GetPath(), content)
 end
 
 -- Sets a value in the config file
