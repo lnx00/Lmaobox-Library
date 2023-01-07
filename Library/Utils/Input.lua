@@ -31,6 +31,14 @@ local KeyNames = {
     [KEY_BREAK] = "BREAK",
     [KEY_LSHIFT] = "LSHIFT",
     [KEY_RSHIFT] = "RSHIFT",
+    [KEY_LALT] = "LALT",
+    [KEY_RALT] = "RALT",
+    [KEY_LCONTROL] = "LCONTROL",
+    [KEY_RCONTROL] = "RCONTROL",
+    [KEY_UP] = "UP",
+    [KEY_LEFT] = "LEFT",
+    [KEY_DOWN] = "DOWN",
+    [KEY_RIGHT] = "RIGHT",
 }
 
 -- Contains pairs of keys and their values
@@ -50,9 +58,10 @@ local KeyValues = {
 
 -- Fill the tables
 local function D(x) return x, x end
-for i = 37, 46 do KeyNames[i], KeyValues[i] = "KP_" .. (i - 37), tostring(i - 37) end -- KP_0 - KP_9
 for i = 1, 10 do KeyNames[i], KeyValues[i] = D(tostring(i - 1)) end -- 0 - 9
 for i = 11, 36 do KeyNames[i], KeyValues[i] = D(string.char(i + 54)) end -- A - Z
+for i = 37, 46 do KeyNames[i], KeyValues[i] = "KP_" .. (i - 37), tostring(i - 37) end -- KP_0 - KP_9
+for i = 92, 103 do KeyNames[i] = "F" .. (i - 91) end
 
 -- Returns the name of a key
 ---@param key integer
