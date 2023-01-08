@@ -4,8 +4,14 @@
 
 ---@class Logger
 ---@field public Name string
+---@field public Level integer
+---@field public Debug fun(...)
+---@field public Info fun(...)
+---@field public Warn fun(...)
+---@field public Error fun(...)
 local Logger = {
-    Name = ""
+    Name = "",
+    Level = 1
 }
 Logger.__index = Logger
 setmetatable(Logger, Logger)
@@ -17,36 +23,33 @@ function Logger.new(name)
     ---@type self
     local self = setmetatable({}, Logger)
     self.Name = name
+    self.Level = 1
 
     return self
 end
 
----@vararg any
-function Logger:Trace(...)
-    local msg = string.format(...)
-    local logMsg = string.format("[%-6s%s] %s: %s", "TRACE", os.date("%H:%M:%S"), self.Name, debug.traceback(msg, 2))
-    printc(165, 175, 190, 255, logMsg)
-end
+---@type table<string, { Color:table, Level:integer }>
+local logModes = {
+    ["Debug"] = { Color = { 165, 175, 190 }, Level = 0 },
+    ["Info"] = { Color = { 15, 185, 180 }, Level = 1 },
+    ["Warn"] = { Color = { 225, 175, 45 }, Level = 2 },
+    ["Error"] = { Color = { 230, 65, 25 }, Level = 3 }
+}
 
----@vararg any
-function Logger:Info(...)
-    local msg = string.format(...)
-    local logMsg = string.format("[%-6s%s] %s: %s", "INFO", os.date("%H:%M:%S"), self.Name, msg)
-    printc(165, 175, 190, 255, logMsg)
-end
+-- Initialize the log methods dynamically
+for mode, data in pairs(logModes) do
+    rawset(Logger, mode, function(self, ...)
+        if data.Level < self.Level then return end
 
----@vararg any
-function Logger:Warn(...)
-    local msg = string.format(...)
-    local logMsg = string.format("[%-6s%s] %s: %s", "WARN", os.date("%H:%M:%S"), self.Name, msg)
-    printc(225, 175, 45, 255, logMsg)
-end
+        local msg = string.format(...)
 
----@vararg any
-function Logger:Error(...)
-    local msg = string.format(...)
-    local logMsg = string.format("[%-6s%s] %s: %s", "ERROR", os.date("%H:%M:%S"), self.Name, msg)
-    printc(230, 65, 25, 255, logMsg)
+        local r, g, b = table.unpack(data.Color)
+        local name = self.Name
+        local time = os.date("%H:%M:%S")
+
+        local logMsg = string.format("[%-6s%s] %s: %s", mode, time, name, msg)
+        printc(r, g, b, 255, logMsg)
+    end)
 end
 
 return Logger

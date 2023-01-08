@@ -15,7 +15,6 @@ function Internal.RegisterCallback(id, callback, ...)
     local name = table.concat({"LNXlib", ..., id}, ".")
     callbacks.Unregister(id, name)
     callbacks.Register(id, name, callback)
-    print("Registered callback: " .. id .. " (" .. name .. ")")
 end
 
 -- Removes all internal functions
