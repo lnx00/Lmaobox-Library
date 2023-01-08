@@ -8,14 +8,14 @@ local oldInternal = rawget(_G, "Internal")
 _G.Internal = {}
 
 -- (Re-)Registers a callback with a given namespace
----@param name string
+---@param id Callback
 ---@param callback fun()
 ---@vararg string
-function Internal.RegisterCallback(name, callback, ...)
-    local id = table.concat({"LNXlib", ..., name}, ".")
-    callbacks.Unregister(name, id)
-    callbacks.Register(name, id, callback)
-    print("Registered callback: " .. name .. " (" .. id .. ")")
+function Internal.RegisterCallback(id, callback, ...)
+    local name = table.concat({"LNXlib", ..., id}, ".")
+    callbacks.Unregister(id, name)
+    callbacks.Register(id, name, callback)
+    print("Registered callback: " .. id .. " (" .. name .. ")")
 end
 
 -- Removes all internal functions

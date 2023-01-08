@@ -4,6 +4,7 @@
 ---@field public Web Web
 ---@field public Input Input
 ---@field public KeyHelper KeyHelper
+---@field public Logger Logger
 ---@field public Timer Timer
 ---@field public Config Config
 ---@field public Commands Commands
@@ -13,6 +14,7 @@ local Utils = {
     Web = require("Library/Utils/Web"),
     Input = require("Library/Utils/Input"),
     KeyHelper = require("Library/Utils/KeyHelper"),
+    Logger = require("Library/Utils/Logger"),
     Timer = require("Library/Utils/Timer"),
     Config = require("Library/Utils/Config"),
     Commands = require("Library/Utils/Commands")
