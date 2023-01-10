@@ -8,16 +8,15 @@
 ---@type Fonts
 local Fonts = require("Library/UI/Fonts")
 
+-- Style constants
 local Size = { W = 300, H = 50 }
 local Offset = { X = 10, Y = 10 }
 local Padding = { X = 10, Y = 10 }
 local FadeTime = 0.3
 
 ---@class Notify
----@field private Width number
----@field private Height number
----@field private Notifications table
----@field private CurrentID number
+---@field private Notifications { ID : integer, Duration : number, StartTime : number, Title : string, Content : string }[]
+---@field private CurrentID integer
 local Notify = {
     Notifications = {},
     CurrentID = 0
@@ -33,7 +32,7 @@ function Notify.Push(data)
     data.Duration = data.Duration or 3
     data.StartTime = globals.RealTime()
 
-    table.insert(Notify.Notifications, data)
+    Notify.Notifications[data.ID] = data
     Notify.CurrentID = Notify.CurrentID + 1
 
     return data.ID
@@ -41,42 +40,45 @@ end
 
 -- Simple notification with a title
 ---@param title string
+---@param duration? number
 ---@return integer
-function Notify.Alert(title)
+function Notify.Alert(title, duration)
     return Notify.Push({
-        Title = title
+        Title = title,
+        Duration = duration
     })
 end
 
 -- Simple notification with a title and a message
 ---@param title string
 ---@param msg string
+---@param duration? number
 ---@return integer
-function Notify.Simple(title, msg)
+function Notify.Simple(title, msg, duration)
     return Notify.Push({
         Title = title,
-        Content = msg
+        Content = msg,
+        Duration = duration
     })
 end
 
+-- Removes a notification by ID
 ---@param id number
 function Notify.Pop(id)
-    for i, notification in pairs(Notify.Notifications) do
-        if notification.ID == id then
-            Notify.Notifications[i] = nil
-            return
-        end
+    local notification = Notify.Notifications[id]
+    if notification then
+        notification.Duration = 0
     end
 end
 
 function Notify._OnDraw()
     local currentY = Offset.Y
 
-    for i, note in pairs(Notify.Notifications) do
+    for id, note in pairs(Notify.Notifications) do
         local deltaTime = globals.RealTime() - note.StartTime
 
         if deltaTime > note.Duration then
-            Notify.Notifications[i] = nil
+            Notify.Notifications[id] = nil
         else
             -- Fade transition
             local fadeStep = 1.0

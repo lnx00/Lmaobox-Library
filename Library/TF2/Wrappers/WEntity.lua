@@ -26,11 +26,16 @@ setmetatable(WEntity, {
 ---@param entity Entity
 ---@return WEntity
 function WEntity.FromEntity(entity)
-    ---@type self
     local self = setmetatable({}, WEntity)
-    self.Entity = entity
+    self:SetEntity(entity)
 
     return self
+end
+
+-- Sets the base entity
+---@param entity Entity
+function WEntity:SetEntity(entity)
+    self.Entity = entity
 end
 
 -- Returns the native entity

@@ -31,7 +31,7 @@ end
 
 -- Generates a rainbow color
 ---@param offset number
----@return number, number, number
+---@return integer, integer, integer
 function Utils.Rainbow(offset)
     local r = math.floor(math.sin(offset + 0) * 127 + 128)
     local g = math.floor(math.sin(offset + 2) * 127 + 128)

@@ -12,7 +12,9 @@ local Commands = {
 ---@param name string
 ---@param callback fun(args : Deque)
 function Commands.Register(name, callback)
-    -- TODO: Check for override
+    if Commands._Commands[name] ~= nil then
+        warn(string.format("Command '%s' already exists and will be overwritten!", name))
+    end
     Commands._Commands[name] = callback
 end
 

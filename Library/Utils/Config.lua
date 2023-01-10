@@ -24,7 +24,6 @@ local ConfigFolder = FileSystem.GetWorkDir() .. "/Configs/"
 -- Creates a new config
 ---@return Config
 function Config.new(name)
-    ---@type self
     local self = setmetatable({}, Config)
     self._Name = name
     self._Content = {}

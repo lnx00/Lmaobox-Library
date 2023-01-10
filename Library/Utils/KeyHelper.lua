@@ -1,5 +1,5 @@
 ---@class KeyHelper
----@field public Key number
+---@field public Key integer
 ---@field private _LastState boolean
 local KeyHelper = {
     Key = 0,
@@ -9,10 +9,9 @@ KeyHelper.__index = KeyHelper
 setmetatable(KeyHelper, KeyHelper)
 
 -- Creates a new key helper
----@param key number
+---@param key integer
 ---@return KeyHelper
 function KeyHelper.new(key)
-    ---@type self
     local self = setmetatable({}, KeyHelper)
     self.Key = key
     self._LastState = false

@@ -22,6 +22,9 @@ local KeyNames = {
     [KEY_BACKSPACE] = "BACKSPACE",
     [KEY_TAB] = "TAB",
     [KEY_CAPSLOCK] = "CAPSLOCK",
+    [KEY_NUMLOCK] = "NUMLOCK",
+    [KEY_ESCAPE] = "ESCAPE",
+    [KEY_SCROLLLOCK] = "SCROLLLOCK",
     [KEY_INSERT] = "INSERT",
     [KEY_DELETE] = "DELETE",
     [KEY_HOME] = "HOME",
@@ -44,6 +47,8 @@ local KeyNames = {
 -- Contains pairs of keys and their values
 ---@type table<integer, string>
 local KeyValues = {
+    [KEY_LBRACKET] = "[",
+    [KEY_RBRACKET] = "]",
     [KEY_SEMICOLON] = ";",
     [KEY_APOSTROPHE] = "'",
     [KEY_BACKQUOTE] = "`",

@@ -16,9 +16,8 @@ setmetatable(WPlayerResource, WEntity)
 ---@param entity Entity
 ---@return WPlayerResource
 function WPlayerResource.FromEntity(entity)
-    ---@type self
     local self = setmetatable({}, WPlayerResource)
-    self.Entity = entity
+    self:SetEntity(entity)
 
     return self
 end

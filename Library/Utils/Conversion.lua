@@ -6,24 +6,22 @@
 local Conversion = {}
 
 -- Converts a given SteamID 3 to SteamID 64 [Credits: Link2006]
----@param steamID3 any
----@return string | boolean, string?
+---@param steamID3 string|number
+---@return string|boolean, string?
 function Conversion.ID3_to_ID64(steamID3)
-    if not steamID3:match("(%[U:1:%d+%])") and not tonumber(steamID3) then
-        return false, "Invalid SteamID"
-    end
-
     if tonumber(steamID3) then
         -- XXX format
         return tostring(tonumber(steamID3) + 0x110000100000000)
-    else
+    elseif steamID3:match("(%[U:1:%d+%])") then
         -- [U:1:XXX] format
         return tostring(tonumber(steamID3:match("%[U:1:(%d+)%]")) + 0x110000100000000)
     end
+
+     return false, "Invalid SteamID"
 end
 
 -- Converts a given SteamID 64 to a SteamID 3 [Credits: Link2006]
----@return string | boolean, string?
+---@return string|boolean, string?
 function Conversion.ID64_to_ID3(steamID64)
     if not tonumber(steamID64) then
         return false, "Invalid SteamID"
@@ -129,14 +127,14 @@ end
 -- Converts time to game ticks
 ---@param time number
 ---@return integer
-function Conversion.TimeToTicks(time)
+function Conversion.Time_to_Ticks(time)
     return math.floor(0.5 + time / globals.TickInterval())
 end
 
 -- Converts game ticks to time
 ---@param ticks integer
 ---@return number
-function Conversion.TicksToTime(ticks)
+function Conversion.Ticks_to_Time(ticks)
     return ticks * globals.TickInterval()
 end
 

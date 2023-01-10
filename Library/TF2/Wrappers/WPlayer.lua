@@ -21,9 +21,8 @@ setmetatable(WPlayer, WEntity)
 function WPlayer.FromEntity(entity)
     assert(entity:IsPlayer(), "WPlayer.FromEntity: entity is not a player")
 
-    ---@type self
     local self = setmetatable({}, WPlayer)
-    self.Entity = entity
+    self:SetEntity(entity)
 
     return self
 end

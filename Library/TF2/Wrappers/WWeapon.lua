@@ -18,9 +18,8 @@ setmetatable(WWeapon, WEntity)
 function WWeapon.FromEntity(entity)
     assert(entity:IsWeapon(), "WWeapon.FromEntity: entity is not a weapon")
 
-    ---@type self
     local self = setmetatable({}, WWeapon)
-    self.Entity = entity
+    self:SetEntity(entity)
 
     return self
 end

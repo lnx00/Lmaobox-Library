@@ -20,7 +20,6 @@ setmetatable(Logger, Logger)
 ---@param name string
 ---@return Logger
 function Logger.new(name)
-    ---@type self
     local self = setmetatable({}, Logger)
     self.Name = name
     self.Level = 1

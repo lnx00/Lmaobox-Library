@@ -11,17 +11,15 @@ require("Library/Global/Global")
 ---@field public TF2 TF2
 ---@field public UI UI
 ---@field public Utils Utils
----@field public Enums Enums
 local LNXlib = {
     TF2 = require("Library/TF2/TF2"),
     UI = require("Library/UI/UI"),
     Utils = require("Library/Utils/Utils"),
-    Enums = require("Library/Enums"),
 }
 
 ---@return number
 function LNXlib.GetVersion()
-    return 0.92
+    return 0.93
 end
 
 --[[ Callbacks ]]

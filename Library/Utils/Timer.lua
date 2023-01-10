@@ -9,7 +9,6 @@ setmetatable(Timer, Timer)
 -- Creates a new timer.
 ---@return Timer
 function Timer.new()
-    ---@type self
     local self = setmetatable({}, Timer)
     self._LastTime = 0
 
