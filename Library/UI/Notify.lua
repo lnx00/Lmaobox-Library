@@ -15,25 +15,25 @@ local Padding = { X = 10, Y = 10 }
 local FadeTime = 0.3
 
 ---@class Notify
----@field private Notifications { ID : integer, Duration : number, StartTime : number, Title : string, Content : string }[]
----@field private CurrentID integer
-local Notify = {
-    Notifications = {},
-    CurrentID = 0
-}
+local Notify = {}
+
+---@alias Notification { ID : integer, Duration : number?, StartTime : number, Title : string, Content : string }
+---@type table<integer, Notification>
+local notifications = {}
+local currentID = 0
 
 -- Advanced notification with custom data
----@param data table
+---@param data Notification
 ---@return integer
 function Notify.Push(data)
     assert(type(data) == "table", "Notify.Push: data must be a table")
 
-    data.ID = data.ID or Notify.CurrentID
+    data.ID = currentID
     data.Duration = data.Duration or 3
     data.StartTime = globals.RealTime()
 
-    Notify.Notifications[data.ID] = data
-    Notify.CurrentID = Notify.CurrentID + 1
+    notifications[data.ID] = data
+    currentID = (currentID + 1) % 1000
 
     return data.ID
 end
@@ -65,7 +65,7 @@ end
 -- Removes a notification by ID
 ---@param id number
 function Notify.Pop(id)
-    local notification = Notify.Notifications[id]
+    local notification = notifications[id]
     if notification then
         notification.Duration = 0
     end
@@ -74,11 +74,11 @@ end
 function Notify._OnDraw()
     local currentY = Offset.Y
 
-    for id, note in pairs(Notify.Notifications) do
+    for id, note in pairs(notifications) do
         local deltaTime = globals.RealTime() - note.StartTime
 
         if deltaTime > note.Duration then
-            Notify.Notifications[id] = nil
+            notifications[id] = nil
         else
             -- Fade transition
             local fadeStep = 1.0
