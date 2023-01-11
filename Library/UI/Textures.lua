@@ -16,7 +16,7 @@ local textureCache = {}
 
 ---@param color TexColor
 ---@return integer, integer, integer, integer
-local function GetColor(color)
+local function UnpackColor(color)
     local r, g, b, a = table.unpack(color)
     a = a or 255
     return r, g, b, a
@@ -24,7 +24,7 @@ end
 
 ---@param size TexSize
 ---@return integer, integer
-local function GetSize(size)
+local function UnpackSize(size)
     local w, h = table.unpack(size)
     w, h = w or 255, h or 255
     return w, h
@@ -56,9 +56,9 @@ end
 ---@param size TexSize
 ---@return Texture
 function Textures.LinearGradient(startColor, endColor, size)
-    local sR, sG, sB, sA = GetColor(startColor)
-    local eR, eG, eB, eA = GetColor(endColor)
-    local w, h = GetSize(size)
+    local sR, sG, sB, sA = UnpackColor(startColor)
+    local eR, eG, eB, eA = UnpackColor(endColor)
+    local w, h = UnpackSize(size)
 
     -- Check if the texture is already cached
     local id = GetTextureID("LG", sR, sG, sB, sA, eR, eG, eB, eA, w, h)
@@ -88,31 +88,43 @@ end
 -- [PERFORMANCE INTENSIVE] Creates a circle with a given color
 ---@param radius number
 ---@param color table<number, number, number, number>
+---@return Texture
 function Textures.Circle(radius, color)
-    color[4] = color[4] or 255
+    local r, g, b, a = UnpackColor(color)
 
-    local data = ""
-    local step = {}
-    local stepX = 0
-    local stepY = 0
-    local stepZ = 0
-    local stepW = 0
-    for i = 0, radius do
-        stepX = math.cos(i * math.pi / radius)
-        stepY = math.sin(i * math.pi / radius)
-        for j = 0, radius do
-            stepZ = math.cos(j * math.pi / radius)
-            stepW = math.sin(j * math.pi / radius)
-            step[1] = math.floor(color[1] * stepX)
-            step[2] = math.floor(color[2] * stepY)
-            step[3] = math.floor(color[3] * stepZ)
-            step[4] = math.floor(color[4] * stepW)
+    -- Check if the texture is already cached
+    local id = GetTextureID("C", r, g, b, a, radius)
+    local cache = textureCache[id]
+    if cache then return cache end
 
-            data = data .. string.char(step[1]) .. string.char(step[2]) .. string.char(step[3]) .. string.char(step[4])
+    local diameter = radius * 2
+    local dataSize = diameter * diameter * 4
+    local data = {}
+    local bm = byteMap
+
+    local i = 1
+    while i < dataSize do
+        local idx = (i / 4)
+        local x, y = idx % diameter, idx // diameter
+        local dx, dy = x - radius, y - radius
+        local dist = math.sqrt(dx * dx + dy * dy)
+
+        if dist <= radius then
+            data[i] = bm[r]
+            data[i + 1] = bm[g]
+            data[i + 2] = bm[b]
+            data[i + 3] = bm[a]
+        else
+            data[i] = bm[0]
+            data[i + 1] = bm[0]
+            data[i + 2] = bm[0]
+            data[i + 3] = bm[0]
         end
+
+        i = i + 4
     end
 
-    return data
+    return CreateTexture(id, diameter, diameter, data)
 end
 
 return Textures
