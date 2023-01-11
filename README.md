@@ -35,6 +35,4 @@ Then, run `Bundle.bat` to build the library or `BundleAndDeploy.bat` to build an
 
 - [ ] Texture Generator (Gradient, Noise, etc.)
 
-## Included Libraries
-
-- [dkjson](http://dkolf.de/src/dkjson-lua.fsl/home)
+*Special thanks to [LewdDeveloper](https://github.com/LewdDeveloper) for helping with optimization and giving good advice!*
