@@ -19,38 +19,14 @@ local LNXlib = {
 
 ---@return number
 function LNXlib.GetVersion()
-    return 0.93
+    return 0.941
 end
-
---[[ Callbacks ]]
-
----@param userCmd UserCmd
-local function OnCreateMove(userCmd)
-    LNXlib.TF2._OnCreateMove(userCmd)
-end
-
-local function OnDraw()
-    draw.Color(255, 255, 255, 255)
-    draw.SetFont(LNXlib.UI.Fonts.Verdana)
-
-    LNXlib.UI._OnDraw()
-end
-
-Internal.RegisterCallback("CreateMove", OnCreateMove, "Main")
-Internal.RegisterCallback("Draw", OnDraw, "Main")
 
 --[[ Debugging ]]
 
 -- Unloads the entire library. Useful for debugging
 function UnloadLib()
-    for name, _ in pairs(package.loaded) do
-        if name:find("Lmaobox-Library", 1, true) or name:find("LNXlib", 1, true) then
-            printc(195, 55, 20, 255, "Unloading: " .. name)
-            package.loaded[name] = nil
-        end
-    end
-
-    printc(230, 65, 25, 255, "LNXlib unloaded.")
+    LNXlib.Utils.UnloadPackages("LNXlib")
 end
 
 -- Library loaded

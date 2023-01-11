@@ -18,8 +18,4 @@ function TF2.Exit()
     os.exit()
 end
 
-function TF2._OnCreateMove(userCmd)
-    TF2.Globals._OnCreateMove(userCmd)
-end
-
 return TF2

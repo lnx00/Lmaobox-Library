@@ -39,4 +39,21 @@ function Utils.Rainbow(offset)
     return r, g, b
 end
 
+-- Unloads all packages that contain the given name
+---@param libName string
+---@return integer
+function Utils.UnloadPackages(libName)
+    local unloadCount = 0
+    for name, _ in pairs(package.loaded) do
+        if name:find(libName, 1, true) then
+            print(string.format("Unloading package '%s'...", name))
+            package.loaded[name] = nil
+            unloadCount = unloadCount + 1
+        end
+    end
+
+    warn(string.format("All packages of '%s' have been unloaded!", libName))
+    return unloadCount
+end
+
 return Utils

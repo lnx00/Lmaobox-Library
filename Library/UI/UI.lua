@@ -8,8 +8,4 @@ local UI = {
     Notify = require("Library/UI/Notify")
 }
 
-function UI._OnDraw()
-    UI.Notify._OnDraw()
-end
-
 return UI

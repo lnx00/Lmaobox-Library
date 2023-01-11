@@ -71,7 +71,7 @@ function Notify.Pop(id)
     end
 end
 
-function Notify._OnDraw()
+local function OnDraw()
     local currentY = Offset.Y
 
     for id, note in pairs(notifications) do
@@ -118,5 +118,7 @@ function Notify._OnDraw()
         end
     end
 end
+
+Internal.RegisterCallback("Draw", OnDraw, "UI", "Notify")
 
 return Notify

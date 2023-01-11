@@ -3,8 +3,8 @@
 ]]
 
 ---@class Globals
----@field public LastCommandNumber number
----@field public CommandNumber number
+---@field public LastCommandNumber integer
+---@field public CommandNumber integer
 local Globals = {
     LastCommandNumber = 0,
     CommandNumber = 0
@@ -12,9 +12,11 @@ local Globals = {
 
 -- Updates the global variables
 ---@param userCmd UserCmd
-function Globals._OnCreateMove(userCmd)
+local function OnCreateMove(userCmd)
     Globals.LastCommandNumber = Globals.CommandNumber
     Globals.CommandNumber = userCmd.command_number
 end
+
+Internal.RegisterCallback("CreateMove", OnCreateMove, "TF2", "Globals")
 
 return Globals
