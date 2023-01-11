@@ -21,6 +21,7 @@ _Optionally, you can also download the minified version of the library `LNXlib.m
 - [x] Timer & Delayed Calls
 - [x] UI Notifications
 - [x] Helpers & Utilities
+- [x] Texture Generator (Gradients, etc.)
 - [x] New data structures
 - ... and more!
 
@@ -30,9 +31,5 @@ To build and deploy this library, you need to have NodeJS installed.
 
 Install the required dependencies with `npm install`.
 Then, run `Bundle.bat` to build the library or `BundleAndDeploy.bat` to build and deploy the library to the `%localappdata%` folder.
-
-## Upcoming Features
-
-- [ ] Texture Generator (Gradient, Noise, etc.)
 
 *Special thanks to [LewdDeveloper](https://github.com/LewdDeveloper) for helping with optimization and giving good advice!*
