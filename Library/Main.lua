@@ -19,7 +19,7 @@ local LNXlib = {
 
 ---@return number
 function LNXlib.GetVersion()
-    return 0.941
+    return 0.942
 end
 
 --[[ Debugging ]]
@@ -30,8 +30,8 @@ function UnloadLib()
 end
 
 -- Library loaded
-printc(75, 210, 55, 255, string.format("LNXlib Loaded (v%.2f)", LNXlib.GetVersion()))
-LNXlib.UI.Notify.Simple("LNXlib loaded", string.format("Version: %.2f", LNXlib.GetVersion()))
+printc(75, 210, 55, 255, string.format("LNXlib Loaded (v%.3f)", LNXlib.GetVersion()))
+LNXlib.UI.Notify.Simple("LNXlib loaded", string.format("Version: %.3f", LNXlib.GetVersion()))
 
 Internal.Cleanup()
 return LNXlib
