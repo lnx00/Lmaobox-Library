@@ -5,32 +5,65 @@
 ---@class Textures
 local Textures = {}
 
-local byteMap = {}
-for i = 0, 255 do
-    byteMap[i] = string.char(i)
-end
+---@alias TexColor table<integer, integer, integer, integer?>
+---@alias TexSize table<integer, integer>
 
+local byteMap = {}
+for i = 0, 255 do byteMap[i] = string.char(i) end
+
+---@type table<string, Texture>
+local textureCache = {}
+
+---@param color TexColor
+---@return integer, integer, integer, integer
 local function GetColor(color)
     local r, g, b, a = table.unpack(color)
     a = a or 255
     return r, g, b, a
 end
 
+---@param size TexSize
+---@return integer, integer
 local function GetSize(size)
     local w, h = table.unpack(size)
     w, h = w or 255, h or 255
     return w, h
 end
 
--- [PERFORMANCE INTENSIVE] Creates a linear gradient
----@param startColor table<number, number, number, number>
----@param endColor table<number, number, number, number>
----@param size table<number, number>
+---@param name string
+---@vararg any
 ---@return string
+local function GetTextureID(name, ...)
+    local id = table.concat({name, ...})
+    return id
+end
+
+-- Creates and caches the texture from RGBA data
+---@param id string
+---@param width integer
+---@param height integer
+---@param data table
+local function CreateTexture(id, width, height, data)
+    local binaryData = table.concat(data)
+    local texture = draw.CreateTextureRGBA(binaryData, width, height)
+    textureCache[id] = texture
+    return texture
+end
+
+-- [PERFORMANCE INTENSIVE] Creates a linear gradient
+---@param startColor TexColor
+---@param endColor TexColor
+---@param size TexSize
+---@return Texture
 function Textures.LinearGradient(startColor, endColor, size)
     local sR, sG, sB, sA = GetColor(startColor)
     local eR, eG, eB, eA = GetColor(endColor)
     local w, h = GetSize(size)
+
+    -- Check if the texture is already cached
+    local id = GetTextureID("LG", sR, sG, sB, sA, eR, eG, eB, eA, w, h)
+    local cache = textureCache[id]
+    if cache then return cache end
 
     local dataSize = w * h * 4
     local data = {}
@@ -49,7 +82,7 @@ function Textures.LinearGradient(startColor, endColor, size)
         i = i + 4
     end
 
-    return table.concat(data)
+    return CreateTexture(id, w, h, data)
 end
 
 -- [PERFORMANCE INTENSIVE] Creates a circle with a given color
