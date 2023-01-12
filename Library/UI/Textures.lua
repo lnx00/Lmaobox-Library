@@ -1,8 +1,8 @@
 ---@class Textures
 local Textures = {}
 
----@alias TexColor table<integer, integer, integer, integer?>
----@alias TexSize table<integer, integer>
+---@alias TColor table<integer, integer, integer, integer?>
+---@alias TSize table<integer, integer>
 
 local byteMap = {}
 for i = 0, 255 do byteMap[i] = string.char(i) end
@@ -10,7 +10,7 @@ for i = 0, 255 do byteMap[i] = string.char(i) end
 ---@type table<string, Texture>
 local textureCache = {}
 
----@param color TexColor
+---@param color TColor
 ---@return integer, integer, integer, integer
 local function UnpackColor(color)
     local r, g, b, a = table.unpack(color)
@@ -18,11 +18,11 @@ local function UnpackColor(color)
     return r, g, b, a
 end
 
----@param size TexSize
+---@param size TSize
 ---@return integer, integer
 local function UnpackSize(size)
     local w, h = table.unpack(size)
-    w, h = w or 255, h or 255
+    w, h = w or 256, h or 256
     return w, h
 end
 
@@ -46,9 +46,9 @@ local function CreateTexture(id, width, height, data)
 end
 
 -- [PERFORMANCE INTENSIVE] Creates a linear gradient
----@param startColor TexColor
----@param endColor TexColor
----@param size TexSize
+---@param startColor TColor
+---@param endColor TColor
+---@param size TSize
 ---@return Texture
 function Textures.LinearGradient(startColor, endColor, size)
     local sR, sG, sB, sA = UnpackColor(startColor)
