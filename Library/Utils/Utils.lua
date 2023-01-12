@@ -45,7 +45,7 @@ end
 function Utils.UnloadPackages(libName)
     local unloadCount = 0
     for name, _ in pairs(package.loaded) do
-        if name:find(libName, 1, true) then
+        if string.find(name, libName) then
             print(string.format("Unloading package '%s'...", name))
             package.loaded[name] = nil
             unloadCount = unloadCount + 1

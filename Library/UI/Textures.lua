@@ -1,7 +1,3 @@
---[[
-    Creates gradients in the RGBA8888 format as RGBA binary data.
-    Can be used to draw textures in the UI.
-]]
 ---@class Textures
 local Textures = {}
 
@@ -34,8 +30,7 @@ end
 ---@vararg any
 ---@return string
 local function GetTextureID(name, ...)
-    local id = table.concat({name, ...})
-    return id
+    return table.concat({name, ...})
 end
 
 -- Creates and caches the texture from RGBA data
@@ -66,8 +61,7 @@ function Textures.LinearGradient(startColor, endColor, size)
     if cache then return cache end
 
     local dataSize = w * h * 4
-    local data = {}
-    local bm = byteMap
+    local data, bm = {}, byteMap
     
     local i = 1
     while i < dataSize do
@@ -99,8 +93,7 @@ function Textures.Circle(radius, color)
 
     local diameter = radius * 2
     local dataSize = diameter * diameter * 4
-    local data = {}
-    local bm = byteMap
+    local data, bm = {}, byteMap
 
     local i = 1
     while i < dataSize do
