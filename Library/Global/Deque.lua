@@ -33,8 +33,8 @@ end
 
 ---@param item any
 function Deque:pushBack(item)
-    table.insert(self._items, item)
     self._size = self._size + 1
+    self._items[self._size] = item
 end
 
 ---@return any
