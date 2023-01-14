@@ -32,8 +32,9 @@ end
 --[[ Table ]]
 
 -- Returns a read-only version of the given table
----@param t table
----@return table
+---@generic T : table
+---@param t T
+---@return T
 function table.readOnly(t)
     local proxy = {}
     setmetatable(proxy, {
@@ -47,9 +48,10 @@ function table.readOnly(t)
 end
 
 -- Performans a linear search on a table and returns the key of the given value
----@param t table
----@param value any
----@return any
+---@generic K, V
+---@param t table<K, V>
+---@param value V
+---@return K|nil
 function table.find(t, value)
     for k, v in pairs(t) do
         if v == value then return k end
