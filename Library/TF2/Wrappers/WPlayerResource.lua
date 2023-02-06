@@ -16,6 +16,8 @@ setmetatable(WPlayerResource, WEntity)
 ---@param entity Entity
 ---@return WPlayerResource
 function WPlayerResource.FromEntity(entity)
+    assert(entity, "WPlayerResource.FromEntity: entity is nil")
+
     local self = setmetatable({}, WPlayerResource)
     self:SetEntity(entity)
 
@@ -23,9 +25,10 @@ function WPlayerResource.FromEntity(entity)
 end
 
 -- Returns the current player resource entity
----@return WPlayerResource
+---@return WPlayerResource|nil
 function WPlayerResource.Get()
-    return WPlayerResource.FromEntity(entities.GetPlayerResources())
+    local pr = entities.GetPlayerResources()
+    return pr ~= nil and WPlayerResource.FromEntity(pr) or nil
 end
 
 --[[ Wrapper functions ]]

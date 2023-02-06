@@ -13,8 +13,8 @@ local WEntity = {
 WEntity.__index = WEntity
 setmetatable(WEntity, {
     __index = function(self, key, ...)
-        return function(self, ...)
-            local entity = rawget(self, "Entity")
+        return function(t, ...)
+            local entity = rawget(t, "Entity")
             return entity[key](entity, ...)
         end
     end
@@ -26,6 +26,8 @@ setmetatable(WEntity, {
 ---@param entity Entity
 ---@return WEntity
 function WEntity.FromEntity(entity)
+    assert(entity, "WEntity.FromEntity: entity is nil")
+
     local self = setmetatable({}, WEntity)
     self:SetEntity(entity)
 

@@ -19,6 +19,7 @@ setmetatable(WPlayer, WEntity)
 ---@param entity Entity
 ---@return WPlayer
 function WPlayer.FromEntity(entity)
+    assert(entity, "WPlayer.FromEntity: entity is nil")
     assert(entity:IsPlayer(), "WPlayer.FromEntity: entity is not a player")
 
     local self = setmetatable({}, WPlayer)
@@ -28,9 +29,10 @@ function WPlayer.FromEntity(entity)
 end
 
 -- Returns a WPlayer of the local player
----@return WPlayer
+---@return WPlayer|nil
 function WPlayer.GetLocal()
-    return WPlayer.FromEntity(entities.GetLocalPlayer())
+    local lp = entities.GetLocalPlayer()
+    return lp ~= nil and WPlayer.FromEntity(lp) or nil
 end
 
 --[[ Wrapper functions ]]
