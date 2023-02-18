@@ -1,48 +1,35 @@
 --[[
-    KeyValues wrapper
+    KeyValues utils
 ]]
 
 ---@class KeyValues
-local KeyValues = {
-    Name = "",
-    _Content = {}
-}
-KeyValues.__index = KeyValues
-setmetatable(KeyValues, KeyValues)
+local KeyValues = {}
 
--- Serializes a KeyValues object
----@param keyValues table
+---@param name string
+---@param data table
 ---@param indent string
----@return string
-local function SerializeKV(keyValues, indent)
-    local data = {}
+local function SerializeKV(name, data, indent)
+    local lines = {}
 
-    for key, value in pairs(keyValues) do
+    for key, value in pairs(data) do
         if type(value) == "table" then
-            table.insert(data, string.format("%s\"%s\"\n%s{\n%s\n%s}", indent, key, indent, SerializeKV(value, indent .. "\t"), indent))
+            table.insert(lines, SerializeKV(key, value, indent .. "\t"))
         else
-            table.insert(data, string.format("%s\"%s\"\t\"%s\"", indent, key, value))
+            table.insert(lines, string.format("\t%s\"%s\"\t\"%s\"", indent, key, value))
         end
     end
 
-    return table.concat(data, "\n")
+    local content = table.concat(lines, "\n")
+    return string.format("%s\"%s\"\n%s{\n%s\n%s}", indent, name, indent, content, indent)
 end
 
--- Creates a new KeyValues object
 ---@param name string
----@return KeyValues
-function KeyValues.new(name)
-    local self = setmetatable({}, KeyValues)
-    self.Name = name
-    self._Content = {}
-
-    return self
-end
-
--- Returns the KeyValues as a string
+---@param data? table
 ---@return string
-function KeyValues:__tostring()
-    return SerializeKV({ [self.Name] = self._Content }, "")
+function KeyValues.Serialize(name, data)
+    data = data or {}
+
+    return SerializeKV(name, data, "")
 end
 
 return KeyValues
