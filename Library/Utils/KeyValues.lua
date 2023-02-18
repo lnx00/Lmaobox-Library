@@ -9,18 +9,45 @@ local KeyValues = {}
 ---@param data table
 ---@param indent string
 local function SerializeKV(name, data, indent)
-    local lines = {}
+    local bodyData = {}
 
     for key, value in pairs(data) do
         if type(value) == "table" then
-            table.insert(lines, SerializeKV(key, value, indent .. "\t"))
+            table.insert(bodyData, SerializeKV(key, value, indent .. "\t"))
         else
-            table.insert(lines, string.format("\t%s\"%s\"\t\"%s\"", indent, key, value))
+            table.insert(bodyData, string.format("\t%s\"%s\"\t\"%s\"", indent, key, value))
         end
     end
 
-    local content = table.concat(lines, "\n")
-    return string.format("%s\"%s\"\n%s{\n%s\n%s}", indent, name, indent, content, indent)
+    local body = table.concat(bodyData, "\n")
+    return string.format("%s\"%s\"\n%s{\n%s\n%s}", indent, name, indent, body, indent)
+end
+
+local function ParseKV(data, result)
+    local name, body = data:match("\"(.+)\"\n%s*{(.+)}")
+    if not name then
+        return
+    end
+
+    local bodyData = {}
+
+    for key, value in body:gmatch("\"(.+)\"\t\"(.+)\"") do
+        bodyData[key] = value
+    end
+
+    result[name] = bodyData
+
+    ParseKV(data:sub(#name + #body + 4), result)
+end
+
+---@param data string
+---@return table
+local function DeserializeKV(data)
+    local result = {}
+
+    ParseKV(data, result)
+
+    return result
 end
 
 ---@param name string
@@ -30,6 +57,12 @@ function KeyValues.Serialize(name, data)
     data = data or {}
 
     return SerializeKV(name, data, "")
+end
+
+---@param data string
+---@return table
+function KeyValues.Deserialize(data)
+    return DeserializeKV(data)
 end
 
 return KeyValues
