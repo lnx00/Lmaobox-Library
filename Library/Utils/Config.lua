@@ -22,6 +22,7 @@ local ConfigExtension = ".cfg"
 local ConfigFolder = FileSystem.GetWorkDir() .. "/Configs/"
 
 -- Creates a new config
+---@param name string
 ---@return Config
 function Config.new(name)
     local self = setmetatable({}, Config)

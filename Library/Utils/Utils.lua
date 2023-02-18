@@ -14,6 +14,7 @@ local Utils = {
     Web = require("Library/Utils/Web"),
     Input = require("Library/Utils/Input"),
     KeyHelper = require("Library/Utils/KeyHelper"),
+    KeyValues = require("Library/Utils/KeyValues"),
     Logger = require("Library/Utils/Logger"),
     Timer = require("Library/Utils/Timer"),
     Config = require("Library/Utils/Config"),
