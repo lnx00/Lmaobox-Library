@@ -60,7 +60,7 @@ end
 ---@param index number
 ---@return boolean
 function WPlayerResource:GetConnected(index)
-    return self:GetPropDataTableInt("m_bConnected")[index + 1] == 1
+    return self:GetPropDataTableBool("m_bConnected")[index + 1]
 end
 
 -- Returns the team number of the given player
@@ -74,7 +74,7 @@ end
 ---@param index number
 ---@return boolean
 function WPlayerResource:GetAlive(index)
-    return self:GetPropDataTableInt("m_bAlive")[index + 1] == 1
+    return self:GetPropDataTableBool("m_bAlive")[index + 1]
 end
 
 -- Returns the health of the given player
@@ -95,7 +95,7 @@ end
 ---@param index number
 ---@return boolean
 function WPlayerResource:GetValid(index)
-    return self:GetPropDataTableInt("m_bValid")[index + 1] == 1
+    return self:GetPropDataTableBool("m_bValid")[index + 1]
 end
 
 -- Returns the user ID of the given player
@@ -138,7 +138,7 @@ end
 ---@param index number
 ---@return boolean
 function WPlayerResource:GetArenaSpectator(index)
-    return self:GetPropDataTableInt("m_bArenaSpectator")[index + 1] == 1
+    return self:GetPropDataTableBool("m_bArenaSpectator")[index + 1]
 end
 
 -- Returns the amount of active dominations of the given player
