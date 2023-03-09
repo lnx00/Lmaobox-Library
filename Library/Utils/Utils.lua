@@ -5,6 +5,7 @@
 ---@field public Input Input
 ---@field public KeyHelper KeyHelper
 ---@field public Logger Logger
+---@field public Math Math
 ---@field public Timer Timer
 ---@field public Config Config
 ---@field public Commands Commands
@@ -16,6 +17,7 @@ local Utils = {
     KeyHelper = require("Library/Utils/KeyHelper"),
     KeyValues = require("Library/Utils/KeyValues"),
     Logger = require("Library/Utils/Logger"),
+    Math = require("Library/Utils/Math"),
     Timer = require("Library/Utils/Timer"),
     Config = require("Library/Utils/Config"),
     Commands = require("Library/Utils/Commands")
