@@ -1,4 +1,4 @@
-# LNX's Lmaobox Library (LNXlib)
+# LNX's Lmaobox Library (lnxLib)
 
 An Utility Library for the Lmaobox Lua API.
 It provides a set of useful functions and classes to make your life easier when writing scripts for Lmaobox.
@@ -7,9 +7,13 @@ Use the [Lmaobox Annotations](https://github.com/LewdDeveloper/lmaobox-annotatio
 
 ## Installation
 
-To install this library, download the latest release from the [releases page](https://github.com/lnx00/Lmaobox-Library/releases/latest/) and copy the `LNXlib.lua` file to your `%localappdata%` folder.
+To install this library, download the latest release from the [releases page](https://github.com/lnx00/Lmaobox-Library/releases/latest/) and copy the `lnxLib.lua` file to your `%localappdata%` folder.
 
-_Optionally, you can also download the minified version of the library `LNXlib.min.lua`. Make sure to rename the file to `LNXlib.lua` before copying it to your `%localappdata%` folder!_
+_Optionally, you can also download the minified version of the library `lnxLib.min.lua`. Make sure to rename the file to `lnxLib.lua` before copying it to your `%localappdata%` folder!_
+
+## Usage
+
+Read the [wiki](https://github.com/lnx00/Lmaobox-Library/wiki) for documentation and installation/usage instructions.
 
 ## Features
 
@@ -27,7 +31,7 @@ _Optionally, you can also download the minified version of the library `LNXlib.m
 
 ## Building
 
-To build and deploy this library, you need to have NodeJS installed.
+To pack and deploy this library, you need to have NodeJS installed.
 
 Install the required dependencies with `npm install`.
 Then, run `Bundle.bat` to build the library or `BundleAndDeploy.bat` to build and deploy the library to the `%localappdata%` folder.
