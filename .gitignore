@@ -399,4 +399,5 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/lua,node,visualstudiocode,jetbrains,intellij
 
-LNX-Library.lua
+lnxLib.lua
+lnxLib.min.lua
