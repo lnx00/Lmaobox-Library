@@ -27,8 +27,8 @@ local Utils = {
 ---@param str string
 ---@return string
 function Utils.Sanitize(str)
-    _ = str:gsub("%s", "")
-    _ = str:gsub("%%", "%%%%")
+    str = string.gsub(str, "[%p%c]", "")
+    str = string.gsub(str, '"', "'")
     return str
 end
 
