@@ -1,5 +1,5 @@
 --[[
-    LNXlib - A utility library for Lmaobox
+    lnxLib - An utility library for Lmaobox
 ]]
 
 -- Globals
@@ -19,19 +19,19 @@ local LNXlib = {
 
 ---@return number
 function LNXlib.GetVersion()
-    return 0.965
+    return 0.966
 end
 
 --[[ Debugging ]]
 
 -- Unloads the entire library. Useful for debugging
 function UnloadLib()
-    LNXlib.Utils.UnloadPackages("LNXlib")
+    LNXlib.Utils.UnloadPackages("lnxLib")
 end
 
 -- Library loaded
-printc(75, 210, 55, 255, string.format("LNXlib Loaded (v%.3f)", LNXlib.GetVersion()))
-LNXlib.UI.Notify.Simple("LNXlib loaded", string.format("Version: %.3f", LNXlib.GetVersion()))
+printc(75, 210, 55, 255, string.format("lnxLib Loaded (v%.3f)", LNXlib.GetVersion()))
+LNXlib.UI.Notify.Simple("lnxLib loaded", string.format("Version: %.3f", LNXlib.GetVersion()))
 
 Internal.Cleanup()
 return LNXlib

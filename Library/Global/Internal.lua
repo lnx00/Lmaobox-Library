@@ -12,7 +12,7 @@ _G.Internal = {}
 ---@param callback fun()
 ---@vararg string
 function Internal.RegisterCallback(id, callback, ...)
-    local name = table.concat({"LNXlib", ..., id}, ".")
+    local name = table.concat({"lnxLib", ..., id}, ".")
     callbacks.Unregister(id, name)
     callbacks.Register(id, name, callback)
 end

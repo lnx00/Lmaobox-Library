@@ -1,5 +1,5 @@
 @echo off
 
 node bundle.js
-move /Y "LNXlib.lua" "%localappdata%"
+move /Y "lnxLib.lua" "%localappdata%"
 pause

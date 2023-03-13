@@ -9,7 +9,7 @@ const bundledLua = bundle('./Library/Main.lua', {
 	}
 });
 
-fs.writeFile('LNXlib.lua', bundledLua, err => {
+fs.writeFile('lnxLib.lua', bundledLua, err => {
     if (err) {
         console.error(err);
     }
