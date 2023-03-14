@@ -44,7 +44,6 @@ end
 ---@return EulerAngles angles
 function Math.PositionAngles(source, dest)
     local delta = source - dest
-    local fHyp = delta:Length2D()
 
     local pitch = math.atan(delta.z / delta:Length2D()) * M_RADPI
     local yaw = math.atan(delta.y / delta.x) * M_RADPI
