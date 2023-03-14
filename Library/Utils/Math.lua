@@ -7,6 +7,8 @@ local Math = {}
 
 local M_RADPI = 180 / math.pi
 
+local function isNaN(x) return x ~= x end
+
 -- Normalizes an angle to be between -180 and 180
 ---@param angle number
 ---@return number
@@ -63,7 +65,10 @@ function Math.AngleFov(vFrom, vTo)
     local vSrc = vFrom:Forward()
     local vDst = vTo:Forward()
     
-    return math.deg(math.acos(vSrc:Dot(vDst) / vDst:LengthSqr()))
+    local fov = math.deg(math.acos(vDst:Dot(vSrc) / vDst:LengthSqr()))
+    if isNaN(fov) then fov = 0 end
+
+    return fov
 end
 
 return Math
