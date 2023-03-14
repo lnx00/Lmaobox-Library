@@ -25,7 +25,7 @@ function WPlayerResource.FromEntity(entity)
 end
 
 -- Returns the current player resource entity
----@return WPlayerResource|nil
+---@return WPlayerResource?
 function WPlayerResource.Get()
     local pr = entities.GetPlayerResources()
     return pr ~= nil and WPlayerResource.FromEntity(pr) or nil

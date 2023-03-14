@@ -43,9 +43,17 @@ end
 ---@param dest Vector3
 ---@return EulerAngles angles
 function Math.PositionAngles(source, dest)
-    local delta = dest - source
+    local delta = source - dest
+    local fHyp = delta:Length2D()
 
-    return EulerAngles(math.atan(delta.z / delta:Length2D()) * M_RADPI, math.atan(delta.y, delta.x) * M_RADPI, 0)
+    local pitch = math.atan(delta.z / delta:Length2D()) * M_RADPI
+    local yaw = math.atan(delta.y / delta.x) * M_RADPI
+
+    if delta.x >= 0 then
+        yaw = yaw + 180
+    end
+
+    return EulerAngles(pitch, yaw, 0)
 end
 
 -- Calculates the FOV between two angles

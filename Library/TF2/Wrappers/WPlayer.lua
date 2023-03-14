@@ -29,7 +29,7 @@ function WPlayer.FromEntity(entity)
 end
 
 -- Returns a WPlayer of the local player
----@return WPlayer|nil
+---@return WPlayer?
 function WPlayer.GetLocal()
     local lp = entities.GetLocalPlayer()
     return lp ~= nil and WPlayer.FromEntity(lp) or nil
