@@ -1,3 +1,7 @@
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/lnx00/Lmaobox-Library)
+![GitHub Release Date](https://img.shields.io/github/release-date/lnx00/Lmaobox-Library)
+![GitHub all releases](https://img.shields.io/github/downloads/lnx00/Lmaobox-Library/total)
+
 # LNX's Lmaobox Library (lnxLib)
 
 An Utility Library for the Lmaobox Lua API.
@@ -6,6 +10,8 @@ It provides a set of useful functions and classes to make your life easier when 
 Use the [Lmaobox Annotations](https://github.com/LewdDeveloper/lmaobox-annotation) for full annotation support.
 
 ## Installation
+
+[![](https://img.shields.io/badge/Download-Latest-blue?style=for-the-badge&logo=github)](https://github.com/lnx00/Lmaobox-Library/releases/latest/)
 
 To install this library, download the latest release from the [releases page](https://github.com/lnx00/Lmaobox-Library/releases/latest/) and copy the `lnxLib.lua` file to your `%localappdata%` folder.
 
