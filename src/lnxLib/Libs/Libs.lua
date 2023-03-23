@@ -1,7 +1,7 @@
 ---@class Libs
 ---@field public Json Json
 local Libs = {
-    Json = require("Library/Libs/dkjson")
+    Json = require("lnxLib/Libs/dkjson")
 }
 
 return Libs

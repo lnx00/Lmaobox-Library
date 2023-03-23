@@ -6,7 +6,7 @@
 ]]
 
 ---@type Fonts
-local Fonts = require("Library/UI/Fonts")
+local Fonts = require("lnxLib/UI/Fonts")
 
 -- Style constants
 local Size = { W = 300, H = 50 }

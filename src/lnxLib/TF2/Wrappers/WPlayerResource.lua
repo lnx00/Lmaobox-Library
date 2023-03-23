@@ -3,7 +3,7 @@
 ]]
 
 ---@type WEntity
-local WEntity = require("Library/TF2/Wrappers/WEntity")
+local WEntity = require("lnxLib/TF2/Wrappers/WEntity")
 
 ---@class WPlayerResource : WEntity
 local WPlayerResource = {}

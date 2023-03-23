@@ -3,7 +3,7 @@
 ]]
 
 -- Globals
-require("Library/Global/Global")
+require("lnxLib/Global/Global")
 
 --[[ Main ]]
 
@@ -12,14 +12,14 @@ require("Library/Global/Global")
 ---@field public UI UI
 ---@field public Utils Utils
 local lnxLib = {
-    TF2 = require("Library/TF2/TF2"),
-    UI = require("Library/UI/UI"),
-    Utils = require("Library/Utils/Utils"),
+    TF2 = require("lnxLib/TF2/TF2"),
+    UI = require("lnxLib/UI/UI"),
+    Utils = require("lnxLib/Utils/Utils"),
 }
 
 ---@return number
 function lnxLib.GetVersion()
-    return 0.967
+    return 0.968
 end
 
 --[[ Debugging ]]

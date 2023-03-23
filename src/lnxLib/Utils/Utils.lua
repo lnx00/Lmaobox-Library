@@ -10,17 +10,17 @@
 ---@field public Config Config
 ---@field public Commands Commands
 local Utils = {
-    Conversion = require("Library/Utils/Conversion"),
-    FileSystem = require("Library/Utils/FileSystem"),
-    Web = require("Library/Utils/Web"),
-    Input = require("Library/Utils/Input"),
-    KeyHelper = require("Library/Utils/KeyHelper"),
-    KeyValues = require("Library/Utils/KeyValues"),
-    Logger = require("Library/Utils/Logger"),
-    Math = require("Library/Utils/Math"),
-    Timer = require("Library/Utils/Timer"),
-    Config = require("Library/Utils/Config"),
-    Commands = require("Library/Utils/Commands")
+    Conversion = require("lnxLib/Utils/Conversion"),
+    FileSystem = require("lnxLib/Utils/FileSystem"),
+    Web = require("lnxLib/Utils/Web"),
+    Input = require("lnxLib/Utils/Input"),
+    KeyHelper = require("lnxLib/Utils/KeyHelper"),
+    KeyValues = require("lnxLib/Utils/KeyValues"),
+    Logger = require("lnxLib/Utils/Logger"),
+    Math = require("lnxLib/Utils/Math"),
+    Timer = require("lnxLib/Utils/Timer"),
+    Config = require("lnxLib/Utils/Config"),
+    Commands = require("lnxLib/Utils/Commands")
 }
 
 -- Removes all special characters from a string

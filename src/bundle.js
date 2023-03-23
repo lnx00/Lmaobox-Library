@@ -1,7 +1,7 @@
 import { bundle } from 'luabundle'
 import * as fs from 'fs';
 
-const bundledLua = bundle('./Library/Main.lua', {
+const bundledLua = bundle('./lnxLib/Main.lua', {
     metadata: false,
     expressionHandler: (module, expression) => {
 		const start = expression.loc.start

@@ -3,9 +3,9 @@
 ---@field public Textures Textures
 ---@field public Notify Notify
 local UI = {
-    Fonts = require("Library/UI/Fonts"),
-    Textures = require("Library/UI/Textures"),
-    Notify = require("Library/UI/Notify")
+    Fonts = require("lnxLib/UI/Fonts"),
+    Textures = require("lnxLib/UI/Textures"),
+    Notify = require("lnxLib/UI/Notify")
 }
 
 return UI
