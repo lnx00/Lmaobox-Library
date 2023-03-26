@@ -54,6 +54,9 @@ function Math.PositionAngles(source, dest)
         yaw = yaw + 180
     end
 
+    if isNaN(pitch) then pitch = 0 end
+    if isNaN(yaw) then yaw = 0 end
+
     return EulerAngles(pitch, yaw, 0)
 end
 

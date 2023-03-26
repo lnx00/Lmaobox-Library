@@ -1,9 +1,9 @@
 ---@diagnostic disable: duplicate-set-field
 
-local mockagne = require("mockagne")
-dofile("ApiConst.lua")
-dofile("Dummy/Vector3.lua")
-dofile("Dummy/EulerAngles.lua")
+local mockagne = require("test.mockagne")
+dofile("test/ApiConst.lua")
+dofile("test/Dummy/Vector3.lua")
+dofile("test/Dummy/EulerAngles.lua")
 
 local function Log(message)
     print(string.format("[API] %s", message))
