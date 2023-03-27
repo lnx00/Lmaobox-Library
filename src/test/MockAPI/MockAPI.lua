@@ -43,7 +43,8 @@ function MockAPI:InvokeCallback(id, ...)
         return
     end
 
-    for _, callback in pairs(self.callbacks[id]) do
+    for name, callback in pairs(self.callbacks[id]) do
+        Log("Invoking callback " .. name .. " for " .. id)
         callback(...)
     end
 end

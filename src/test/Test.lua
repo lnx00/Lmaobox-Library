@@ -5,13 +5,14 @@ local mockAPI = require("MockAPI.MockAPI")
 
 -- Mock required functions
 Mockagne.when(engine.GetGameDir()).thenAnswer("Test")
+Mockagne.when(globals.RealTime()).thenAnswer(0)
 
 ---@type lnxLib
 local lnxLib = require("lnxLib.Main")
 print("Testing lnxLib version: " .. lnxLib.GetVersion())
 
 local function BeginSection(name)
-    print(string.format("== %s ==", name))
+    print(string.format("\n== %s ==", name))
 end
 
 local function PrintResult(name, success)
@@ -57,4 +58,33 @@ end)
 Test("AngleFov between the same vectors is 0", function()
     local fov = math.AngleFov(EulerAngles(0, 0, 0), EulerAngles(0, 0, 0))
     lu.assertEquals(fov, 0)
+end)
+
+--[[ Callback Tests ]]
+BeginSection("Callback Tests")
+
+-- CreateMove
+Test("CreateMove callback is called", function()
+    local userCmd = Mockagne.getMock("UserCmd")
+    mockAPI:InvokeCallback("CreateMove", userCmd)
+end)
+
+-- Draw
+Test("Draw callback is called", function()
+    mockAPI:InvokeCallback("Draw")
+end)
+
+--[[ Globals Tests ]]
+
+Test("Globals are correct", function ()
+    local userCmd = Mockagne.getMock("UserCmd")
+
+    userCmd.command_number = 1
+    mockAPI:InvokeCallback("CreateMove", userCmd)
+
+    userCmd.command_number = 2
+    mockAPI:InvokeCallback("CreateMove", userCmd)
+
+    lu.assertEquals(lnxLib.TF2.Globals.CommandNumber, 2)
+    lu.assertEquals(lnxLib.TF2.Globals.LastCommandNumber, 1)
 end)
