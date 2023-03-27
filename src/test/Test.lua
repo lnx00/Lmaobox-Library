@@ -1,7 +1,10 @@
 package.path = package.path .. ";../?.lua"
 
-local lu = require("test.luaunit")
-local apiDummy = require("test.ApiDummy")
+local lu = require("luaunit")
+local mockAPI = require("MockAPI.MockAPI")
+
+-- Mock required functions
+Mockagne.when(engine.GetGameDir()).thenAnswer("Test")
 
 ---@type lnxLib
 local lnxLib = require("lnxLib.Main")

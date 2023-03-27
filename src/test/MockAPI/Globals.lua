@@ -1,3 +1,21 @@
+function _G.printc(r, g, b, a, ...)
+    print(...)
+end
+
+function _G.LoadScript(scriptPath)
+    print("Loading script: " .. scriptPath)
+    dofile(scriptPath)
+end
+
+function _G.UnloadScript(scriptPath)
+    print("Unloading script: " .. scriptPath)
+end
+
+function _G.GetScriptName()
+    return "ScriptName"
+end
+
+--[[ Global Constants ]]
 -- UserCmd buttons
 IN_ATTACK = (1 << 0)
 IN_JUMP = (1 << 1)

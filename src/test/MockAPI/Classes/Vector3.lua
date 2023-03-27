@@ -15,20 +15,63 @@ function Vector3.new(x, y, z)
     return self
 end
 
-function Vector3:Length()
-    return math.sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
+function Vector3:Unpack()
+    return self.x, self.y, self.z
 end
 
-function Vector3:Length2D()
-    return math.sqrt(self.x * self.x + self.y * self.y)
+function Vector3:Length()
+    return math.sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
 end
 
 function Vector3:LengthSqr()
     return self.x * self.x + self.y * self.y + self.z * self.z
 end
 
+function Vector3:Length2D()
+    return math.sqrt(self.x * self.x + self.y * self.y)
+end
+
+function Vector3:Length2DSqr()
+    return self.x * self.x + self.y * self.y
+end
+
 function Vector3:Dot(other)
     return self.x * other.x + self.y * other.y + self.z * other.z
+end
+
+function Vector3:Cross(other)
+    return Vector3(
+        self.y * other.z - self.z * other.y,
+        self.z * other.x - self.x * other.z,
+        self.x * other.y - self.y * other.x
+    )
+end
+
+function Vector3:Clear()
+    self.x = 0
+    self.y = 0
+    self.z = 0
+end
+
+function Vector3:Normalize()
+    local length = self:Length()
+    if length == 0 then return end
+
+    self.x = self.x / length
+    self.y = self.y / length
+    self.z = self.z / length
+end
+
+function Vector3:Right()
+    return Vector3(self.y, -self.x, self.z)
+end
+
+function Vector3:Up()
+    return Vector3(-self.z, self.y, self.x)
+end
+
+function Vector3:Forward()
+    return Vector3(self.z, self.y, -self.x)
 end
 
 function Vector3:__tostring()
