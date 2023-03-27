@@ -7,7 +7,7 @@
 An Utility Library for the Lmaobox Lua API.
 It provides a set of useful functions and classes to make your life easier when writing scripts for Lmaobox.
 
-Use the [Lmaobox Annotations](https://github.com/LewdDeveloper/lmaobox-annotation) for full annotation support.
+Use the [Lmaobox Annotations](https://github.com/lnx00/Lmaobox-Annotations) for full annotation support when developing with this library.
 
 ## Installation
 
