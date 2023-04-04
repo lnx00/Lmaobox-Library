@@ -60,6 +60,42 @@ Test("AngleFov between the same vectors is 0", function()
     lu.assertEquals(fov, 0)
 end)
 
+--[[ Conversion Tests ]]
+BeginSection("Conversion Tests")
+local conversion = lnxLib.Utils.Conversion
+
+-- Test ID3_to_ID64 (As integer)
+Test("ID3_to_ID64 converts a valid ID3 (Integer) to ID64", function()
+    local id64 = conversion.ID3_to_ID64(123456789)
+    lu.assertEquals(tostring(id64), "76561198083722517")
+end)
+
+-- Test ID3_to_ID64 (As string)
+Test("ID3_to_ID64 converts a valid ID3 (String) to ID64", function()
+    local id64 = conversion.ID3_to_ID64("[U:1:123456789]")
+    lu.assertEquals(tostring(id64), "76561198083722517")
+end)
+
+-- Test ID64_to_ID3
+Test("ID64_to_ID3 converts a valid ID64 to ID3", function()
+    local id3 = conversion.ID64_to_ID3(76561198083722517)
+    lu.assertEquals(id3, "[U:1:123456789]")
+end)
+
+-- Test Hex_to_RGB
+Test("Hex_to_RGB converts a valid hex to RGB", function()
+    local r, g, b = conversion.Hex_to_RGB("41fa05")
+    lu.assertEquals(r, 65)
+    lu.assertEquals(g, 250)
+    lu.assertEquals(b, 5)
+end)
+
+-- Test RGB_to_Hex
+Test("RGB_to_Hex converts a valid RGB to hex", function()
+    local hex = conversion.RGB_to_Hex(20, 70, 180)
+    lu.assertEquals(hex, "1446b4")
+end)
+
 --[[ Callback Tests ]]
 BeginSection("Callback Tests")
 
