@@ -19,7 +19,7 @@ local lnxLib = {
 
 ---@return number
 function lnxLib.GetVersion()
-    return 0.968
+    return 0.969
 end
 
 --[[ Debugging ]]
@@ -27,6 +27,7 @@ end
 -- Unloads the entire library. Useful for debugging
 function UnloadLib()
     lnxLib.Utils.UnloadPackages("lnxLib")
+    lnxLib.Utils.UnloadPackages("LNXlib")
 end
 
 -- Library loaded

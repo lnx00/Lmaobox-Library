@@ -46,14 +46,20 @@ function WEntity:Unwrap()
     return self.Entity
 end
 
----@param b WEntity|Entity
-function WEntity:Equals(b)
-    return self:GetIndex() == b:GetIndex()
+---@param other WEntity|Entity
+function WEntity:Equals(other)
+    return self:GetIndex() == other:GetIndex()
 end
 
 ---@return number
 function WEntity:GetSimulationTime()
     return self:GetPropFloat("m_flSimulationTime")
+end
+
+---@param t number
+---@return Vector3
+function WEntity:Extrapolate(t)
+    return self:GetAbsOrigin() + self:EstimateAbsVelocity() * t
 end
 
 -- Returns whether the entity can be seen from the given entity
