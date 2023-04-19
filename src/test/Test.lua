@@ -124,3 +124,34 @@ Test("Globals are correct", function ()
     lu.assertEquals(lnxLib.TF2.Globals.CommandNumber, 2)
     lu.assertEquals(lnxLib.TF2.Globals.LastCommandNumber, 1)
 end)
+
+--[[ WEntity Tests ]]
+BeginSection("WEntity Tests")
+
+-- IsValid
+Test("Entity methods are called", function ()
+    -- Arrange
+    local entity = Mockagne.getMock("Entity")
+    Mockagne.when(entity:IsValid()).thenAnswer(true)
+
+    -- Act
+    local wEntity = lnxLib.TF2.WEntity.FromEntity(entity)
+
+    -- Assert
+    lu.assertEquals(wEntity:IsValid(), true)
+end)
+
+-- Extrapolate
+Test("Extrapolate is correct", function ()
+        -- Arrange
+    local entity = Mockagne.getMock("Entity")
+    Mockagne.when(entity:GetAbsOrigin()).thenAnswer(Vector3(3, 2, 1))
+    Mockagne.when(entity:EstimateAbsVelocity()).thenAnswer(Vector3(1, 2, 3))
+
+    -- Act
+    local wEntity = lnxLib.TF2.WEntity.FromEntity(entity)
+    local result = wEntity:Extrapolate(2)
+
+    -- Assert
+    lu.assertEquals(result, Vector3(5, 6, 7))
+end)
