@@ -97,4 +97,21 @@ function WPlayer:GetViewPos()
     return trace.endpos
 end
 
+-- Predicts where the player will be in t seconds
+---@param t number
+---@return Vector3
+function WPlayer:Predict(t)
+    local gravity = client.GetConVar("sv_gravity")
+    if not gravity then return Vector3() end
+
+    local vel = self:EstimateAbsVelocity()
+    local pos = self:GetAbsOrigin()
+
+    local predVel = vel * t
+    local predGrav = Vector3(0, 0, gravity * -0.5) * (t ^ 2)
+    local predPos = pos + predVel + predGrav
+
+    return predPos
+end
+
 return WPlayer
