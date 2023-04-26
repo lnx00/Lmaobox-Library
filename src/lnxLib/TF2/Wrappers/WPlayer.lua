@@ -97,21 +97,44 @@ function WPlayer:GetViewPos()
     return trace.endpos
 end
 
--- Predicts where the player will be in t seconds
----@param t number
----@return Vector3
+-- Predicts where the player will be in t ticks
+---@param t integer
+---@return { p: Vector3, v: Vector3, g: boolean }[] | nil
 function WPlayer:Predict(t)
     local gravity = client.GetConVar("sv_gravity")
-    if not gravity then return Vector3() end
+    if not gravity then return nil end
 
     local vel = self:EstimateAbsVelocity()
     local pos = self:GetAbsOrigin()
 
-    local predVel = vel * t
-    local predGrav = Vector3(0, 0, gravity * -0.5) * (t ^ 2)
-    local predPos = pos + predVel + predGrav
+    local predTable = {
+        [0] = {p = pos, v = vel, g = self:IsOnGround()}
+    }
+    local interval = globals.TickInterval()
+    for i = 1, t do
+        local last = predTable[i - 1]
+        local time = i * interval
 
-    return predPos
+        local predVel = vel * time
+        local predGrav = Vector3(0, 0, gravity * -0.5) * (time ^ 2)
+        local predPos = pos + predVel + predGrav
+
+        -- Check if the position is on ground
+        local onGround = false
+        local trace = engine.TraceLine(last.p, predPos, MASK_SOLID)
+        if trace.fraction < 1 then
+            predPos = trace.endpos
+            onGround = true
+        end
+
+        table.insert(predTable, {
+            p = predPos,
+            v = predVel,
+            g = onGround
+        })
+    end
+
+    return predTable
 end
 
 return WPlayer
