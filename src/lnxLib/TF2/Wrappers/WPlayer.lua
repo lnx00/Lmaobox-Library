@@ -123,11 +123,11 @@ function WPlayer:Predict(t)
 
         -- Check if the position is on ground
         local onGround = false
-        local trace = engine.TraceLine(last.p + step, predPos, MASK_SOLID)
+        local trace = engine.TraceHull(last.p + step, predPos, Vector3(-5, -5, -5), Vector3(5, 5, 5), MASK_SOLID)
         if trace.fraction < 1 then
-            -- check if the step is too big
-            local stepDist = (trace.endpos - last.p):Length()
-            if math.floor(stepDist) >= stepSize then
+            -- Check if the step is too big | TODO: Calculate the new velocity
+            local stepDist = trace.endpos.z - last.p.z
+            if math.floor(stepDist) >= stepSize - 1 then
                 predPos = last.p
                 onGround = true
             else
