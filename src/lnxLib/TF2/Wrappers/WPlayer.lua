@@ -102,10 +102,12 @@ end
 ---@return { p: Vector3, v: Vector3, g: boolean }[] | nil
 function WPlayer:Predict(t)
     local gravity = client.GetConVar("sv_gravity")
-    if not gravity then return nil end
+    local stepSize = self:GetPropFloat("localdata", "m_flStepSize")
+    if not gravity or not stepSize then return nil end
 
     local vel = self:EstimateAbsVelocity()
     local pos = self:GetAbsOrigin()
+    local step = Vector3(0, 0, stepSize)
 
     local predTable = {
         [0] = {p = pos, v = vel, g = self:IsOnGround()}
@@ -121,17 +123,24 @@ function WPlayer:Predict(t)
 
         -- Check if the position is on ground
         local onGround = false
-        local trace = engine.TraceLine(last.p, predPos, MASK_SOLID)
+        local trace = engine.TraceLine(last.p + step, predPos, MASK_SOLID)
         if trace.fraction < 1 then
-            predPos = trace.endpos
-            onGround = true
+            -- check if the step is too big
+            local stepDist = (trace.endpos - last.p):Length()
+            if math.floor(stepDist) >= stepSize then
+                predPos = last.p
+                onGround = true
+            else
+                predPos = trace.endpos
+                onGround = true
+            end
         end
 
-        table.insert(predTable, {
+        predTable[i] = {
             p = predPos,
             v = predVel,
             g = onGround
-        })
+        }
     end
 
     return predTable
