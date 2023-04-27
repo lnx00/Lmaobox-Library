@@ -105,6 +105,7 @@ function WPlayer:Predict(t)
     local stepSize = self:GetPropFloat("localdata", "m_flStepSize")
     local vStep = Vector3(0, 0, stepSize)
     local vUp = Vector3(0, 0, 1)
+    local hitbox = { Vector3(-5, -5, 0), Vector3(5, 5, 5) }
 
     local pred = {
         [0] = { p = self:GetAbsOrigin(), v = self:EstimateAbsVelocity(), g = self:IsOnGround() }
@@ -118,12 +119,13 @@ function WPlayer:Predict(t)
         local vel = last.v
         local onGround = true
 
+        local step = vStep * (last.p - pos):Length() * 0.1
+
         -- Wall collision
-        local wallTrace = engine.TraceLine(last.p, pos + vStep, MASK_SOLID)
+        local wallTrace = engine.TraceHull(last.p, pos + step, hitbox[1], hitbox[2], MASK_SOLID)
         if wallTrace.fraction < 1 then
             -- We will collide
             local normal = wallTrace.plane
-            --print(string.format("Dot: %.2f", normal:Dot(vUp)))
             if math.abs(normal:Dot(vUp)) < 0.1 then
                 -- Wall
                 local dot = vel:Dot(normal)
@@ -133,11 +135,11 @@ function WPlayer:Predict(t)
         end
 
         -- Ground collision
-        local groundTrace = engine.TraceLine(pos + vStep, pos - vStep, MASK_SOLID)
+        local groundTrace = engine.TraceHull(pos + step, pos - step, hitbox[1], hitbox[2], MASK_SOLID)
         if groundTrace.fraction < 1 then
             -- We hit the ground
             pos = groundTrace.endpos
-            --vel = Vector3(0, 0, 0)
+            vel = Vector3(vel.x, vel.y, 0)
             onGround = true
         else
             -- We're in the air
