@@ -103,47 +103,56 @@ end
 function WPlayer:Predict(t)
     local gravity = client.GetConVar("sv_gravity")
     local stepSize = self:GetPropFloat("localdata", "m_flStepSize")
-    if not gravity or not stepSize then return nil end
+    local vStep = Vector3(0, 0, stepSize)
+    local vUp = Vector3(0, 0, 1)
 
-    local vel = self:EstimateAbsVelocity()
-    local pos = self:GetAbsOrigin()
-    local step = Vector3(0, 0, stepSize)
-
-    local predTable = {
-        [0] = {p = pos, v = vel, g = self:IsOnGround()}
+    local pred = {
+        [0] = { p = self:GetAbsOrigin(), v = self:EstimateAbsVelocity(), g = self:IsOnGround() }
     }
-    local interval = globals.TickInterval()
+
     for i = 1, t do
-        local last = predTable[i - 1]
-        local time = i * interval
+        local last = pred[i - 1]
+        if not last then return nil end
 
-        local predVel = vel * time
-        local predGrav = Vector3(0, 0, gravity * -0.5) * (time ^ 2)
-        local predPos = pos + predVel + predGrav
+        local pos = last.p + last.v * globals.TickInterval()
+        local vel = last.v
+        local onGround = true
 
-        -- Check if the position is on ground
-        local onGround = false
-        local trace = engine.TraceHull(last.p + step, predPos, Vector3(-5, -5, -5), Vector3(5, 5, 5), MASK_SOLID)
-        if trace.fraction < 1 then
-            -- Check if the step is too big | TODO: Calculate the new velocity
-            local stepDist = trace.endpos.z - last.p.z
-            if math.floor(stepDist) >= stepSize - 1 then
-                predPos = last.p
-                onGround = true
-            else
-                predPos = trace.endpos
-                onGround = true
+        -- Wall collision
+        local wallTrace = engine.TraceLine(last.p, pos + vStep, MASK_SOLID)
+        if wallTrace.fraction < 1 then
+            -- We will collide
+            local normal = wallTrace.plane
+            --print(string.format("Dot: %.2f", normal:Dot(vUp)))
+            if math.abs(normal:Dot(vUp)) < 0.1 then
+                -- Wall
+                local dot = vel:Dot(normal)
+                vel = vel - normal * dot
             end
+            pos = Vector3(wallTrace.endpos.x, wallTrace.endpos.y, pos.z)
         end
 
-        predTable[i] = {
-            p = predPos,
-            v = predVel,
-            g = onGround
-        }
+        -- Ground collision
+        local groundTrace = engine.TraceLine(pos + vStep, pos - vStep, MASK_SOLID)
+        if groundTrace.fraction < 1 then
+            -- We hit the ground
+            pos = groundTrace.endpos
+            --vel = Vector3(0, 0, 0)
+            onGround = true
+        else
+            -- We're in the air
+            onGround = false
+        end
+
+        -- Gravity
+        if not onGround then
+            vel = Vector3(vel.x, vel.y, vel.z - gravity * globals.TickInterval())
+        end
+
+        pred[i] = { p = pos, v = vel, g = onGround }
     end
 
-    return predTable
+    return pred
 end
 
 return WPlayer
