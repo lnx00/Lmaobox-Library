@@ -97,6 +97,16 @@ function WPlayer:GetViewPos()
     return trace.endpos
 end
 
+local function DrawLine(a, b)
+    local startPos = client.WorldToScreen(a)
+    local endPos = client.WorldToScreen(b)
+
+    if startPos and endPos then
+        draw.Color(255, 255, 255, 255)
+        draw.Line(startPos[1], startPos[2], endPos[1], endPos[2])
+    end
+end
+
 -- Predicts where the player will be in t ticks
 ---@param t integer
 ---@return { p: Vector3, v: Vector3, g: boolean }[] | nil
@@ -119,10 +129,9 @@ function WPlayer:Predict(t)
         local vel = last.v
         local onGround = true
 
-        local step = vStep * (last.p - pos):Length() * 0.1
-
         -- Wall collision
-        local wallTrace = engine.TraceHull(last.p, pos + step, hitbox[1], hitbox[2], MASK_SOLID)
+        local wallTrace = engine.TraceHull(last.p + vStep, pos + vStep, hitbox[1], hitbox[2], MASK_SOLID)
+        DrawLine(last.p + vStep, pos + vStep)
         if wallTrace.fraction < 1 then
             -- We will collide
             local normal = wallTrace.plane
@@ -135,7 +144,8 @@ function WPlayer:Predict(t)
         end
 
         -- Ground collision
-        local groundTrace = engine.TraceHull(pos + step, pos - step, hitbox[1], hitbox[2], MASK_SOLID)
+        local groundTrace = engine.TraceHull(pos + vStep, pos - vStep, hitbox[1], hitbox[2], MASK_SOLID)
+        DrawLine(pos + vStep, pos - vStep)
         if groundTrace.fraction < 1 then
             -- We hit the ground
             pos = groundTrace.endpos
