@@ -5,6 +5,20 @@
 ---@class Helpers
 local Helpers = {}
 
+local _vUp = Vector3(0, 0, 1)
+local _hitbox = { Vector3(-20, -20, 0), Vector3(20, 20, 80) }
+
+-- Used for testing purpose
+local function DrawLine(a, b)
+    local startPos = client.WorldToScreen(a)
+    local endPos = client.WorldToScreen(b)
+
+    if startPos and endPos then
+        draw.Color(255, 255, 255, 255)
+        draw.Line(startPos[1], startPos[2], endPos[1], endPos[2])
+    end
+end
+
 -- Computes the move vector between two points
 ---@param userCmd UserCmd
 ---@param a Vector3
@@ -84,6 +98,67 @@ function Helpers.GetBBox(player)
         w = math.floor(width),
         h = math.floor(height)
     }
+end
+
+---@param player WPlayer
+---@param t integer
+---@return { p: Vector3, v: Vector3, g: boolean }|nil
+function Helpers.Predict(player, t)
+    local gravity = client.GetConVar("sv_gravity")
+    local stepSize = player:GetPropFloat("localdata", "m_flStepSize")
+    if not gravity or not stepSize then return nil end
+
+    local vStep = Vector3(0, 0, stepSize)
+
+    local pred = {
+        [0] = { p = player:GetAbsOrigin(), v = player:EstimateAbsVelocity(), g = player:IsOnGround() }
+    }
+
+    for i = 1, t do
+        local last = pred[i - 1]
+        if not last then return nil end
+
+        local pos = last.p + last.v * globals.TickInterval()
+        local vel = last.v
+        local onGround = true
+
+        -- Check wall collision
+        local wallTrace = engine.TraceHull(last.p + vStep, pos + vStep, _hitbox[1], _hitbox[2], MASK_SOLID)
+        DrawLine(last.p + vStep, pos + vStep)
+        if wallTrace.fraction < 1 then
+            local normal = wallTrace.plane
+            if math.abs(normal:Dot(_vUp)) < 0.1 then
+                -- Perpendular wall
+                local dot = vel:Dot(normal)
+                vel = vel - normal * dot
+            end
+
+            pos = Vector3(wallTrace.endpos.x, wallTrace.endpos.y, pos.z)
+        end
+
+        -- Check ground collision
+        local groundTrace = engine.TraceHull(pos + vStep, pos - vStep, _hitbox[1], _hitbox[2], MASK_SOLID)
+        DrawLine(pos + vStep, pos - vStep)
+        if groundTrace.fraction < 1 then
+            -- We hit the ground
+            pos = groundTrace.endpos
+            vel = Vector3(vel.x, vel.y, 0)
+            onGround = true
+        else
+            -- We're in the air
+            onGround = false
+        end
+
+        -- Gravity
+        if not onGround then
+            vel = Vector3(vel.x, vel.y, vel.z - gravity * globals.TickInterval())
+        end
+
+        -- Add the prediction record
+        pred[i] = { p = pos, v = vel, g = onGround }
+    end
+
+    return pred
 end
 
 return Helpers
