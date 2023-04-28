@@ -44,7 +44,7 @@ end
 ---@return boolean
 function Helpers.CanShoot(weapon)
     local lPlayer = entities.GetLocalPlayer()
-    if weapon:IsMeleeWeapon() then return false end
+    if not lPlayer or weapon:IsMeleeWeapon() then return false end
 
     local nextPrimaryAttack = weapon:GetPropFloat("LocalActiveWeaponData", "m_flNextPrimaryAttack")
     local nextAttack = lPlayer:GetPropFloat("bcc_localdata", "m_flNextAttack")
