@@ -120,12 +120,15 @@ function Helpers.Predict(player, t)
 
         local pos = last.p + last.v * globals.TickInterval()
         local vel = last.v
-        local onGround = true
+        local onGround = last.g
 
-        -- Check wall collision
+        --[[ Forward collision ]]
+
         local wallTrace = engine.TraceHull(last.p + vStep, pos + vStep, _hitbox[1], _hitbox[2], MASK_SOLID)
         DrawLine(last.p + vStep, pos + vStep)
         if wallTrace.fraction < 1 then
+            -- We'll collide
+            
             local normal = wallTrace.plane
             if math.abs(normal:Dot(_vUp)) < 0.1 then
                 -- Perpendular wall
@@ -136,11 +139,16 @@ function Helpers.Predict(player, t)
             pos = Vector3(wallTrace.endpos.x, wallTrace.endpos.y, pos.z)
         end
 
-        -- Check ground collision
-        local groundTrace = engine.TraceHull(pos + vStep, pos - vStep, _hitbox[1], _hitbox[2], MASK_SOLID)
-        DrawLine(pos + vStep, pos - vStep)
+        --[[ Ground collision ]]
+
+        -- Don't step down if we're in-air
+        local downStep = vStep
+        if not onGround then downStep = Vector3() end
+
+        local groundTrace = engine.TraceHull(pos + vStep, pos - downStep, _hitbox[1], _hitbox[2], MASK_SOLID)
+        DrawLine(pos + vStep, pos - downStep)
         if groundTrace.fraction < 1 then
-            -- We hit the ground
+            -- We'll hit the ground
             pos = groundTrace.endpos
             vel = Vector3(vel.x, vel.y, 0)
             onGround = true
