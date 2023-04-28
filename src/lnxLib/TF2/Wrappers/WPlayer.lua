@@ -115,7 +115,7 @@ function WPlayer:Predict(t)
     local stepSize = self:GetPropFloat("localdata", "m_flStepSize")
     local vStep = Vector3(0, 0, stepSize)
     local vUp = Vector3(0, 0, 1)
-    local hitbox = { Vector3(-5, -5, 0), Vector3(5, 5, 5) }
+    local hitbox = { Vector3(-20, -20, 0), Vector3(20, 20, 80) }
 
     local pred = {
         [0] = { p = self:GetAbsOrigin(), v = self:EstimateAbsVelocity(), g = self:IsOnGround() }
