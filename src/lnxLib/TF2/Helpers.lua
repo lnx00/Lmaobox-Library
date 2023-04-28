@@ -128,10 +128,11 @@ function Helpers.Predict(player, t)
         DrawLine(last.p + vStep, pos + vStep)
         if wallTrace.fraction < 1 then
             -- We'll collide
-            
             local normal = wallTrace.plane
-            if math.abs(normal:Dot(_vUp)) < 0.1 then
-                -- Perpendular wall
+            local angle = math.deg(math.acos(normal:Dot(_vUp)))
+
+            if angle > 50 then
+                -- The wall is too steep, we'll slide
                 local dot = vel:Dot(normal)
                 vel = vel - normal * dot
             end
