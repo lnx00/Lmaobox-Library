@@ -124,7 +124,9 @@ function Helpers.Predict(player, t)
 
         --[[ Forward collision ]]
 
-        local wallTrace = engine.TraceHull(last.p + vStep, pos + vStep, _hitbox[1], _hitbox[2], MASK_SOLID)
+        local wallTrace = engine.TraceHull(last.p + vStep, pos + vStep, _hitbox[1], _hitbox[2], MASK_SOLID, function (ent, contentsMask)
+            return ent:GetIndex() ~= player:GetIndex()
+        end)
         DrawLine(last.p + vStep, pos + vStep)
         if wallTrace.fraction < 1 then
             -- We'll collide
@@ -146,7 +148,9 @@ function Helpers.Predict(player, t)
         local downStep = vStep
         if not onGround then downStep = Vector3() end
 
-        local groundTrace = engine.TraceHull(pos + vStep, pos - downStep, _hitbox[1], _hitbox[2], MASK_SOLID)
+        local groundTrace = engine.TraceHull(pos + vStep, pos - downStep, _hitbox[1], _hitbox[2], MASK_SOLID, function (ent, contentsMask)
+            return ent:GetIndex() ~= player:GetIndex()
+        end)
         DrawLine(pos + vStep, pos - downStep)
         if groundTrace.fraction < 1 then
             -- We'll hit the ground
