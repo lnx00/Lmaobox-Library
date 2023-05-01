@@ -102,7 +102,7 @@ end
 
 ---@param player WPlayer
 ---@param t integer
----@return { p: Vector3, v: Vector3, g: boolean }|nil
+---@return { p: Vector3, v: Vector3, g: boolean }[]?
 function Helpers.Predict(player, t)
     local gravity = client.GetConVar("sv_gravity")
     local stepSize = player:GetPropFloat("localdata", "m_flStepSize")
@@ -132,7 +132,7 @@ function Helpers.Predict(player, t)
             local angle = math.deg(math.acos(normal:Dot(_vUp)))
 
             if angle > 50 then
-                -- The wall is too steep, we'll slide
+                -- The wall is too steep, we'll collide
                 local dot = vel:Dot(normal)
                 vel = vel - normal * dot
             end
@@ -150,8 +150,24 @@ function Helpers.Predict(player, t)
         DrawLine(pos + vStep, pos - downStep)
         if groundTrace.fraction < 1 then
             -- We'll hit the ground
-            pos = groundTrace.endpos
-            vel = Vector3(vel.x, vel.y, 0)
+            local normal = groundTrace.plane
+            local angle = math.deg(math.acos(normal:Dot(_vUp)))
+
+            if angle > 50 then
+                --print(string.format("Angle: %f", angle))
+                -- The ground is too steep, we'll slide
+                local dot = vel:Dot(normal)
+                vel = Vector3()
+                pos = last.p + vel * globals.TickInterval()
+
+                local testVel = vel - normal * dot
+                local testPos = last.p + testVel * globals.TickInterval()
+                DrawLine(last.p, testPos)
+            else
+                pos = groundTrace.endpos
+                vel = Vector3(vel.x, vel.y, 0)
+            end
+
             onGround = true
         else
             -- We're in the air
