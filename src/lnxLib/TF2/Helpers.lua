@@ -102,13 +102,15 @@ end
 
 ---@param player WPlayer
 ---@param t integer
+---@param d number?
 ---@return { p: Vector3, v: Vector3, g: boolean }[]?
-function Helpers.Predict(player, t)
+function Helpers.Predict(player, t, d)
     local gravity = client.GetConVar("sv_gravity")
     local stepSize = player:GetPropFloat("localdata", "m_flStepSize")
     if not gravity or not stepSize then return nil end
 
     local vStep = Vector3(0, 0, stepSize)
+    local shouldHitEntity = function (ent, _) return ent:GetIndex() ~= player:GetIndex() end
 
     local pred = {
         [0] = { p = player:GetAbsOrigin(), v = player:EstimateAbsVelocity(), g = player:IsOnGround() }
@@ -122,12 +124,17 @@ function Helpers.Predict(player, t)
         local vel = last.v
         local onGround = last.g
 
+        -- Apply deviation
+        if d then
+            local ang = vel:Angles()
+            ang = EulerAngles(ang.x, ang.y + d, ang.z)
+            vel = ang:Forward() * vel:Length()
+        end
+
         --[[ Forward collision ]]
 
-        local wallTrace = engine.TraceHull(last.p + vStep, pos + vStep, _hitbox[1], _hitbox[2], MASK_SOLID, function (ent, contentsMask)
-            return ent:GetIndex() ~= player:GetIndex()
-        end)
-        DrawLine(last.p + vStep, pos + vStep)
+        local wallTrace = engine.TraceHull(last.p + vStep, pos + vStep, _hitbox[1], _hitbox[2], MASK_PLAYERSOLID, shouldHitEntity)
+        --DrawLine(last.p + vStep, pos + vStep)
         if wallTrace.fraction < 1 then
             -- We'll collide
             local normal = wallTrace.plane
@@ -148,10 +155,8 @@ function Helpers.Predict(player, t)
         local downStep = vStep
         if not onGround then downStep = Vector3() end
 
-        local groundTrace = engine.TraceHull(pos + vStep, pos - downStep, _hitbox[1], _hitbox[2], MASK_SOLID, function (ent, contentsMask)
-            return ent:GetIndex() ~= player:GetIndex()
-        end)
-        DrawLine(pos + vStep, pos - downStep)
+        local groundTrace = engine.TraceHull(pos + vStep, pos - downStep, _hitbox[1], _hitbox[2], MASK_PLAYERSOLID, shouldHitEntity)
+        --DrawLine(pos + vStep, pos - downStep)
         if groundTrace.fraction < 1 then
             -- We'll hit the ground
             local normal = groundTrace.plane
@@ -163,10 +168,6 @@ function Helpers.Predict(player, t)
                 local dot = vel:Dot(normal)
                 vel = Vector3()
                 pos = last.p + vel * globals.TickInterval()
-
-                local testVel = vel - normal * dot
-                local testPos = last.p + testVel * globals.TickInterval()
-                DrawLine(last.p, testPos)
             else
                 pos = groundTrace.endpos
                 vel = Vector3(vel.x, vel.y, 0)
