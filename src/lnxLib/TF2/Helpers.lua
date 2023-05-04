@@ -162,18 +162,22 @@ function Helpers.Predict(player, t, d)
             local normal = groundTrace.plane
             local angle = math.deg(math.acos(normal:Dot(_vUp)))
 
-            if angle > 50 then
-                --print(string.format("Angle: %f", angle))
-                -- The ground is too steep, we'll slide
-                local dot = vel:Dot(normal)
-                vel = Vector3()
-                pos = last.p + vel * globals.TickInterval()
-            else
+            if angle < 45 then
                 pos = groundTrace.endpos
                 vel = Vector3(vel.x, vel.y, 0)
+                onGround = true
+            elseif angle < 60 then
+                -- The ground is too steep, we'll slide [TODO]
+                vel = Vector3()
+                onGround = false
+            else
+                -- The ground is too steep, we'll collide
+                local dot = vel:Dot(normal)
+                vel = vel - normal * dot
+                vel.z = 0
+                onGround = true
             end
 
-            onGround = true
         else
             -- We're in the air
             onGround = false
