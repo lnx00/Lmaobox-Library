@@ -140,7 +140,8 @@ function Helpers.Predict(player, t, d)
             local normal = wallTrace.plane
             local angle = math.deg(math.acos(normal:Dot(_vUp)))
 
-            if angle > 50 then
+            -- Check the wall angle
+            if angle > 55 then
                 -- The wall is too steep, we'll collide
                 local dot = vel:Dot(normal)
                 vel = vel - normal * dot
@@ -162,11 +163,11 @@ function Helpers.Predict(player, t, d)
             local normal = groundTrace.plane
             local angle = math.deg(math.acos(normal:Dot(_vUp)))
 
+            -- Check the ground angle
             if angle < 45 then
                 pos = groundTrace.endpos
-                vel = Vector3(vel.x, vel.y, 0)
                 onGround = true
-            elseif angle < 60 then
+            elseif angle < 55 then
                 -- The ground is too steep, we'll slide [TODO]
                 vel = Vector3()
                 onGround = false
@@ -174,10 +175,11 @@ function Helpers.Predict(player, t, d)
                 -- The ground is too steep, we'll collide
                 local dot = vel:Dot(normal)
                 vel = vel - normal * dot
-                vel.z = 0
                 onGround = true
             end
 
+            -- Don't apply gravity if we're on the ground
+            if onGround then vel.z = 0 end
         else
             -- We're in the air
             onGround = false
