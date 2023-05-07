@@ -100,11 +100,11 @@ function Helpers.GetBBox(player)
     }
 end
 
+---@param _out table
 ---@param player WPlayer
 ---@param t integer
 ---@param d number?
----@return { p: Vector3, v: Vector3, g: boolean }[]?
-function Helpers.Predict(player, t, d)
+function Helpers.Predict(_out, player, t, d)
     local gravity = client.GetConVar("sv_gravity")
     local stepSize = player:GetPropFloat("localdata", "m_flStepSize")
     if not gravity or not stepSize then return nil end
@@ -112,12 +112,11 @@ function Helpers.Predict(player, t, d)
     local vStep = Vector3(0, 0, stepSize)
     local shouldHitEntity = function (ent, _) return ent:GetIndex() ~= player:GetIndex() end
 
-    local pred = {
-        [0] = { p = player:GetAbsOrigin(), v = player:EstimateAbsVelocity(), g = player:IsOnGround() }
-    }
+    --_out = _out or {}
+    _out[0] = { p = player:GetAbsOrigin(), v = player:EstimateAbsVelocity(), g = player:IsOnGround() }
 
     for i = 1, t do
-        local last = pred[i - 1]
+        local last = _out[i - 1]
         if not last then return nil end
 
         local pos = last.p + last.v * globals.TickInterval()
@@ -191,10 +190,10 @@ function Helpers.Predict(player, t, d)
         end
 
         -- Add the prediction record
-        pred[i] = { p = pos, v = vel, g = onGround }
+        _out[i] = { p = pos, v = vel, g = onGround }
     end
 
-    return pred
+    --return _out
 end
 
 return Helpers
