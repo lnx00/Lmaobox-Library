@@ -122,16 +122,16 @@ local function Predict(_out, player, t, d)
         -- Add the prediction record
         _out.pos[i], _out.vel[i], _out.onGround[i] = pos, vel, onGround
     end
-
-    --return _out
 end
 
 -- Performs a prediction
 ---@param player WPlayer
 ---@param ticks integer
 ---@param deviation number?
+---@return PredictionResult
 function Prediction:Perform(player, ticks, deviation)
     Predict(self._Result, player, ticks, deviation)
+    return self._Result
 end
 
 return Prediction

@@ -45,9 +45,10 @@ function WPlayer:IsOnGround()
 end
 
 -- Returns the active weapon
----@return WWeapon
+---@return WWeapon?
 function WPlayer:GetActiveWeapon()
-    return WWeapon.FromEntity(self:GetPropEntity("m_hActiveWeapon"))
+    local wpn = self:GetPropEntity("m_hActiveWeapon")
+    return wpn ~= nil and WWeapon.FromEntity(wpn) or nil
 end
 
 ---@return number

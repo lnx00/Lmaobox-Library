@@ -1,5 +1,5 @@
 --[[
-    Global variables for TF2
+    (Deprecated) Global variables for TF2
 ]]
 
 ---@class Globals

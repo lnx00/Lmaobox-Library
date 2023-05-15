@@ -46,9 +46,16 @@ function WEntity:Unwrap()
     return self.Entity
 end
 
+-- Returns if the entities are equal (same index)
 ---@param other WEntity|Entity
 function WEntity:Equals(other)
     return self:GetIndex() == other:GetIndex()
+end
+
+-- Returns the distance to the given entity
+---@param other WEntity|Entity
+function WEntity:DistTo(other)
+    return (other:GetAbsOrigin() - self:GetAbsOrigin()):Length()
 end
 
 ---@return number
