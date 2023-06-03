@@ -62,6 +62,12 @@ function WPlayer:GetObserverTarget()
     return WPlayer.FromEntity(self:GetPropEntity("m_hObserverTarget"))
 end
 
+-- Returns when the player can attack again
+---@return number
+function WPlayer:GetNextAttack()
+    return self:GetPropFloat("m_flNextAttack")
+end
+
 -- Returns the position of the hitbox as a Vector3
 ---@param hitboxID number
 ---@return Vector3

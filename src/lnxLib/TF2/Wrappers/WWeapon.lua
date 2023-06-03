@@ -46,6 +46,11 @@ function WWeapon:GetDefIndex()
     return self:GetPropInt("m_iItemDefinitionIndex")
 end
 
+---@return number
+function WWeapon:GetNextPrimaryAttack()
+    return self:GetPropFloat("m_flNextPrimaryAttack")
+end
+
 ---@return table<number, number>?
 function WWeapon:GetProjectileInfo()
     local defIndex = self:GetDefIndex()
