@@ -10,6 +10,15 @@ local WWeapon = {}
 WWeapon.__index = WWeapon
 setmetatable(WWeapon, WEntity)
 
+local projInfo = {
+    [17] = { 1000, 0.2 }, -- Syringe Gun
+    [18] = { 1100, 0 }, -- Rocket Launcher
+    [19] = { 1216, 0.5 }, -- Grenade Launcher
+    [56] = { 2600, 0.1 }, -- Huntsman (Maximum charge only)
+    [127] = { 1980, 0 }, -- Direct Hit
+    [414] = { 1540, 0 }, -- Liberty Launcher
+}
+
 --[[ Contructors ]]
 
 -- Creates a WWeapon from a given native Entity
@@ -35,6 +44,12 @@ end
 ---@return number
 function WWeapon:GetDefIndex()
     return self:GetPropInt("m_iItemDefinitionIndex")
+end
+
+---@return table<number, number>?
+function WWeapon:GetProjectileInfo()
+    local defIndex = self:GetDefIndex()
+    return projInfo[defIndex]
 end
 
 return WWeapon
