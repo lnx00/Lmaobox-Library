@@ -70,10 +70,10 @@ end
 
 -- Returns the position of the hitbox as a Vector3
 ---@param hitboxID number
----@return Vector3
+---@return Vector3?
 function WPlayer:GetHitboxPos(hitboxID)
     local hitbox = self:GetHitboxes()[hitboxID]
-    if not hitbox then return Vector3(0, 0, 0) end
+    if not hitbox then return nil end
 
     return (hitbox[1] + hitbox[2]) * 0.5
 end

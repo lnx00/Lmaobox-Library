@@ -10,13 +10,29 @@ local WWeapon = {}
 WWeapon.__index = WWeapon
 setmetatable(WWeapon, WEntity)
 
+local piGroups = {
+    RocketLauncher = { 1100, 0 },
+    DirectHit = { 1980, 0 },
+    LibertyLauncher = { 1540, 0 },
+    GrenadeLauncher = { 1216.6, 0.5 },
+    Electric = { 1200, 0 },
+    LooseCannon = { 1453.9, 0.5 },
+    LochnLoad = { 1513.3, 0 },
+    Bolts = { 2400, 0.2 },
+    DragonsFury = { 3000, 0.2 },
+    FlameThrower = { 1000, 0.2 },
+    Flare = { 2000, 0.3 },
+    Throwable = { 3000, 0.2 },
+    Syringe = { 1000, 0.2 }
+}
+
 local projInfo = {
-    [17] = { 1000, 0.2 }, -- Syringe Gun
-    [18] = { 1100, 0 }, -- Rocket Launcher
-    [19] = { 1216, 0.5 }, -- Grenade Launcher
-    [56] = { 2600, 0.1 }, -- Huntsman (Maximum charge only)
-    [127] = { 1980, 0 }, -- Direct Hit
-    [414] = { 1540, 0 }, -- Liberty Launcher
+    [17] = piGroups.Syringe, -- Syringe Gun
+    [18] = piGroups.RocketLauncher, -- Rocket Launcher
+    [205] = piGroups.RocketLauncher, -- Rocket Launcher
+    [127] = piGroups.DirectHit, -- Direct Hit
+    [19] = piGroups.GrenadeLauncher, -- Grenade Launcher
+    [414] = piGroups.LibertyLauncher, -- Liberty Launcher
 }
 
 --[[ Contructors ]]
@@ -49,6 +65,11 @@ end
 ---@return number
 function WWeapon:GetNextPrimaryAttack()
     return self:GetPropFloat("m_flNextPrimaryAttack")
+end
+
+---@return number
+function WWeapon:GetChargeTime()
+    return self:GetPropFloat("m_flChargeBeginTime")
 end
 
 ---@return table<number, number>?
