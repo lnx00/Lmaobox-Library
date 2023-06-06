@@ -29,9 +29,10 @@ local piGroups = {
 local projInfo = {
     [17] = piGroups.Syringe, -- Syringe Gun
     [18] = piGroups.RocketLauncher, -- Rocket Launcher
-    [205] = piGroups.RocketLauncher, -- Rocket Launcher
-    [127] = piGroups.DirectHit, -- Direct Hit
     [19] = piGroups.GrenadeLauncher, -- Grenade Launcher
+    [127] = piGroups.DirectHit, -- Direct Hit
+    [205] = piGroups.RocketLauncher, -- Rocket Launcher
+    [206] = piGroups.GrenadeLauncher,
     [414] = piGroups.LibertyLauncher, -- Liberty Launcher
 }
 
