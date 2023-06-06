@@ -1,7 +1,6 @@
 ---@class Utils
 ---@field public Conversion Conversion
 ---@field public FileSystem FileSystem
----@field public Web Web
 ---@field public Input Input
 ---@field public KeyHelper KeyHelper
 ---@field public Logger Logger
@@ -12,7 +11,6 @@
 local Utils = {
     Conversion = require("lnxLib/Utils/Conversion"),
     FileSystem = require("lnxLib/Utils/FileSystem"),
-    Web = require("lnxLib/Utils/Web"),
     Input = require("lnxLib/Utils/Input"),
     KeyHelper = require("lnxLib/Utils/KeyHelper"),
     KeyValues = require("lnxLib/Utils/KeyValues"),
