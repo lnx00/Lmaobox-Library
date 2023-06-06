@@ -110,6 +110,7 @@ end
 ---@param speed number
 ---@param gravity number
 ---@param t integer
+---@return { pos : Vector3[], vel: Vector3[] }?
 function Prediction.Projectile(player, speed, gravity, t)
     local shootPos = player:GetEyePos()
     local shootAngles = player:GetEyeAngles()
