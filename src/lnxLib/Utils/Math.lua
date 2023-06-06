@@ -74,4 +74,34 @@ function Math.AngleFov(vFrom, vTo)
     return fov
 end
 
+---@param origin Vector3
+---@param target Vector3
+---@param speed number
+---@param gravity number
+---@return EulerAngles?
+function Math.SolveProjectile(origin, target, speed, gravity)
+    local _, sv_gravity = client.GetConVar("sv_gravity")
+    local v = target - origin
+    local dx = v:Length2D()
+    local dy = v.z
+    local v0 = speed
+
+    local g = sv_gravity * gravity
+    if g == 0 then
+        -- Straight line
+        return Math.PositionAngles(origin, target)
+    else
+        -- Ballistic arc
+        local root = v0 * v0 * v0 * v0 - g * (g * dx * dx + 2 * dy * v0 * v0)
+        if root < 0 then return nil end
+
+        local pitch = math.atan((v0 * v0 - math.sqrt(root)) / (g * dx))
+        local yaw = math.atan(v.y, v.x)
+
+        if isNaN(pitch) or isNaN(yaw) then return nil end
+
+        return EulerAngles(pitch * -M_RADPI, yaw * M_RADPI, 0)
+    end
+end
+
 return Math
