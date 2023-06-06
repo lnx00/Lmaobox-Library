@@ -78,20 +78,22 @@ end
 ---@param target Vector3
 ---@param speed number
 ---@param gravity number
----@return EulerAngles?
+---@return { angles: EulerAngles, time : number }?
 function Math.SolveProjectile(origin, target, speed, gravity)
     local _, sv_gravity = client.GetConVar("sv_gravity")
     local v = target - origin
-    local dx = v:Length2D()
-    local dy = v.z
     local v0 = speed
 
     local g = sv_gravity * gravity
     if g == 0 then
         -- Straight line
-        return Math.PositionAngles(origin, target)
+        local angles = Math.PositionAngles(origin, target)
+        local time = v:Length() / v0
+        return { angles = angles, time = time }
     else
         -- Ballistic arc
+        local dx = v:Length2D()
+        local dy = v.z
         local root = v0 * v0 * v0 * v0 - g * (g * dx * dx + 2 * dy * v0 * v0)
         if root < 0 then return nil end
 
@@ -100,7 +102,9 @@ function Math.SolveProjectile(origin, target, speed, gravity)
 
         if isNaN(pitch) or isNaN(yaw) then return nil end
 
-        return EulerAngles(pitch * -M_RADPI, yaw * M_RADPI, 0)
+        local angles = EulerAngles(pitch * -M_RADPI, yaw * M_RADPI)
+        local time =  dx / (math.cos(pitch) * v0)
+        return { angles = angles, time = time }
     end
 end
 
