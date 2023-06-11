@@ -69,8 +69,13 @@ function WWeapon:GetNextPrimaryAttack()
 end
 
 ---@return number
-function WWeapon:GetChargeTime()
+function WWeapon:GetChargeBeginTime()
     return self:GetPropFloat("m_flChargeBeginTime")
+end
+
+---@return number
+function WWeapon:GetChargedDamage()
+    return self:GetPropFloat("m_flChargedDamage")
 end
 
 ---@return table<number, number>?
