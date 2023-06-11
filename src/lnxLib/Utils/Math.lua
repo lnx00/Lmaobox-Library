@@ -74,20 +74,21 @@ function Math.AngleFov(vFrom, vTo)
     return fov
 end
 
+-- Calculates the angle needed to hit a target with a projectile
 ---@param origin Vector3
----@param target Vector3
+---@param dest Vector3
 ---@param speed number
 ---@param gravity number
 ---@return { angles: EulerAngles, time : number }?
-function Math.SolveProjectile(origin, target, speed, gravity)
+function Math.SolveProjectile(origin, dest, speed, gravity)
     local _, sv_gravity = client.GetConVar("sv_gravity")
-    local v = target - origin
+    local v = dest - origin
     local v0 = speed
 
     local g = sv_gravity * gravity
     if g == 0 then
         -- Straight line
-        local angles = Math.PositionAngles(origin, target)
+        local angles = Math.PositionAngles(origin, dest)
         local time = v:Length() / v0
         return { angles = angles, time = time }
     else
