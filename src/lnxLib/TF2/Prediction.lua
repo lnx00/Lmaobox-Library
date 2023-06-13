@@ -14,7 +14,8 @@ function Prediction.Player(player, t, d)
     local vUp = Vector3(0, 0, 1)
     local vHitbox = { Vector3(-20, -20, 0), Vector3(20, 20, 80) }
     local vStep = Vector3(0, 0, stepSize)
-    local shouldHitEntity = function (_, _) return false end
+    local idx = player:GetIndex()
+    local shouldHitEntity = function (e, _) return e:GetIndex() ~= idx end
 
     -- Add the current record
     local _out = {
