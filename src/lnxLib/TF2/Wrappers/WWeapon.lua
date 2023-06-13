@@ -5,6 +5,9 @@
 ---@type WEntity
 local WEntity = require("lnxLib/TF2/Wrappers/WEntity")
 
+---@type Math
+local Math = require("lnxLib/Utils/Math")
+
 ---@class WWeapon : WEntity
 local WWeapon = {}
 WWeapon.__index = WWeapon
@@ -27,13 +30,14 @@ local piGroups = {
 }
 
 local projInfo = {
-    [17] = piGroups.Syringe, -- Syringe Gun
-    [18] = piGroups.RocketLauncher, -- Rocket Launcher
-    [19] = piGroups.GrenadeLauncher, -- Grenade Launcher
-    [127] = piGroups.DirectHit, -- Direct Hit
-    [205] = piGroups.RocketLauncher, -- Rocket Launcher
-    [206] = piGroups.GrenadeLauncher,
-    [414] = piGroups.LibertyLauncher, -- Liberty Launcher
+    [TF_WEAPON_ROCKETLAUNCHER] = { 1100, 0 }, -- Rocket Launcher
+    [TF_WEAPON_DIRECTHIT] = { 1980, 0 }, -- Direct Hit
+    [TF_WEAPON_GRENADELAUNCHER] = { 1216.6, 0.5 }, -- Grenade Launcher
+    [TF_WEAPON_PIPEBOMBLAUNCHER] = { 1100, 0 }, -- Rocket Launcher
+    [TF_WEAPON_SYRINGEGUN_MEDIC] = { 1000, 0.2 }, -- Syringe Gun
+    [TF_WEAPON_FLAMETHROWER] = { 1000, 0.2, 0.33 }, -- Flame Thrower
+    [TF_WEAPON_FLAREGUN] = { 2000, 0.3 }, -- Flare Gun
+    [TF_WEAPON_CLEAVER] = { 3000, 0.2 }, -- Flying Guillotine
 }
 
 --[[ Contructors ]]
@@ -80,8 +84,23 @@ end
 
 ---@return table<number, number>?
 function WWeapon:GetProjectileInfo()
+    local id = self:GetWeaponID()
     local defIndex = self:GetDefIndex()
-    return projInfo[defIndex]
+
+    if id == TF_WEAPON_COMPOUND_BOW then
+        local charge = globals.CurTime() - self:GetChargeBeginTime()
+        return { Math.RemapValClamped(charge, 0.0, 1.0, 1800, 2600),
+                 Math.RemapValClamped(charge, 0.0, 1.0, 0.5, 0.1) }
+    elseif id == TF_WEAPON_PIPEBOMBLAUNCHER then
+        local charge = globals.CurTime() - self:GetChargeBeginTime()
+        return { Math.RemapValClamped(charge, 0.0, 4.0, 900, 2400),
+                 Math.RemapValClamped(charge, 0.0, 4.0, 0.5, 0.0) }
+    elseif defIndex == 414 then
+        -- Liberty Launcher
+        return { 1540, 0 }
+    end
+
+    return projInfo[id]
 end
 
 return WWeapon
