@@ -13,23 +13,15 @@ local WWeapon = {}
 WWeapon.__index = WWeapon
 setmetatable(WWeapon, WEntity)
 
-local piGroups = {
-    RocketLauncher = { 1100, 0 },
-    DirectHit = { 1980, 0 },
-    LibertyLauncher = { 1540, 0 },
-    GrenadeLauncher = { 1216.6, 0.5 },
-    Electric = { 1200, 0 },
-    LooseCannon = { 1453.9, 0.5 },
-    LochnLoad = { 1513.3, 0 },
-    Bolts = { 2400, 0.2 },
-    DragonsFury = { 3000, 0.2 },
-    FlameThrower = { 1000, 0.2 },
-    Flare = { 2000, 0.3 },
-    Throwable = { 3000, 0.2 },
-    Syringe = { 1000, 0.2 }
+-- Projectile info by definition index
+local projInfo = {
+    [414] = { 1540, 0 }, -- Liberty Launcher
+    [308] = { 1513.3, 0.4 }, -- Loch n' Load
+    [595] = { 3000, 0.2 }, -- Manmelter
 }
 
-local projInfo = {
+-- Projectile info by weapon ID
+local projInfoID = {
     [TF_WEAPON_ROCKETLAUNCHER] = { 1100, 0 }, -- Rocket Launcher
     [TF_WEAPON_DIRECTHIT] = { 1980, 0 }, -- Direct Hit
     [TF_WEAPON_GRENADELAUNCHER] = { 1216.6, 0.5 }, -- Grenade Launcher
@@ -38,6 +30,9 @@ local projInfo = {
     [TF_WEAPON_FLAMETHROWER] = { 1000, 0.2, 0.33 }, -- Flame Thrower
     [TF_WEAPON_FLAREGUN] = { 2000, 0.3 }, -- Flare Gun
     [TF_WEAPON_CLEAVER] = { 3000, 0.2 }, -- Flying Guillotine
+    [TF_WEAPON_CROSSBOW] = { 2400, 0.2 }, -- Crusader's Crossbow
+    [TF_WEAPON_SHOTGUN_BUILDING_RESCUE] = { 2400, 0.2 }, -- Rescue Ranger
+    [TF_WEAPON_CANNON] = { 1453.9, 0.4 }, -- Loose Cannon
 }
 
 --[[ Contructors ]]
@@ -82,11 +77,13 @@ function WWeapon:GetChargedDamage()
     return self:GetPropFloat("m_flChargedDamage")
 end
 
+-- Returns the projectile speed and gravity of the weapon
 ---@return table<number, number>?
 function WWeapon:GetProjectileInfo()
     local id = self:GetWeaponID()
     local defIndex = self:GetDefIndex()
 
+    -- Special cases
     if id == TF_WEAPON_COMPOUND_BOW then
         local charge = globals.CurTime() - self:GetChargeBeginTime()
         return { Math.RemapValClamped(charge, 0.0, 1.0, 1800, 2600),
@@ -95,12 +92,9 @@ function WWeapon:GetProjectileInfo()
         local charge = globals.CurTime() - self:GetChargeBeginTime()
         return { Math.RemapValClamped(charge, 0.0, 4.0, 900, 2400),
                  Math.RemapValClamped(charge, 0.0, 4.0, 0.5, 0.0) }
-    elseif defIndex == 414 then
-        -- Liberty Launcher
-        return { 1540, 0 }
     end
 
-    return projInfo[id]
+    return projInfo[defIndex] or projInfoID[id]
 end
 
 return WWeapon

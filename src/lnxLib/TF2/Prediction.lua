@@ -14,7 +14,6 @@ function Prediction.Player(player, t, d)
     local vUp = Vector3(0, 0, 1)
     local vHitbox = { Vector3(-20, -20, 0), Vector3(20, 20, 80) }
     local vStep = Vector3(0, 0, stepSize)
-    local idx = player:GetIndex()
     local shouldHitEntity = function (e, _) return false end
 
     -- Add the current record
@@ -102,7 +101,6 @@ function Prediction.Player(player, t, d)
         _out.pos[i], _out.vel[i], _out.onGround[i] = pos, vel, onGround
     end
 
-    --shouldHitEntity = nil
     return _out
 end
 
@@ -132,6 +130,8 @@ function Prediction.Projectile(player, speed, gravity, t)
 
         -- Apply gravity
         vel.z = vel.z - gravity * globals.TickInterval()
+
+        -- TODO: Check for collisions
 
         -- Add the prediction record
         _out.pos[i], _out.vel[i] = pos, vel
