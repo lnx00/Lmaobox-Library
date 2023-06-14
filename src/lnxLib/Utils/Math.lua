@@ -13,10 +13,9 @@ local function isNaN(x) return x ~= x end
 ---@param angle number
 ---@return number
 function Math.NormalizeAngle(angle)
+    angle = angle % 360
     if angle > 180 then
         angle = angle - 360
-    elseif angle < -180 then
-        angle = angle + 360
     end
 
     return angle
