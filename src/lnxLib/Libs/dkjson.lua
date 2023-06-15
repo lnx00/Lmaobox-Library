@@ -36,6 +36,8 @@ SOFTWARE.
 
 --]==]
 
+---@alias StateTable { indent : boolean?, keyorder : integer[]?, level : integer?, buffer : string[]?, bufferlen : integer?, tables : table[]?, exception : function? }
+
 -- global dependencies:
 local pairs, type, tostring, tonumber, getmetatable, setmetatable, rawset =
     pairs, type, tostring, tonumber, getmetatable, setmetatable, rawset
@@ -243,7 +245,7 @@ end
 encode2 = function(value, indent, level, buffer, buflen, tables, globalorder, state)
   local valtype = type(value)
   local valmeta = getmetatable(value)
-  valmeta = type(valmeta) == 'table' and valmeta  -- only tables
+  valmeta = type(valmeta) == 'table' and valmeta -- only tables
   local valtojson = valmeta and valmeta.__tojson
   if valtojson then
     if tables[value] then
@@ -343,6 +345,10 @@ encode2 = function(value, indent, level, buffer, buflen, tables, globalorder, st
   return buflen
 end
 
+---Encodes a lua table to a JSON string.
+---@param value any
+---@param state StateTable
+---@return string|boolean
 function json.encode(value, state)
   state = state or {}
   local oldbuffer = state.buffer
@@ -588,9 +594,9 @@ local function optionalmetatables(...)
 end
 
 ---@param str string
----@param pos any
----@param nullval any
----@param ... any
+---@param pos integer?
+---@param nullval any?
+---@param ... table?
 function json.decode(str, pos, nullval, ...)
   local objectmeta, arraymeta = optionalmetatables(...)
   return scanvalue(str, pos, nullval, objectmeta, arraymeta)
