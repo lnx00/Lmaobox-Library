@@ -84,7 +84,7 @@ function WPlayerResource:GetHealth(index)
     return self:GetPropDataTableInt("m_iHealth")[index + 1]
 end
 
--- Returns the account ID of the given player
+-- Returns the account ID of the given player (SteamID 3)
 ---@param index number
 ---@return integer
 function WPlayerResource:GetAccountID(index)
