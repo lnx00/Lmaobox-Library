@@ -1,6 +1,7 @@
 ---@class TF2
 ---@field public Helpers Helpers
 ---@field public Prediction Prediction
+---@field public PlayerResource PlayerResource
 ---@field public WPlayer WPlayer
 ---@field public WEntity WEntity
 ---@field public WWeapon WWeapon
@@ -8,6 +9,7 @@
 local TF2 = {
     Helpers = require("lnxLib/TF2/Helpers"),
     Prediction = require("lnxLib/TF2/Prediction"),
+    PlayerResource = require("lnxLib/TF2/PlayerResource"),
 
     WPlayer = require("lnxLib/TF2/Wrappers/WPlayer"),
     WEntity = require("lnxLib/TF2/Wrappers/WEntity"),
