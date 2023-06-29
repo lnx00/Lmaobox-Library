@@ -5,6 +5,8 @@
 ---@type WEntity
 local WEntity = require("lnxLib/TF2/Wrappers/WEntity")
 
+--- Deprecated! Use TF2.PlayerResource instead.
+---@deprecated
 ---@class WPlayerResource : WEntity
 local WPlayerResource = {}
 WPlayerResource.__index = WPlayerResource
@@ -13,6 +15,7 @@ setmetatable(WPlayerResource, WEntity)
 --[[ Contructors ]]
 
 -- Creates a WPlayerResource from a given native Entity
+---@deprecated
 ---@param entity Entity
 ---@return WPlayerResource
 function WPlayerResource.FromEntity(entity)
@@ -25,6 +28,7 @@ function WPlayerResource.FromEntity(entity)
 end
 
 -- Returns the current player resource entity
+---@deprecated
 ---@return WPlayerResource?
 function WPlayerResource.Get()
     local pr = entities.GetPlayerResources()
