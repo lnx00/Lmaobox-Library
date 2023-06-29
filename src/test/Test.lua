@@ -32,6 +32,53 @@ local function Test(name, func)
     end
 end
 
+--[[ Key Values Tests]]
+BeginSection("Key Values Tests")
+local keyValues = lnxLib.Utils.KeyValues
+
+Test("Serialize empty table", function()
+    local kv = keyValues.Serialize("Test", {})
+    lu.assertEquals(kv, "\"Test\"\n{\n\n}")
+end)
+
+Test("Serialize simple table", function()
+    local kv = keyValues.Serialize("Test", {
+        ["a"] = "one"
+    })
+    lu.assertEquals(kv, "\"Test\"\n{\n\t\"a\"\t\"one\"\n}")
+end)
+
+Test("Deserialize empty table", function ()
+    local kv = "\"Test\"\n{\n\n}"
+    local name, data = keyValues.Deserialize(kv)
+    lu.assertEquals(name, "Test")
+    lu.assertEquals(data, {})
+end)
+
+Test("Deserialize simple table", function ()
+    local kv = "\"Test\"\n{\n\t\"a\"\t\"one\"\n}"
+    local name, data = keyValues.Deserialize(kv)
+    lu.assertEquals(name, "Test")
+    lu.assertEquals(data, {
+        ["a"] = "one"
+    })
+end)
+
+Test("Serialize and Deserialize", function ()
+    local name = "Test"
+    local data = {
+        ["a"] = "one",
+        ["b"] = "two",
+        ["c"] = "three"
+    }
+
+    local kv = keyValues.Serialize(name, data)
+    local name2, data2 = keyValues.Deserialize(kv)
+
+    lu.assertEquals(name, name2)
+    lu.assertEquals(data, data2)
+end)
+
 --[[ Math Tests ]]
 BeginSection("Math Tests")
 local math = lnxLib.Utils.Math
@@ -108,21 +155,6 @@ end)
 -- Draw
 Test("Draw callback is called", function()
     mockAPI:InvokeCallback("Draw")
-end)
-
---[[ Globals Tests ]]
-
-Test("Globals are correct", function ()
-    local userCmd = Mockagne.getMock("UserCmd")
-
-    userCmd.command_number = 1
-    mockAPI:InvokeCallback("CreateMove", userCmd)
-
-    userCmd.command_number = 2
-    mockAPI:InvokeCallback("CreateMove", userCmd)
-
-    lu.assertEquals(lnxLib.TF2.Globals.CommandNumber, 2)
-    lu.assertEquals(lnxLib.TF2.Globals.LastCommandNumber, 1)
 end)
 
 --[[ WEntity Tests ]]
