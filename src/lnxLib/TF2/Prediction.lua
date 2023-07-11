@@ -1,12 +1,15 @@
 ---@class Prediction
 local Prediction = {}
 
--- Predict the position of a player
+local fFalse = function () return false end
+
+-- [WIP] Predict the position of a player
 ---@param player WPlayer
 ---@param t integer
 ---@param d number?
+---@param shouldHitEntity fun(entity: WEntity, contentsMask: integer): boolean?
 ---@return { pos : Vector3[], vel: Vector3[], onGround: boolean[] }?
-function Prediction.Player(player, t, d)
+function Prediction.Player(player, t, d, shouldHitEntity)
     local gravity = client.GetConVar("sv_gravity")
     local stepSize = player:GetPropFloat("localdata", "m_flStepSize")
     if not gravity or not stepSize then return nil end
@@ -14,7 +17,7 @@ function Prediction.Player(player, t, d)
     local vUp = Vector3(0, 0, 1)
     local vHitbox = { Vector3(-20, -20, 0), Vector3(20, 20, 80) }
     local vStep = Vector3(0, 0, stepSize)
-    local shouldHitEntity = function (e, _) return false end
+    shouldHitEntity = shouldHitEntity or fFalse
 
     -- Add the current record
     local _out = {
@@ -104,7 +107,7 @@ function Prediction.Player(player, t, d)
     return _out
 end
 
--- Predicts the position of a projectile
+-- [WIP] Predicts the position of a projectile
 ---@param player WPlayer
 ---@param speed number
 ---@param gravity number
