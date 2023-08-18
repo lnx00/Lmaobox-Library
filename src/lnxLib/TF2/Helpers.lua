@@ -59,7 +59,7 @@ end
 ---@param to Vector3
 ---@return boolean
 function Helpers.VisPos(target, from, to)
-    local trace = engine.TraceLine(from, to, MASK_SHOT | CONTENTS_GRATE)
+    local trace = engine.TraceLine(from, to,  (0x1|0x4000|0x2000000|0x2|0x4000000|0x40000000) | CONTENTS_GRATE)
     return (trace.entity == target) or (trace.fraction > 0.99)
 end
 
