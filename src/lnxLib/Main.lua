@@ -19,7 +19,7 @@ local lnxLib = {
 
 ---@return number
 function lnxLib.GetVersion()
-    return 0.995
+    return 0.996
 end
 
 --[[ Debugging ]]
