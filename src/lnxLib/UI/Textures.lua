@@ -7,9 +7,6 @@ local Textures = {}
 local byteMap = {}
 for i = 0, 255 do byteMap[i] = string.char(i) end
 
----@type table<string, Texture>
-local textureCache = {}
-
 ---@param color TColor
 ---@return integer, integer, integer, integer
 local function UnpackColor(color)
@@ -21,28 +18,16 @@ end
 ---@param size TSize
 ---@return integer, integer
 local function UnpackSize(size)
-    local w, h = table.unpack(size)
-    w, h = w or 256, h or 256
-    return w, h
-end
-
----@param name string
----@vararg any
----@return string
-local function GetTextureID(name, ...)
-    return table.concat({name, ...})
+    return size[1] or 256, size[2] or 256
 end
 
 -- Creates and caches the texture from RGBA data
----@param id string
 ---@param width integer
 ---@param height integer
 ---@param data table
-local function CreateTexture(id, width, height, data)
+local function CreateTexture(width, height, data)
     local binaryData = table.concat(data)
-    local texture = draw.CreateTextureRGBA(binaryData, width, height)
-    textureCache[id] = texture
-    return texture
+    return draw.CreateTextureRGBA(binaryData, width, height)
 end
 
 -- [PERFORMANCE INTENSIVE] Creates a linear gradient
@@ -50,15 +35,11 @@ end
 ---@param endColor TColor
 ---@param size TSize
 ---@return Texture
+---@nodiscard
 function Textures.LinearGradient(startColor, endColor, size)
     local sR, sG, sB, sA = UnpackColor(startColor)
     local eR, eG, eB, eA = UnpackColor(endColor)
     local w, h = UnpackSize(size)
-
-    -- Check if the texture is already cached
-    local id = GetTextureID("LG", sR, sG, sB, sA, eR, eG, eB, eA, w, h)
-    local cache = textureCache[id]
-    if cache then return cache end
 
     local dataSize = w * h * 4
     local data, bm = {}, byteMap
@@ -76,20 +57,16 @@ function Textures.LinearGradient(startColor, endColor, size)
         i = i + 4
     end
 
-    return CreateTexture(id, w, h, data)
+    return CreateTexture(w, h, data)
 end
 
 -- [PERFORMANCE INTENSIVE] Creates a circle with a given color
 ---@param radius number
 ---@param color table<number, number, number, number>
 ---@return Texture
+---@nodiscard
 function Textures.Circle(radius, color)
     local r, g, b, a = UnpackColor(color)
-
-    -- Check if the texture is already cached
-    local id = GetTextureID("C", r, g, b, a, radius)
-    local cache = textureCache[id]
-    if cache then return cache end
 
     local diameter = radius * 2
     local dataSize = diameter * diameter * 4
@@ -117,7 +94,7 @@ function Textures.Circle(radius, color)
         i = i + 4
     end
 
-    return CreateTexture(id, diameter, diameter, data)
+    return CreateTexture(diameter, diameter, data)
 end
 
 return Textures
