@@ -111,14 +111,14 @@ function Input.GetPressedKeys()
 end
 
 -- Returns if the cursor is in the given bounds
----@param x integer
----@param y integer
+---@param x1 integer
+---@param y1 integer
 ---@param x2 integer
 ---@param y2 integer
 ---@return boolean
-function Input.MouseInBounds(x, y, x2, y2)
+function Input.MouseInBounds(x1, y1, x2, y2)
     local mx, my = table.unpack(input.GetMousePos())
-    return mx >= x and mx <= x2 and my >= y and my <= y2
+    return mx >= x1 and mx <= x2 and my >= y1 and my <= y2
 end
 
 return Input
