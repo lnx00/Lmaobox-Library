@@ -1,9 +1,9 @@
----@class Draw
-local Draw = {}
+---@class Draw3D
+local Draw3D = {}
 
 ---@param min Vector3
 ---@param max Vector3
-function Draw.Box(min, max)
+function Draw3D.Box(min, max)
     -- Vertices
     local vertices = {
         Vector3(min.x, min.y, min.z),
@@ -34,4 +34,13 @@ function Draw.Box(min, max)
     end
 end
 
-return Draw
+function Draw3D.Line(start, finish)
+    start = client.WorldToScreen(start)
+    finish = client.WorldToScreen(finish)
+
+    if start and finish then
+        draw.Line(start[1], start[2], finish[1], finish[2])
+    end
+end
+
+return Draw3D
