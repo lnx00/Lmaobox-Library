@@ -1,6 +1,7 @@
 ---@class Draw3D
 local Draw3D = {}
 
+-- Draws a box in 3D space
 ---@param min Vector3
 ---@param max Vector3
 function Draw3D.Box(min, max)
@@ -34,13 +35,47 @@ function Draw3D.Box(min, max)
     end
 end
 
+-- Draws a line in 3D space
+---@param start Vector3
+---@param finish Vector3
 function Draw3D.Line(start, finish)
-    start = client.WorldToScreen(start)
-    finish = client.WorldToScreen(finish)
+    local screenA = client.WorldToScreen(start)
+    local screenB = client.WorldToScreen(finish)
 
-    if start and finish then
-        draw.Line(start[1], start[2], finish[1], finish[2])
+    if screenA and screenB then
+        draw.Line(screenA[1], screenA[2], screenB[1], screenB[2])
     end
+end
+
+-- Draws a texture rect in 3D space
+---@param texture Texture
+---@param min Vector3
+---@param max Vector3
+function Draw3D.Texture(texture, min, max)
+    -- Vertices
+    local vertices = {
+        Vector3(min.x, min.y, min.z),
+        Vector3(min.x, max.y, min.z),
+        Vector3(max.x, max.y, max.z),
+        Vector3(max.x, min.y, max.z)
+    }
+
+    -- Transform
+    local screen = {}
+    for i = 1, #vertices do
+        screen[i] = client.WorldToScreen(vertices[i])
+        if not screen[i] then return end
+    end
+
+    local texVert = {
+        { screen[1][1], screen[1][2], 0.0, 0.0 },
+        { screen[2][1], screen[2][2], 1.0, 0.0 },
+        { screen[3][1], screen[3][2], 1.0, 1.0 },
+        { screen[4][1], screen[4][2], 0.0, 1.0 }
+    }
+
+    -- Draw
+    draw.TexturedPolygon(texture, texVert, false)
 end
 
 return Draw3D
