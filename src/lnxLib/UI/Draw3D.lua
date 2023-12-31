@@ -48,7 +48,7 @@ function Draw3D.Line(start, finish)
 end
 
 -- Draws a texture rect in 3D space
----@param texture Texture
+---@param texture TextureID
 ---@param min Vector3
 ---@param max Vector3
 function Draw3D.Texture(texture, min, max)
@@ -76,6 +76,50 @@ function Draw3D.Texture(texture, min, max)
 
     -- Draw
     draw.TexturedPolygon(texture, texVert, false)
+end
+
+function Draw3D.TextureBox(texture, min, max)
+    -- Vertices
+    local vertices = {
+        Vector3(min.x, min.y, min.z),
+        Vector3(min.x, max.y, min.z),
+        Vector3(max.x, max.y, min.z),
+        Vector3(max.x, min.y, min.z),
+        Vector3(min.x, min.y, max.z),
+        Vector3(min.x, max.y, max.z),
+        Vector3(max.x, max.y, max.z),
+        Vector3(max.x, min.y, max.z)
+    }
+
+    -- Transform
+    local screen = {}
+    for i = 1, #vertices do
+        screen[i] = client.WorldToScreen(vertices[i])
+    end
+
+    -- Faces
+    local faces = {
+        { 1, 2, 3, 4 }, -- Front
+        { 5, 6, 7, 8 }, -- Back
+        { 1, 2, 6, 5 }, -- Left
+        { 2, 3, 7, 6 }, -- Top
+        { 3, 4, 8, 7 }, -- Right
+        { 4, 1, 5, 8 }  -- Bottom
+    }
+
+    -- Draw
+    for i = 1, 6 do
+        local v1, v2, v3, v4 = screen[faces[i][1]], screen[faces[i][2]], screen[faces[i][3]], screen[faces[i][4]]
+        if v1 and v2 and v3 and v4 then
+            local texVert = {
+                { v1[1], v1[2], 0.0, 0.0 },
+                { v2[1], v2[2], 1.0, 0.0 },
+                { v3[1], v3[2], 1.0, 1.0 },
+                { v4[1], v4[2], 0.0, 1.0 }
+            }
+            draw.TexturedPolygon(texture, texVert, false)
+        end
+    end
 end
 
 return Draw3D

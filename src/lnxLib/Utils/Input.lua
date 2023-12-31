@@ -42,6 +42,13 @@ local KeyNames = {
     [KEY_LEFT] = "LEFT",
     [KEY_DOWN] = "DOWN",
     [KEY_RIGHT] = "RIGHT",
+    [MOUSE_LEFT] = "LMB",
+    [MOUSE_RIGHT] = "RMB",
+    [MOUSE_MIDDLE] = "MMB",
+    [MOUSE_4] = "MOUSE4",
+    [MOUSE_5] = "MOUSE5",
+    [MOUSE_WHEEL_UP] = "MWHEELUP",
+    [MOUSE_WHEEL_DOWN] = "MWHEELDOWN",
 }
 
 -- Contains pairs of keys and their values
@@ -70,27 +77,27 @@ for i = 92, 103 do KeyNames[i] = "F" .. (i - 91) end
 
 -- Returns the name of a keycode
 ---@param key integer
----@return string|nil
+---@return string?
 function Input.GetKeyName(key)
     return KeyNames[key]
 end
 
 -- Returns the string value of a keycode
 ---@param key integer
----@return string|nil
+---@return string?
 function Input.KeyToChar(key)
     return KeyValues[key]
 end
 
 -- Returns the keycode of a string value
 ---@param char string
----@return integer|nil
+---@return integer?
 function Input.CharToKey(char)
     return table.find(KeyValues, string.upper(char))
 end
 
 -- Returns the currently pressed key
----@return integer|nil
+---@return integer?
 function Input.GetPressedKey()
     for i = KEY_FIRST, KEY_LAST do
         if input.IsButtonDown(i) then return i end
