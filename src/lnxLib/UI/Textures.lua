@@ -34,7 +34,7 @@ end
 ---@param startColor TColor
 ---@param endColor TColor
 ---@param size TSize
----@return Texture
+---@return TextureID
 ---@nodiscard
 function Textures.LinearGradient(startColor, endColor, size)
     local sR, sG, sB, sA = UnpackColor(startColor)
@@ -63,7 +63,7 @@ end
 -- [PERFORMANCE INTENSIVE] Creates a circle with a given color
 ---@param radius number
 ---@param color table<number, number, number, number>
----@return Texture
+---@return TextureID
 ---@nodiscard
 function Textures.Circle(radius, color)
     local r, g, b, a = UnpackColor(color)
