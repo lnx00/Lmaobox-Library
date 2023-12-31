@@ -51,7 +51,7 @@ end
 ---@generic K, V
 ---@param t table<K, V>
 ---@param value V
----@return K|nil
+---@return K?
 function table.find(t, value)
     for k, v in pairs(t) do
         if v == value then return k end

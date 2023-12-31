@@ -65,7 +65,7 @@ end
 
 -- Returns the screen bounding box of the player (or nil if the player is not visible)
 ---@param player WPlayer
----@return {x:number, y:number, w:number, h:number}|nil
+---@return {x:number, y:number, w:number, h:number}?
 function Helpers.GetBBox(player)
     local padding = Vector3(0, 0, 10)
     local headPos = player:GetEyePos() + padding

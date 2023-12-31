@@ -6,7 +6,7 @@
 local Helpers = require("lnxLib/TF2/Helpers")
 
 ---@class WEntity : Entity
----@field private Entity Entity|nil
+---@field private Entity Entity?
 local WEntity = {
     Entity = nil
 }
