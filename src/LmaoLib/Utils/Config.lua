@@ -1,8 +1,16 @@
 ---@type FileSystem
 local FileSystem = require("LmaoLib/Utils/FileSystem")
 
----@type Json
-local Json = require("LmaoLib/Libs/dkjson")
+local jsonAvailable, Json = pcall(require, "dkjson")
+
+-- Stub dkjson if it's not available
+if not jsonAvailable then
+    local msg = "dkjson not found, Config system will be unavailable!"
+    Json = {
+        encode = function(...) return "", error(msg) end,
+        decode = function(...) return {}, error(msg) end
+    }
+end
 
 ---@class Config
 ---@field private _Name string

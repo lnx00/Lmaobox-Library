@@ -24,7 +24,7 @@ end
 
 --[[ Debugging ]]
 
--- Unloads the entire library. Useful for debugging
+-- Unloads the entire library. Useful for debugging.
 function UnloadLib()
     LmaoLib.Utils.UnloadPackages("LmaoLib")
 end
