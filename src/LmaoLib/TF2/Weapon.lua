@@ -40,32 +40,32 @@ end
 
 ---@param weapon Entity
 ---@return number
-function Weapon:GetDefIndex(weapon)
+function Weapon.GetDefIndex(weapon)
     return weapon:GetPropInt("m_iItemDefinitionIndex")
 end
 
 ---@param weapon Entity
 ---@return number
-function Weapon:GetNextPrimaryAttack(weapon)
+function Weapon.GetNextPrimaryAttack(weapon)
     return weapon:GetPropFloat("m_flNextPrimaryAttack")
 end
 
 ---@param weapon Entity
 ---@return number
-function Weapon:GetChargeBeginTime(weapon)
+function Weapon.GetChargeBeginTime(weapon)
     return weapon:GetPropFloat("m_flChargeBeginTime")
 end
 
 ---@param weapon Entity
 ---@return number
-function Weapon:GetChargedDamage(weapon)
+function Weapon.GetChargedDamage(weapon)
     return weapon:GetPropFloat("m_flChargedDamage")
 end
 
 -- Returns the projectile speed and gravity of the weapon
 ---@param weapon Entity
 ---@return table<number, number>?
-function Weapon:GetProjectileInfo(weapon)
+function Weapon.GetProjectileInfo(weapon)
     local id = weapon:GetWeaponID()
     local defIndex = weapon:ToInventoryItem():GetDefIndex()
 
