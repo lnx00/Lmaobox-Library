@@ -30,6 +30,22 @@ local projInfoID = {
     [E_WeaponBaseID.TF_WEAPON_CANNON] = { 1453.9, 0.4 }, -- Loose Cannon
 }
 
+-- Projectile info for special cases (e.g. chargeable weapons)
+---@type table<number, function>
+local projInfoSpecial = {
+    [E_WeaponBaseID.TF_WEAPON_COMPOUND_BOW] = function (weapon)
+        local charge = globals.CurTime() - weapon:GetChargeBeginTime()
+        return { Math.RemapValClamped(charge, 0.0, 1.0, 1800, 2600),
+                 Math.RemapValClamped(charge, 0.0, 1.0, 0.5, 0.1) }
+    end,
+
+    [E_WeaponBaseID.TF_WEAPON_PIPEBOMBLAUNCHER] = function (weapon)
+        local charge = globals.CurTime() - weapon:GetChargeBeginTime()
+        return { Math.RemapValClamped(charge, 0.0, 4.0, 900, 2400),
+                 Math.RemapValClamped(charge, 0.0, 4.0, 0.5, 0.0) }
+    end
+}
+
 --[[ Helper functions ]]
 
 ---@param weapon Entity
@@ -70,16 +86,10 @@ function WeaponUtils.GetProjectileInfo(weapon)
     local defIndex = weapon:ToInventoryItem():GetDefIndex()
 
     -- Special cases
-    if id == E_WeaponBaseID.TF_WEAPON_COMPOUND_BOW then
-        local charge = globals.CurTime() - weapon:GetChargeBeginTime()
-        return { Math.RemapValClamped(charge, 0.0, 1.0, 1800, 2600),
-                 Math.RemapValClamped(charge, 0.0, 1.0, 0.5, 0.1) }
-    elseif id == E_WeaponBaseID.TF_WEAPON_PIPEBOMBLAUNCHER then
-        local charge = globals.CurTime() - weapon:GetChargeBeginTime()
-        return { Math.RemapValClamped(charge, 0.0, 4.0, 900, 2400),
-                 Math.RemapValClamped(charge, 0.0, 4.0, 0.5, 0.0) }
-    end
+    local specialInfo = projInfoSpecial[id]
+    if specialInfo then return specialInfo(weapon) end
 
+    -- Regular cases
     return projInfo[defIndex] or projInfoID[id]
 end
 
