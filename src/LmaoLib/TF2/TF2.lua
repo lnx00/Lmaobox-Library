@@ -3,7 +3,7 @@
 ---@field public Prediction Prediction
 ---@field public PlayerResource PlayerResource
 ---@field public Player Player
----@field public WEntity WEntity
+---@field public Entity EntityUtils
 ---@field public Weapon Weapon
 local TF2 = {
     Helpers = require("LmaoLib/TF2/Helpers"),
@@ -11,7 +11,7 @@ local TF2 = {
     PlayerResource = require("LmaoLib/TF2/PlayerResource"),
 
     Player = require("LmaoLib/TF2/Player"),
-    WEntity = require("LmaoLib/TF2/Wrappers/WEntity"),
+    EntityUtils = require("LmaoLib/TF2/Wrappers/Entity"),
     Weapon = require("LmaoLib/TF2/Weapon")
 }
 

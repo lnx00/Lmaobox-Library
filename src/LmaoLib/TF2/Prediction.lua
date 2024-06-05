@@ -9,7 +9,7 @@ local fFalse = function () return false end
 ---@param player Entity
 ---@param t integer
 ---@param d number?
----@param shouldHitEntity fun(entity: WEntity, contentsMask: integer): boolean?
+---@param shouldHitEntity fun(entity: Entity, contentsMask: integer): boolean?
 ---@return { pos : Vector3[], vel: Vector3[], onGround: boolean[] }?
 function Prediction.Player(player, t, d, shouldHitEntity)
     local gravity = client.GetConVar("sv_gravity")
