@@ -3,7 +3,7 @@
 ]]
 
 ---@type Helpers
-local Helpers = require("lnxLib/TF2/Helpers")
+local Helpers = require("LmaoLib/TF2/Helpers")
 
 ---@class WEntity : Entity
 ---@field private Entity Entity?

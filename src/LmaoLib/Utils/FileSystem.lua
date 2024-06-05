@@ -4,7 +4,7 @@
 
 ---@class FileSystem
 local FileSystem = {}
-local WorkDir = engine.GetGameDir() .. "/../lnxLib/"
+local WorkDir = engine.GetGameDir() .. "/../LmaoLib/"
 
 -- Reads a file and returns its contents
 ---@param path string

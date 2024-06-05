@@ -7,9 +7,9 @@ local mockAPI = require("MockAPI.MockAPI")
 Mockagne.when(engine.GetGameDir()).thenAnswer("Test")
 Mockagne.when(globals.RealTime()).thenAnswer(0)
 
----@type lnxLib
-local lnxLib = require("lnxLib.Main")
-print("Testing lnxLib version: " .. lnxLib.GetVersion())
+---@type LmaoLib
+local LmaoLib = require("LmaoLib.Main")
+print("Testing LmaoLib version: " .. LmaoLib.GetVersion())
 
 local function BeginSection(name)
     print(string.format("\n== %s ==", name))
@@ -34,7 +34,7 @@ end
 
 --[[ Key Values Tests]]
 BeginSection("Key Values Tests")
-local keyValues = lnxLib.Utils.KeyValues
+local keyValues = LmaoLib.Utils.KeyValues
 
 Test("Serialize empty table", function()
     local kv = keyValues.Serialize("Test", {})
@@ -81,7 +81,7 @@ end)
 
 --[[ Math Tests ]]
 BeginSection("Math Tests")
-local math = lnxLib.Utils.Math
+local math = LmaoLib.Utils.Math
 
 -- Test NormalizeAngle
 Test("NormalizeAngle does not change 180", function()
@@ -109,7 +109,7 @@ end)
 
 --[[ Conversion Tests ]]
 BeginSection("Conversion Tests")
-local conversion = lnxLib.Utils.Conversion
+local conversion = LmaoLib.Utils.Conversion
 
 -- Test ID3_to_ID64 (As integer)
 Test("ID3_to_ID64 converts a valid ID3 (Integer) to ID64", function()
@@ -167,7 +167,7 @@ Test("Entity methods are called", function ()
     Mockagne.when(entity:IsValid()).thenAnswer(true)
 
     -- Act
-    local wEntity = lnxLib.TF2.WEntity.FromEntity(entity)
+    local wEntity = LmaoLib.TF2.WEntity.FromEntity(entity)
 
     -- Assert
     lu.assertEquals(wEntity:IsValid(), true)
@@ -181,7 +181,7 @@ Test("Extrapolate is correct", function ()
     Mockagne.when(entity:EstimateAbsVelocity()).thenAnswer(Vector3(1, 2, 3))
 
     -- Act
-    local wEntity = lnxLib.TF2.WEntity.FromEntity(entity)
+    local wEntity = LmaoLib.TF2.WEntity.FromEntity(entity)
     local result = wEntity:Extrapolate(2)
 
     -- Assert

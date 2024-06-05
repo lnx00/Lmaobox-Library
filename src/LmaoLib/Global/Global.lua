@@ -1,8 +1,8 @@
-require("lnxLib/Global/Extensions")
-require("lnxLib/Global/Internal")
-require("lnxLib/Global/Stack")
-require("lnxLib/Global/Deque")
-require("lnxLib/Global/DelayedCall")
+require("LmaoLib/Global/Extensions")
+require("LmaoLib/Global/Internal")
+require("LmaoLib/Global/Stack")
+require("LmaoLib/Global/Deque")
+require("LmaoLib/Global/DelayedCall")
 
 -- TraceLine masks
 CONTENTS_EMPTY = 0

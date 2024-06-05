@@ -1,8 +1,8 @@
 ---@type FileSystem
-local FileSystem = require("lnxLib/Utils/FileSystem")
+local FileSystem = require("LmaoLib/Utils/FileSystem")
 
 ---@type Json
-local Json = require("lnxLib/Libs/dkjson")
+local Json = require("LmaoLib/Libs/dkjson")
 
 ---@class Config
 ---@field private _Name string

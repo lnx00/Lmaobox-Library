@@ -1,7 +1,7 @@
 import { bundle } from 'luabundle'
 import * as fs from 'fs';
 
-const bundledLua = bundle('./lnxLib/Main.lua', {
+const bundledLua = bundle('./LmaoLib/Main.lua', {
     metadata: false,
     expressionHandler: (module, expression) => {
 		const start = expression.loc.start
@@ -9,7 +9,7 @@ const bundledLua = bundle('./lnxLib/Main.lua', {
 	}
 });
 
-fs.writeFile('lnxLib.lua', bundledLua, err => {
+fs.writeFile('LmaoLib.lua', bundledLua, err => {
     if (err) {
         console.error(err);
     }

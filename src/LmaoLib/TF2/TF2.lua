@@ -6,13 +6,13 @@
 ---@field public WEntity WEntity
 ---@field public WWeapon WWeapon
 local TF2 = {
-    Helpers = require("lnxLib/TF2/Helpers"),
-    Prediction = require("lnxLib/TF2/Prediction"),
-    PlayerResource = require("lnxLib/TF2/PlayerResource"),
+    Helpers = require("LmaoLib/TF2/Helpers"),
+    Prediction = require("LmaoLib/TF2/Prediction"),
+    PlayerResource = require("LmaoLib/TF2/PlayerResource"),
 
-    WPlayer = require("lnxLib/TF2/Wrappers/WPlayer"),
-    WEntity = require("lnxLib/TF2/Wrappers/WEntity"),
-    WWeapon = require("lnxLib/TF2/Wrappers/WWeapon")
+    WPlayer = require("LmaoLib/TF2/Wrappers/WPlayer"),
+    WEntity = require("LmaoLib/TF2/Wrappers/WEntity"),
+    WWeapon = require("LmaoLib/TF2/Wrappers/WWeapon")
 }
 
 function TF2.Exit()

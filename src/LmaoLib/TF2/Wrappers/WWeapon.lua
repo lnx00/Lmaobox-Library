@@ -3,10 +3,10 @@
 ]]
 
 ---@type WEntity
-local WEntity = require("lnxLib/TF2/Wrappers/WEntity")
+local WEntity = require("LmaoLib/TF2/Wrappers/WEntity")
 
 ---@type Math
-local Math = require("lnxLib/Utils/Math")
+local Math = require("LmaoLib/Utils/Math")
 
 ---@class WWeapon : WEntity
 local WWeapon = {}
