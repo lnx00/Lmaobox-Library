@@ -5,9 +5,6 @@
 ---@type WEntity
 local WEntity = require("LmaoLib/TF2/Wrappers/WEntity")
 
----@type WWeapon
-local WWeapon = require("LmaoLib/TF2/Wrappers/WWeapon")
-
 ---@class WPlayer : WEntity
 local WPlayer = {}
 WPlayer.__index = WPlayer
@@ -45,10 +42,9 @@ function WPlayer:IsOnGround()
 end
 
 -- Returns the active weapon
----@return WWeapon?
+---@return Entity?
 function WPlayer:GetActiveWeapon()
-    local wpn = self:GetPropEntity("m_hActiveWeapon")
-    return wpn ~= nil and WWeapon.FromEntity(wpn) or nil
+    return self:GetPropEntity("m_hActiveWeapon")
 end
 
 ---@return number

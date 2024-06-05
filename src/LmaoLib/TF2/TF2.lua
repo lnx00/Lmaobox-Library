@@ -4,7 +4,7 @@
 ---@field public PlayerResource PlayerResource
 ---@field public WPlayer WPlayer
 ---@field public WEntity WEntity
----@field public WWeapon WWeapon
+---@field public Weapon Weapon
 local TF2 = {
     Helpers = require("LmaoLib/TF2/Helpers"),
     Prediction = require("LmaoLib/TF2/Prediction"),
@@ -12,7 +12,7 @@ local TF2 = {
 
     WPlayer = require("LmaoLib/TF2/Wrappers/WPlayer"),
     WEntity = require("LmaoLib/TF2/Wrappers/WEntity"),
-    WWeapon = require("LmaoLib/TF2/Wrappers/WWeapon")
+    Weapon = require("LmaoLib/TF2/Weapon")
 }
 
 function TF2.Exit()

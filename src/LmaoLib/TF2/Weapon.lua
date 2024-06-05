@@ -2,16 +2,11 @@
     Wrapper Class for Wepaon Entities
 ]]
 
----@type WEntity
-local WEntity = require("LmaoLib/TF2/Wrappers/WEntity")
-
 ---@type Math
 local Math = require("LmaoLib/Utils/Math")
 
----@class WWeapon : WEntity
-local WWeapon = {}
-WWeapon.__index = WWeapon
-setmetatable(WWeapon, WEntity)
+---@class Weapon
+local Weapon = {}
 
 -- Projectile info by definition index
 local projInfo = {
@@ -35,61 +30,52 @@ local projInfoID = {
     [E_WeaponBaseID.TF_WEAPON_CANNON] = { 1453.9, 0.4 }, -- Loose Cannon
 }
 
---[[ Contructors ]]
+--[[ Helper functions ]]
 
--- Creates a WWeapon from a given native Entity
----@param entity Entity
----@return WWeapon
-function WWeapon.FromEntity(entity)
-    assert(entity, "WWeapon.FromEntity: entity is nil")
-    assert(entity:IsWeapon(), "WWeapon.FromEntity: entity is not a weapon")
-
-    local self = setmetatable({}, WWeapon)
-    self:SetEntity(entity)
-
-    return self
-end
-
---[[ Wrapper functions ]]
-
+---@param weapon Entity
 ---@return Entity
-function WWeapon:GetOwner()
-    return self:GetPropEntity("m_hOwner")
+function Weapon.GetOwner(weapon)
+    return weapon:GetPropEntity("m_hOwner")
 end
 
+---@param weapon Entity
 ---@return number
-function WWeapon:GetDefIndex()
-    return self:GetPropInt("m_iItemDefinitionIndex")
+function Weapon:GetDefIndex(weapon)
+    return weapon:GetPropInt("m_iItemDefinitionIndex")
 end
 
+---@param weapon Entity
 ---@return number
-function WWeapon:GetNextPrimaryAttack()
-    return self:GetPropFloat("m_flNextPrimaryAttack")
+function Weapon:GetNextPrimaryAttack(weapon)
+    return weapon:GetPropFloat("m_flNextPrimaryAttack")
 end
 
+---@param weapon Entity
 ---@return number
-function WWeapon:GetChargeBeginTime()
-    return self:GetPropFloat("m_flChargeBeginTime")
+function Weapon:GetChargeBeginTime(weapon)
+    return weapon:GetPropFloat("m_flChargeBeginTime")
 end
 
+---@param weapon Entity
 ---@return number
-function WWeapon:GetChargedDamage()
-    return self:GetPropFloat("m_flChargedDamage")
+function Weapon:GetChargedDamage(weapon)
+    return weapon:GetPropFloat("m_flChargedDamage")
 end
 
 -- Returns the projectile speed and gravity of the weapon
+---@param weapon Entity
 ---@return table<number, number>?
-function WWeapon:GetProjectileInfo()
-    local id = self:GetWeaponID()
-    local defIndex = self:GetDefIndex()
+function Weapon:GetProjectileInfo(weapon)
+    local id = weapon:GetWeaponID()
+    local defIndex = weapon:ToInventoryItem():GetDefIndex()
 
     -- Special cases
     if id == E_WeaponBaseID.TF_WEAPON_COMPOUND_BOW then
-        local charge = globals.CurTime() - self:GetChargeBeginTime()
+        local charge = globals.CurTime() - weapon:GetChargeBeginTime()
         return { Math.RemapValClamped(charge, 0.0, 1.0, 1800, 2600),
                  Math.RemapValClamped(charge, 0.0, 1.0, 0.5, 0.1) }
     elseif id == E_WeaponBaseID.TF_WEAPON_PIPEBOMBLAUNCHER then
-        local charge = globals.CurTime() - self:GetChargeBeginTime()
+        local charge = globals.CurTime() - weapon:GetChargeBeginTime()
         return { Math.RemapValClamped(charge, 0.0, 4.0, 900, 2400),
                  Math.RemapValClamped(charge, 0.0, 4.0, 0.5, 0.0) }
     end
@@ -97,4 +83,4 @@ function WWeapon:GetProjectileInfo()
     return projInfo[defIndex] or projInfoID[id]
 end
 
-return WWeapon
+return Weapon
