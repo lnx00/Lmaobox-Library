@@ -1,10 +1,12 @@
+local Player = require("LmaoLib/TF2/Player")
+
 ---@class Prediction
 local Prediction = {}
 
 local fFalse = function () return false end
 
 -- [WIP] Predict the position of a player
----@param player WPlayer
+---@param player Entity
 ---@param t integer
 ---@param d number?
 ---@param shouldHitEntity fun(entity: WEntity, contentsMask: integer): boolean?
@@ -23,7 +25,7 @@ function Prediction.Player(player, t, d, shouldHitEntity)
     local _out = {
         pos = { [0] = player:GetAbsOrigin() },
         vel = { [0] = player:EstimateAbsVelocity() },
-        onGround = { [0] = player:IsOnGround() }
+        onGround = { [0] = Player.IsOnGround(player) }
     }
 
     -- Perform the prediction
@@ -108,14 +110,14 @@ function Prediction.Player(player, t, d, shouldHitEntity)
 end
 
 -- [WIP] Predicts the position of a projectile
----@param player WPlayer
+---@param player Entity
 ---@param speed number
 ---@param gravity number
 ---@param t integer
 ---@return { pos : Vector3[], vel: Vector3[] }?
 function Prediction.Projectile(player, speed, gravity, t)
-    local shootPos = player:GetEyePos()
-    local shootAngles = player:GetEyeAngles()
+    local shootPos = Player.GetEyePos(player)
+    local shootAngles = Player.GetEyeAngles(player)
     local shootDir = shootAngles:Forward()
     local _, sv_gravity = client.GetConVar("sv_gravity")
     gravity = sv_gravity * gravity

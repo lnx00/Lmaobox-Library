@@ -2,6 +2,9 @@
     Helpers
 ]]
 
+---@type Player
+local Player = require("LmaoLib/TF2/Player")
+
 ---@class Helpers
 local Helpers = {}
 
@@ -64,12 +67,12 @@ function Helpers.VisPos(target, from, to)
 end
 
 -- Returns the screen bounding box of the player (or nil if the player is not visible)
----@param player WPlayer
+---@param player Entity
 ---@return {x:number, y:number, w:number, h:number}?
 function Helpers.GetBBox(player)
     local padding = Vector3(0, 0, 10)
-    local headPos = player:GetEyePos() + padding
     local feetPos = player:GetAbsOrigin() - padding
+    local headPos = Player.GetEyePos(player) + padding
 
     local headScreenPos = client.WorldToScreen(headPos)
     local feetScreenPos = client.WorldToScreen(feetPos)
