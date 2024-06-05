@@ -85,4 +85,27 @@ function PlayerUtils.GetViewPos(player)
     return trace.endpos
 end
 
+-- Returns the screen bounding box of the player (or nil if the player is not visible)
+---@param player Entity
+---@return {x:number, y:number, w:number, h:number}?
+function PlayerUtils.GetBBox(player)
+    local padding = Vector3(0, 0, 10)
+    local feetPos = player:GetAbsOrigin() - padding
+    local headPos = PlayerUtils.GetEyePos(player) + padding
+
+    local headScreenPos = client.WorldToScreen(headPos)
+    local feetScreenPos = client.WorldToScreen(feetPos)
+    if (not headScreenPos) or (not feetScreenPos) then return nil end
+
+    local height = math.abs(headScreenPos[2] - feetScreenPos[2])
+    local width = height * 0.6
+
+    return {
+        x = math.floor(headScreenPos[1] - width * 0.5),
+        y = math.floor(headScreenPos[2]),
+        w = math.floor(width),
+        h = math.floor(height)
+    }
+end
+
 return PlayerUtils
