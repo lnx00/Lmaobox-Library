@@ -10,8 +10,8 @@ local TF2 = {
     Prediction = require("LmaoLib/TF2/Prediction"),
     PlayerResource = require("LmaoLib/TF2/PlayerResource"),
 
+    EntityUtils = require("LmaoLib/TF2/Entities/EntityUtils"),
     PlayerUtils = require("LmaoLib/TF2/Entities/PlayerUtils"),
-    EntityUtils = require("LmaoLib/TF2/Entities/PlayerUtils"),
     WeaponUtils = require("LmaoLib/TF2/Entities/WeaponUtils")
 }
 
