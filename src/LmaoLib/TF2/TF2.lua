@@ -2,17 +2,17 @@
 ---@field public Helpers Helpers
 ---@field public Prediction Prediction
 ---@field public PlayerResource PlayerResource
----@field public Player Player
+---@field public Player PlayerUtils
 ---@field public Entity EntityUtils
----@field public Weapon Weapon
+---@field public Weapon WeaponUtils
 local TF2 = {
     Helpers = require("LmaoLib/TF2/Helpers"),
     Prediction = require("LmaoLib/TF2/Prediction"),
     PlayerResource = require("LmaoLib/TF2/PlayerResource"),
 
-    Player = require("LmaoLib/TF2/Player"),
-    EntityUtils = require("LmaoLib/TF2/Wrappers/Entity"),
-    Weapon = require("LmaoLib/TF2/Weapon")
+    PlayerUtils = require("LmaoLib/TF2/Entities/PlayerUtils"),
+    EntityUtils = require("LmaoLib/TF2/Entities/PlayerUtils"),
+    WeaponUtils = require("LmaoLib/TF2/Entities/WeaponUtils")
 }
 
 function TF2.Exit()
@@ -20,14 +20,14 @@ function TF2.Exit()
 end
 
 -- Returns if the given player is friendly
----@param idx integer
+---@param playerIndex integer
 ---@param inParty boolean?
 ---@return boolean
-function TF2.IsFriend(idx, inParty)
-    if idx == client.GetLocalPlayerIndex() then return true end
+function TF2.IsFriend(playerIndex, inParty)
+    if playerIndex == client.GetLocalPlayerIndex() then return true end
 
     -- Check if the target is a friend or ignored
-    local playerInfo = client.GetPlayerInfo(idx)
+    local playerInfo = client.GetPlayerInfo(playerIndex)
     if steam.IsFriend(playerInfo.SteamID) then return true end
     if playerlist.GetPriority(playerInfo.UserID) < 0 then return true end
 

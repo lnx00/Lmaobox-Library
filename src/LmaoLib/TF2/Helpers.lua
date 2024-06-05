@@ -2,8 +2,7 @@
     Helpers
 ]]
 
----@type Player
-local Player = require("LmaoLib/TF2/Player")
+local PlayerUtils = require("LmaoLib/TF2/Entities/PlayerUtils")
 
 ---@class Helpers
 local Helpers = {}
@@ -72,7 +71,7 @@ end
 function Helpers.GetBBox(player)
     local padding = Vector3(0, 0, 10)
     local feetPos = player:GetAbsOrigin() - padding
-    local headPos = Player.GetEyePos(player) + padding
+    local headPos = PlayerUtils.GetEyePos(player) + padding
 
     local headScreenPos = client.WorldToScreen(headPos)
     local feetScreenPos = client.WorldToScreen(feetPos)

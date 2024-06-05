@@ -5,8 +5,8 @@
 ---@type Math
 local Math = require("LmaoLib/Utils/Math")
 
----@class Weapon
-local Weapon = {}
+---@class WeaponUtils
+local WeaponUtils = {}
 
 -- Projectile info by definition index
 local projInfo = {
@@ -34,38 +34,38 @@ local projInfoID = {
 
 ---@param weapon Entity
 ---@return Entity
-function Weapon.GetOwner(weapon)
+function WeaponUtils.GetOwner(weapon)
     return weapon:GetPropEntity("m_hOwner")
 end
 
 ---@param weapon Entity
 ---@return number
-function Weapon.GetDefIndex(weapon)
+function WeaponUtils.GetDefIndex(weapon)
     return weapon:GetPropInt("m_iItemDefinitionIndex")
 end
 
 ---@param weapon Entity
 ---@return number
-function Weapon.GetNextPrimaryAttack(weapon)
+function WeaponUtils.GetNextPrimaryAttack(weapon)
     return weapon:GetPropFloat("m_flNextPrimaryAttack")
 end
 
 ---@param weapon Entity
 ---@return number
-function Weapon.GetChargeBeginTime(weapon)
+function WeaponUtils.GetChargeBeginTime(weapon)
     return weapon:GetPropFloat("m_flChargeBeginTime")
 end
 
 ---@param weapon Entity
 ---@return number
-function Weapon.GetChargedDamage(weapon)
+function WeaponUtils.GetChargedDamage(weapon)
     return weapon:GetPropFloat("m_flChargedDamage")
 end
 
 -- Returns the projectile speed and gravity of the weapon
 ---@param weapon Entity
 ---@return table<number, number>?
-function Weapon.GetProjectileInfo(weapon)
+function WeaponUtils.GetProjectileInfo(weapon)
     local id = weapon:GetWeaponID()
     local defIndex = weapon:ToInventoryItem():GetDefIndex()
 
@@ -83,4 +83,4 @@ function Weapon.GetProjectileInfo(weapon)
     return projInfo[defIndex] or projInfoID[id]
 end
 
-return Weapon
+return WeaponUtils
