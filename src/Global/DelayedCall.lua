@@ -2,12 +2,12 @@
     Delayed Calls
 ]]
 
----@type { time : number, func : fun() }[]
+---@type { time: number, func: function }[]
 local delayedCalls = {}
 
 -- Calls the given function after the given delay
 ---@param delay number
----@param func fun()
+---@param func function
 function _G.DelayedCall(delay, func)
     table.insert(delayedCalls, {
         time = globals.RealTime() + delay,

@@ -10,7 +10,7 @@ local fFalse = function () return false end
 ---@param t integer
 ---@param d number?
 ---@param shouldHitEntity fun(entity: Entity, contentsMask: integer): boolean?
----@return { pos : Vector3[], vel: Vector3[], onGround: boolean[] }?
+---@return { pos: Vector3[], vel: Vector3[], onGround: boolean[] }?
 function Prediction.Player(player, t, d, shouldHitEntity)
     local gravity = client.GetConVar("sv_gravity")
     local stepSize = player:GetPropFloat("localdata", "m_flStepSize")
@@ -114,7 +114,7 @@ end
 ---@param speed number
 ---@param gravity number
 ---@param t integer
----@return { pos : Vector3[], vel: Vector3[] }?
+---@return { pos: Vector3[], vel: Vector3[] }?
 function Prediction.Projectile(player, speed, gravity, t)
     local shootPos = PlayerUtils.GetEyePos(player)
     local shootAngles = PlayerUtils.GetEyeAngles(player)

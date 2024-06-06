@@ -1,12 +1,9 @@
---[[
-    LmaoLib - An utility library for Lmaobox
-]]
-
 -- Globals
 require("src/Global/Global")
 
 --[[ Main ]]
 
+---A utility library for Lmaobox
 ---@class LmaoLib
 ---@field public TF2 TF2
 ---@field public UI UI
@@ -25,12 +22,12 @@ end
 --[[ Debugging ]]
 
 -- Unloads the entire library. Useful for debugging.
-function UnloadLib()
+function _DEBUG_UNLOAD_LMAOLIB()
     LmaoLib.Utils.UnloadPackages("LmaoLib")
 end
 
 -- Library loaded
-printc(75, 210, 55, 255, string.format("LmaoLib Loaded (v%.3f)", LmaoLib.GetVersion()))
+printc(75, 210, 55, 255, string.format("LmaoLib loaded (v%.3f)", LmaoLib.GetVersion()))
 LmaoLib.UI.Notify.Simple("LmaoLib loaded", string.format("Version: %.3f", LmaoLib.GetVersion()))
 
 Internal.Cleanup()

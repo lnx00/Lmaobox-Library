@@ -3,14 +3,14 @@
 ]]
 
 ---@class Commands
----@field _Commands table<string, fun(args : Deque)>
+---@field _Commands table<string, fun(args: Deque)>
 local Commands = {
     _Commands = {}
 }
 
 -- Register a new command
 ---@param name string
----@param callback fun(args : Deque)
+---@param callback fun(args: Deque)
 function Commands.Register(name, callback)
     if Commands._Commands[name] ~= nil then
         warn(string.format("Command '%s' already exists and will be overwritten!", name))

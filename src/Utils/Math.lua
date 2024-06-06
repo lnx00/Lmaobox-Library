@@ -78,7 +78,7 @@ end
 ---@param dest Vector3
 ---@param speed number
 ---@param gravity number
----@return { angles: EulerAngles, time : number }?
+---@return { angles: EulerAngles, time: number }?
 function Math.SolveProjectile(origin, dest, speed, gravity)
     local _, sv_gravity = client.GetConVar("sv_gravity")
     local v = dest - origin

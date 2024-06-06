@@ -1,6 +1,8 @@
 --[[
     Internal functions for the library.
+    These will only be available during initialization.
 ]]
+
 local oldInternal = rawget(_G, "Internal")
 
 ---@class Internal
@@ -18,5 +20,5 @@ end
 
 -- Removes all internal functions
 function Internal.Cleanup()
-    _G.Internal = oldInternal
+    rawset(_G, "Internal", oldInternal)
 end

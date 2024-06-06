@@ -17,7 +17,7 @@ local FadeTime = 0.3
 ---@class Notify
 local Notify = {}
 
----@alias Notification { ID : integer, Duration : number?, StartTime : number, Title : string, Content : string }
+---@alias Notification { ID: integer, Duration: number?, StartTime: number, Title: string, Content: string }
 ---@type table<integer, Notification>
 local notifications = {}
 local currentID = 0
