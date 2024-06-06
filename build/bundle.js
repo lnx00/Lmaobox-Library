@@ -4,7 +4,7 @@ import * as fs from "fs";
 // Config
 const config = {
     inputFile: "../src/Main.lua",
-    outputFile: "LmaoLib.lua",
+    outputFile: "./out/LmaoLib.lua",
 };
 
 // Bundle the library

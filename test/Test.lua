@@ -8,7 +8,7 @@ Mockagne.when(engine.GetGameDir()).thenAnswer("Test")
 Mockagne.when(globals.RealTime()).thenAnswer(0)
 
 ---@type LmaoLib
-local LmaoLib = require("LmaoLib.Main")
+local LmaoLib = require("build/out/LmaoLib")
 print("Testing LmaoLib version: " .. LmaoLib.GetVersion())
 
 local function BeginSection(name)
@@ -157,32 +157,18 @@ Test("Draw callback is called", function()
     mockAPI:InvokeCallback("Draw")
 end)
 
---[[ WEntity Tests ]]
-BeginSection("WEntity Tests")
-
--- IsValid
-Test("Entity methods are called", function ()
-    -- Arrange
-    local entity = Mockagne.getMock("Entity")
-    Mockagne.when(entity:IsValid()).thenAnswer(true)
-
-    -- Act
-    local wEntity = LmaoLib.TF2.WEntity.FromEntity(entity)
-
-    -- Assert
-    lu.assertEquals(wEntity:IsValid(), true)
-end)
+--[[ EntityUtils Tests ]]
+BeginSection("EntityUtils Tests")
 
 -- Extrapolate
 Test("Extrapolate is correct", function ()
-        -- Arrange
+    -- Arrange
     local entity = Mockagne.getMock("Entity")
     Mockagne.when(entity:GetAbsOrigin()).thenAnswer(Vector3(3, 2, 1))
     Mockagne.when(entity:EstimateAbsVelocity()).thenAnswer(Vector3(1, 2, 3))
 
     -- Act
-    local wEntity = LmaoLib.TF2.WEntity.FromEntity(entity)
-    local result = wEntity:Extrapolate(2)
+    local result = LmaoLib.TF2.EntityUtils.Extrapolate(entity, 2)
 
     -- Assert
     lu.assertEquals(result, Vector3(5, 6, 7))
