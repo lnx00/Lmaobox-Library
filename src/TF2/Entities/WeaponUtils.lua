@@ -3,7 +3,7 @@
 ]]
 
 ---@type Math
-local Math = require("LmaoLib/Utils/Math")
+local Math = require("src/Utils/Math")
 
 ---@class WeaponUtils
 local WeaponUtils = {}

@@ -3,7 +3,7 @@
 ]]
 
 -- Globals
-require("LmaoLib/Global/Global")
+require("src/Global/Global")
 
 --[[ Main ]]
 
@@ -12,9 +12,9 @@ require("LmaoLib/Global/Global")
 ---@field public UI UI
 ---@field public Utils Utils
 local LmaoLib = {
-    TF2 = require("LmaoLib/TF2/TF2"),
-    UI = require("LmaoLib/UI/UI"),
-    Utils = require("LmaoLib/Utils/Utils"),
+    TF2 = require("src/TF2/TF2"),
+    UI = require("src/UI/UI"),
+    Utils = require("src/Utils/Utils"),
 }
 
 ---@return number

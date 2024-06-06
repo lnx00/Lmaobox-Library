@@ -1,5 +1,0 @@
-require("LmaoLib/Global/Extensions")
-require("LmaoLib/Global/Internal")
-require("LmaoLib/Global/Stack")
-require("LmaoLib/Global/Deque")
-require("LmaoLib/Global/DelayedCall")

@@ -6,13 +6,13 @@
 ---@field public Entity EntityUtils
 ---@field public Weapon WeaponUtils
 local TF2 = {
-    Helpers = require("LmaoLib/TF2/Helpers"),
-    Prediction = require("LmaoLib/TF2/Prediction"),
-    PlayerResource = require("LmaoLib/TF2/PlayerResource"),
+    Helpers = require("src/TF2/Helpers"),
+    Prediction = require("src/TF2/Prediction"),
+    PlayerResource = require("src/TF2/PlayerResource"),
 
-    EntityUtils = require("LmaoLib/TF2/Entities/EntityUtils"),
-    PlayerUtils = require("LmaoLib/TF2/Entities/PlayerUtils"),
-    WeaponUtils = require("LmaoLib/TF2/Entities/WeaponUtils")
+    EntityUtils = require("src/TF2/Entities/EntityUtils"),
+    PlayerUtils = require("src/TF2/Entities/PlayerUtils"),
+    WeaponUtils = require("src/TF2/Entities/WeaponUtils")
 }
 
 function TF2.Exit()

@@ -1,5 +1,5 @@
 ---@type FileSystem
-local FileSystem = require("LmaoLib/Utils/FileSystem")
+local FileSystem = require("src/Utils/FileSystem")
 
 local jsonAvailable, Json = pcall(require, "dkjson")
 

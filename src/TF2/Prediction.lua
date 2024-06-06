@@ -1,4 +1,4 @@
-local PlayerUtils = require("LmaoLib/TF2/Entities/PlayerUtils")
+local PlayerUtils = require("src/TF2/Entities/PlayerUtils")
 
 ---@class Prediction
 local Prediction = {}
