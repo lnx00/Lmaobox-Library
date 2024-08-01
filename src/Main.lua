@@ -28,7 +28,6 @@ end
 
 -- Library loaded
 printc(75, 210, 55, 255, string.format("LmaoLib loaded (v%.3f)", LmaoLib.GetVersion()))
-LmaoLib.UI.Notify.Simple("LmaoLib loaded", string.format("Version: %.3f", LmaoLib.GetVersion()))
 
 Internal.Cleanup()
 return LmaoLib

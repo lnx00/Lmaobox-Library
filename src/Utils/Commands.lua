@@ -3,7 +3,7 @@
 ]]
 
 ---@class Commands
----@field _Commands table<string, fun(args: Deque)>
+---@field private _Commands table<string, fun(args: Deque)>
 local Commands = {
     _Commands = {}
 }

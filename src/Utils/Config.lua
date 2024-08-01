@@ -1,9 +1,8 @@
 ---@type FileSystem
 local FileSystem = require("src/Utils/FileSystem")
 
-local jsonAvailable, Json = pcall(require, "dkjson")
-
 -- Stub dkjson if it's not available
+local jsonAvailable, Json = pcall(require, "dkjson")
 if not jsonAvailable then
     local msg = "dkjson not found, Config system will be unavailable!"
     Json = {

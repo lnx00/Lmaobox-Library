@@ -38,6 +38,9 @@ local KeyNames = {
     [KEY_RALT] = "RALT",
     [KEY_LCONTROL] = "LCONTROL",
     [KEY_RCONTROL] = "RCONTROL",
+    [KEY_LWIN] = "LWIN",
+    [KEY_RWIN] = "RWIN",
+    [KEY_APP] = "APP",
     [KEY_UP] = "UP",
     [KEY_LEFT] = "LEFT",
     [KEY_DOWN] = "DOWN",
@@ -70,10 +73,10 @@ local KeyValues = {
 
 -- Fill the tables
 local function D(x) return x, x end
-for i = 1, 10 do KeyNames[i], KeyValues[i] = D(tostring(i - 1)) end -- 0 - 9
-for i = 11, 36 do KeyNames[i], KeyValues[i] = D(string.char(i + 54)) end -- A - Z
-for i = 37, 46 do KeyNames[i], KeyValues[i] = "KP_" .. (i - 37), tostring(i - 37) end -- KP_0 - KP_9
-for i = 92, 103 do KeyNames[i] = "F" .. (i - 91) end
+for i = KEY_0, KEY_9 do KeyNames[i], KeyValues[i] = D(tostring(i - KEY_0)) end -- 0 - 9
+for i = KEY_A, KEY_Z do KeyNames[i], KeyValues[i] = D(string.char(i - KEY_A + 65)) end -- A - Z
+for i = KEY_PAD_0, KEY_PAD_9 do KeyNames[i], KeyValues[i] = "KP_" .. (i - KEY_PAD_0), tostring(i - KEY_PAD_0) end -- KP_0 - KP_9
+for i = KEY_F1, KEY_F1 do KeyNames[i] = "F" .. (i - KEY_F1 + 1) end
 
 -- Returns the name of a keycode
 ---@param key integer
