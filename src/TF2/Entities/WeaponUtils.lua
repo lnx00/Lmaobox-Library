@@ -3,10 +3,10 @@
 ]]
 
 ---@type Math
-local Math = require("src/Utils/Math")
+local mathx = require("src/Utils/Math")
 
 ---@class WeaponUtils
-local WeaponUtils = {}
+local weapon_util = {}
 
 -- Projectile info by definition index
 local projInfo = {
@@ -35,14 +35,14 @@ local projInfoID = {
 local projInfoSpecial = {
     [E_WeaponBaseID.TF_WEAPON_COMPOUND_BOW] = function (weapon)
         local charge = globals.CurTime() - weapon:GetChargeBeginTime()
-        return { Math.remap_clamp(charge, 0.0, 1.0, 1800, 2600),
-                 Math.remap_clamp(charge, 0.0, 1.0, 0.5, 0.1) }
+        return { mathx.remap_clamp(charge, 0.0, 1.0, 1800, 2600),
+                 mathx.remap_clamp(charge, 0.0, 1.0, 0.5, 0.1) }
     end,
 
     [E_WeaponBaseID.TF_WEAPON_PIPEBOMBLAUNCHER] = function (weapon)
         local charge = globals.CurTime() - weapon:GetChargeBeginTime()
-        return { Math.remap_clamp(charge, 0.0, 4.0, 900, 2400),
-                 Math.remap_clamp(charge, 0.0, 4.0, 0.5, 0.0) }
+        return { mathx.remap_clamp(charge, 0.0, 4.0, 900, 2400),
+                 mathx.remap_clamp(charge, 0.0, 4.0, 0.5, 0.0) }
     end
 }
 
@@ -50,38 +50,38 @@ local projInfoSpecial = {
 
 ---@param weapon Entity
 ---@return Entity
-function WeaponUtils.GetOwner(weapon)
+function weapon_util.get_owner(weapon)
     return weapon:GetPropEntity("m_hOwner")
 end
 
 ---@param weapon Entity
 ---@return number
-function WeaponUtils.GetDefIndex(weapon)
+function weapon_util.get_def_index(weapon)
     return weapon:GetPropInt("m_iItemDefinitionIndex")
 end
 
 ---@param weapon Entity
 ---@return number
-function WeaponUtils.GetNextPrimaryAttack(weapon)
+function weapon_util.get_next_primary_attack(weapon)
     return weapon:GetPropFloat("m_flNextPrimaryAttack")
 end
 
 ---@param weapon Entity
 ---@return number
-function WeaponUtils.GetChargeBeginTime(weapon)
+function weapon_util.get_charge_begin_time(weapon)
     return weapon:GetPropFloat("m_flChargeBeginTime")
 end
 
 ---@param weapon Entity
 ---@return number
-function WeaponUtils.GetChargedDamage(weapon)
+function weapon_util.get_charged_dmg(weapon)
     return weapon:GetPropFloat("m_flChargedDamage")
 end
 
 -- Returns the projectile speed and gravity of the weapon
 ---@param weapon Entity
 ---@return table<number, number>?
-function WeaponUtils.GetProjectileInfo(weapon)
+function weapon_util.get_proj_info(weapon)
     local id = weapon:GetWeaponID()
     local defIndex = weapon:ToInventoryItem():GetDefIndex()
 
@@ -93,4 +93,4 @@ function WeaponUtils.GetProjectileInfo(weapon)
     return projInfo[defIndex] or projInfoID[id]
 end
 
-return WeaponUtils
+return weapon_util

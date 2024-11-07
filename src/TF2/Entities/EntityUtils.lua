@@ -3,44 +3,44 @@
 ]]
 
 ---@type Helpers
-local Helpers = require("src/TF2/Helpers")
+local helpers = require("src/TF2/Helpers")
 
 ---@class EntityUtils
 ---@field private Entity Entity?
-local EntityUtils = {}
+local entity_util = {}
 
 -- Returns if the entities are equal (same index)
 ---@param ent Entity
 ---@param other Entity
-function EntityUtils.Equals(ent, other)
+function entity_util.equals(ent, other)
     return ent:GetIndex() == other:GetIndex()
 end
 
 -- Returns the distance to the given entity
 ---@param ent Entity
 ---@param other Entity
-function EntityUtils.DistTo(ent, other)
+function entity_util.dist_to(ent, other)
     return (other:GetAbsOrigin() - ent:GetAbsOrigin()):Length()
 end
 
 ---@param ent Entity
 ---@return number
-function EntityUtils.GetSimulationTime(ent)
+function entity_util.get_sim_time(ent)
     return ent:GetPropFloat("m_flSimulationTime")
 end
 
 ---@param ent Entity
 ---@param t number
 ---@return Vector3
-function EntityUtils.Extrapolate(ent, t)
+function entity_util.extrapolate(ent, t)
     return ent:GetAbsOrigin() + ent:EstimateAbsVelocity() * t
 end
 
 -- Returns whether the entity can be seen from the given entity
 ---@param ent Entity
 ---@param fromEntity Entity
-function EntityUtils.IsVisible(ent, fromEntity)
-    return Helpers.can_see(ent, fromEntity:GetAbsOrigin(), ent:GetAbsOrigin())
+function entity_util.is_visible(ent, fromEntity)
+    return helpers.can_see(ent, fromEntity:GetAbsOrigin(), ent:GetAbsOrigin())
 end
 
-return EntityUtils
+return entity_util
