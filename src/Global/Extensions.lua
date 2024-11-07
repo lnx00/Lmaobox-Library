@@ -35,7 +35,7 @@ end
 ---@generic T : table
 ---@param t T
 ---@return T
-function table.readOnly(t)
+function table.readonly(t)
     local proxy = {}
     setmetatable(proxy, {
         __index = t,

@@ -3,38 +3,38 @@
 ]]
 
 ---@class Commands
----@field private _Commands table<string, fun(args: Deque)>
-local Commands = {
-    _Commands = {}
+---@field private _callbacks table<string, fun(args: Deque)>
+local commands = {
+    _callbacks = {}
 }
 
--- Register a new command
+---Register a new command
 ---@param name string
 ---@param callback fun(args: Deque)
-function Commands.Register(name, callback)
-    if Commands._Commands[name] ~= nil then
+function commands.register(name, callback)
+    if commands._callbacks[name] ~= nil then
         warn(string.format("Command '%s' already exists and will be overwritten!", name))
     end
-    Commands._Commands[name] = callback
+    commands._callbacks[name] = callback
 end
 
--- Unregister a command
+---Unregister a command
 ---@param name string
-function Commands.Unregister(name)
-    Commands._Commands[name] = nil
+function commands.unregister(name)
+    commands._callbacks[name] = nil
 end
 
 ---@param stringCmd StringCmd
 local function OnStringCmd(stringCmd)
     local args = Deque.new(string.split(stringCmd:Get(), " "))
-    local cmd = args:popFront()
-    
-    if Commands._Commands[cmd] then
+    local cmd = args:pop_front()
+
+    if commands._callbacks[cmd] then
         stringCmd:Set("")
-        Commands._Commands[cmd](args)
+        commands._callbacks[cmd](args)
     end
 end
 
 Internal.RegisterCallback("SendStringCmd", OnStringCmd, "Utils", "Commands")
 
-return Commands
+return commands

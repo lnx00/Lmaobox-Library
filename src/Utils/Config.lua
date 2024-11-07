@@ -12,95 +12,93 @@ if not jsonAvailable then
 end
 
 ---@class Config
----@field private _Name string
----@field private _Content table
----@field public AutoSave boolean
----@field public AutoLoad boolean
+---@field private _name string
+---@field private _content table
+---@field public auto_save boolean
+---@field public auto_load boolean
 local Config = {
-    _Name = "",
-    _Content = {},
-    AutoSave = true,
-    AutoLoad = false
+    _name = "",
+    _content = {},
+    auto_save = true,
+    auto_load = false
 }
 Config.__index = Config
-setmetatable(Config, Config)
 
 local ConfigExtension = ".cfg"
-local ConfigFolder = FileSystem.GetWorkDir() .. "/Configs/"
+local ConfigFolder = FileSystem.get_work_dir() .. "/Configs/"
 
--- Creates a new config
+---Creates a new config
 ---@param name string
 ---@return Config
 function Config.new(name)
     local self = setmetatable({}, Config)
-    self._Name = name
-    self._Content = {}
-    self.AutoSave = true
-    self.AutoLoad = false
+    self._name = name
+    self._content = {}
+    self.auto_save = true
+    self.auto_load = false
 
-    self:Load()
+    self:load()
 
     return self
 end
 
--- Returns the path of the config file
+---Returns the path of the config file
 ---@return string
-function Config:GetPath()
-    if not FileSystem.Exists(ConfigFolder) then
+function Config:get_path()
+    if not FileSystem.exists(ConfigFolder) then
         filesystem.CreateDirectory(ConfigFolder)
     end
 
-    return ConfigFolder .. self._Name .. ConfigExtension
+    return ConfigFolder .. self._name .. ConfigExtension
 end
 
--- Loads the config file
+---Loads the config file
 ---@return boolean
-function Config:Load()
-    local configPath = self:GetPath()
-    if not FileSystem.Exists(configPath) then return false end
+function Config:load()
+    local configPath = self:get_path()
+    if not FileSystem.exists(configPath) then return false end
 
-    local content = FileSystem.Read(self:GetPath())
-    self._Content = Json.decode(content, 1, nil)
-    return self._Content ~= nil
+    local content = FileSystem.read(self:get_path())
+    self._content = Json.decode(content, 1, nil)
+    return self._content ~= nil
 end
 
--- Deletes the config file
+---Deletes the config file
 ---@return boolean
-function Config:Delete()
-    local configPath = self:GetPath()
-    if not FileSystem.Exists(configPath) then return false end
+function Config:delete()
+    local configPath = self:get_path()
+    if not FileSystem.exists(configPath) then return false end
 
-    self._Content = {}
-    return FileSystem.Delete(configPath)
+    self._content = {}
+    return FileSystem.delete(configPath)
 end
 
--- Saves the config file
+---Saves the config file
 ---@return boolean
-function Config:Save()
-    local content = Json.encode(self._Content, { indent = true })
-    return FileSystem.Write(self:GetPath(), content)
+function Config:save()
+    local content = Json.encode(self._content, { indent = true })
+    return FileSystem.write(self:get_path(), content)
 end
 
--- Sets a value in the config file
+---Sets a value in the config file
 ---@param key string
 ---@param value any
-function Config:SetValue(key, value)
-    if self.AutoLoad then self:Load() end
-    self._Content[key] = value
-    if self.AutoSave then self:Save() end
+function Config:set(key, value)
+    if self.auto_load then self:load() end
+    self._content[key] = value
+    if self.auto_save then self:save() end
 end
 
--- Retrieves a value from the config file
+---Retrieves a value from the config file
 ---@generic T
 ---@param key string
 ---@param default T
 ---@return T
-function Config:GetValue(key, default)
-    if self.AutoLoad then self:Load() end
-    local value = self._Content[key]
-    if value == nil then return default end
+function Config:get(key, default)
+    if self.auto_load then self:load() end
 
-    return value
+    local value = self._content[key]
+    return (value ~= nil) and value or default
 end
 
 return Config

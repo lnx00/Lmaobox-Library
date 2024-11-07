@@ -35,14 +35,14 @@ local projInfoID = {
 local projInfoSpecial = {
     [E_WeaponBaseID.TF_WEAPON_COMPOUND_BOW] = function (weapon)
         local charge = globals.CurTime() - weapon:GetChargeBeginTime()
-        return { Math.RemapValClamped(charge, 0.0, 1.0, 1800, 2600),
-                 Math.RemapValClamped(charge, 0.0, 1.0, 0.5, 0.1) }
+        return { Math.remap_clamp(charge, 0.0, 1.0, 1800, 2600),
+                 Math.remap_clamp(charge, 0.0, 1.0, 0.5, 0.1) }
     end,
 
     [E_WeaponBaseID.TF_WEAPON_PIPEBOMBLAUNCHER] = function (weapon)
         local charge = globals.CurTime() - weapon:GetChargeBeginTime()
-        return { Math.RemapValClamped(charge, 0.0, 4.0, 900, 2400),
-                 Math.RemapValClamped(charge, 0.0, 4.0, 0.5, 0.0) }
+        return { Math.remap_clamp(charge, 0.0, 4.0, 900, 2400),
+                 Math.remap_clamp(charge, 0.0, 4.0, 0.5, 0.0) }
     end
 }
 

@@ -1,7 +1,7 @@
 local PlayerUtils = require("src/TF2/Entities/PlayerUtils")
 
 ---@class Prediction
-local Prediction = {}
+local pred = {}
 
 local fFalse = function () return false end
 
@@ -11,7 +11,7 @@ local fFalse = function () return false end
 ---@param d number?
 ---@param shouldHitEntity fun(entity: Entity, contentsMask: integer): boolean?
 ---@return { pos: Vector3[], vel: Vector3[], onGround: boolean[] }?
-function Prediction.Player(player, t, d, shouldHitEntity)
+function pred.player(player, t, d, shouldHitEntity)
     local gravity = client.GetConVar("sv_gravity")
     local stepSize = player:GetPropFloat("localdata", "m_flStepSize")
     if not gravity or not stepSize then return nil end
@@ -115,7 +115,7 @@ end
 ---@param gravity number
 ---@param t integer
 ---@return { pos: Vector3[], vel: Vector3[] }?
-function Prediction.Projectile(player, speed, gravity, t)
+function pred.projectile(player, speed, gravity, t)
     local shootPos = PlayerUtils.GetEyePos(player)
     local shootAngles = PlayerUtils.GetEyeAngles(player)
     local shootDir = shootAngles:Forward()
@@ -145,4 +145,4 @@ function Prediction.Projectile(player, speed, gravity, t)
     return _out
 end
 
-return Prediction
+return pred

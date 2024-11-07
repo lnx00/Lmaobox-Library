@@ -1,5 +1,5 @@
 ---@class Textures
-local Textures = {}
+local textures = {}
 
 ---@alias TColor table<integer, integer, integer, integer?>
 ---@alias TSize table<integer, integer>
@@ -9,7 +9,7 @@ for i = 0, 255 do byteMap[i] = string.char(i) end
 
 ---@param color TColor
 ---@return integer, integer, integer, integer
-local function UnpackColor(color)
+local function unpack_color(color)
     local r, g, b, a = table.unpack(color)
     a = a or 255
     return r, g, b, a
@@ -17,7 +17,7 @@ end
 
 ---@param size TSize
 ---@return integer, integer
-local function UnpackSize(size)
+local function unpack_size(size)
     return size[1] or 256, size[2] or 256
 end
 
@@ -25,7 +25,7 @@ end
 ---@param width integer
 ---@param height integer
 ---@param data table
-local function CreateTexture(width, height, data)
+local function create_tex(width, height, data)
     local binaryData = table.concat(data)
     return draw.CreateTextureRGBA(binaryData, width, height)
 end
@@ -36,10 +36,10 @@ end
 ---@param size TSize
 ---@return TextureID
 ---@nodiscard
-function Textures.LinearGradient(startColor, endColor, size)
-    local sR, sG, sB, sA = UnpackColor(startColor)
-    local eR, eG, eB, eA = UnpackColor(endColor)
-    local w, h = UnpackSize(size)
+function textures.linear_gradient(startColor, endColor, size)
+    local sR, sG, sB, sA = unpack_color(startColor)
+    local eR, eG, eB, eA = unpack_color(endColor)
+    local w, h = unpack_size(size)
 
     local dataSize = w * h * 4
     local data, bm = {}, byteMap
@@ -57,7 +57,7 @@ function Textures.LinearGradient(startColor, endColor, size)
         i = i + 4
     end
 
-    return CreateTexture(w, h, data)
+    return create_tex(w, h, data)
 end
 
 -- [PERFORMANCE INTENSIVE] Creates a circle with a given color
@@ -65,8 +65,8 @@ end
 ---@param color table<number, number, number, number>
 ---@return TextureID
 ---@nodiscard
-function Textures.Circle(radius, color)
-    local r, g, b, a = UnpackColor(color)
+function textures.circle(radius, color)
+    local r, g, b, a = unpack_color(color)
 
     local diameter = radius * 2
     local dataSize = diameter * diameter * 4
@@ -94,7 +94,7 @@ function Textures.Circle(radius, color)
         i = i + 4
     end
 
-    return CreateTexture(diameter, diameter, data)
+    return create_tex(diameter, diameter, data)
 end
 
-return Textures
+return textures

@@ -1,13 +1,13 @@
 ---@class UI
----@field public Fonts Fonts
----@field public Draw3D Draw3D
----@field public Textures Textures
----@field public Notify Notify
-local UI = {
-    Fonts = require("src/UI/Fonts"),
-    Draw3D = require("src/UI/Draw3D"),
-    Textures = require("src/UI/Textures"),
-    Notify = require("src/UI/Notify")
+---@field public fonts Fonts
+---@field public draw3d Draw3D
+---@field public textures Textures
+---@field public notify Notify
+local ui = {
+    fonts = require("src/UI/Fonts"),
+    draw3d = require("src/UI/Draw3D"),
+    textures = require("src/UI/Textures"),
+    notify = require("src/UI/Notify")
 }
 
-return UI
+return ui

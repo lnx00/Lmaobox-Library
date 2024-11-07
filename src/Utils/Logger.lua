@@ -3,26 +3,25 @@
 ]]
 
 ---@class Logger
----@field public Name string
----@field public Level integer
+---@field public name string
+---@field public level integer
 ---@field public Debug fun(...)
 ---@field public Info fun(...)
 ---@field public Warn fun(...)
 ---@field public Error fun(...)
 local Logger = {
-    Name = "",
-    Level = 1
+    name = "",
+    level = 1
 }
 Logger.__index = Logger
-setmetatable(Logger, Logger)
 
 -- Creates a new logger
 ---@param name string
 ---@return Logger
 function Logger.new(name)
     local self = setmetatable({}, Logger)
-    self.Name = name
-    self.Level = 1
+    self.name = name
+    self.level = 1
 
     return self
 end

@@ -3,17 +3,17 @@
 ]]
 
 ---@class KeyValues
-local KeyValues = {}
+local kv = {}
 
 ---@param name string
 ---@param data table
 ---@param indent string
-local function SerializeKV(name, data, indent)
+local function serialize_kv(name, data, indent)
     local bodyData = {}
 
     for key, value in pairs(data) do
         if type(value) == "table" then
-            table.insert(bodyData, SerializeKV(key, value, indent .. "\t"))
+            table.insert(bodyData, serialize_kv(key, value, indent .. "\t"))
         else
             table.insert(bodyData, string.format("\t%s\"%s\"\t\"%s\"", indent, key, value))
         end
@@ -24,7 +24,7 @@ local function SerializeKV(name, data, indent)
 end
 
 ---@return table
-local function DeserializeKV(data)
+local function deserialize_kv(data)
     local result = {}
 
     for key, value in data:gmatch('"(.-)"%s*"(.-)"') do
@@ -37,17 +37,17 @@ end
 ---@param name string
 ---@param data? table
 ---@return string
-function KeyValues.Serialize(name, data)
+function kv.serialize(name, data)
     data = data or {}
 
-    return SerializeKV(name, data, "")
+    return serialize_kv(name, data, "")
 end
 
 ---@param data string
 ---@return string name, table data
-function KeyValues.Deserialize(data)
+function kv.deserialize(data)
     local name, content = data:match('"(.-)"%s*{([^}]-)}')
-    return name, DeserializeKV(content)
+    return name, deserialize_kv(content)
 end
 
-return KeyValues
+return kv

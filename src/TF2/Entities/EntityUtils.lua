@@ -40,7 +40,7 @@ end
 ---@param ent Entity
 ---@param fromEntity Entity
 function EntityUtils.IsVisible(ent, fromEntity)
-    return Helpers.VisPos(ent, fromEntity:GetAbsOrigin(), ent:GetAbsOrigin())
+    return Helpers.can_see(ent, fromEntity:GetAbsOrigin(), ent:GetAbsOrigin())
 end
 
 return EntityUtils

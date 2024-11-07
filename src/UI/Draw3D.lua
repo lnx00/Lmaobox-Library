@@ -1,10 +1,10 @@
 ---@class Draw3D
-local Draw3D = {}
+local draw3d = {}
 
 -- Draws a box in 3D space
 ---@param min Vector3
 ---@param max Vector3
-function Draw3D.Box(min, max)
+function draw3d.cube(min, max)
     -- Vertices
     local vertices = {
         Vector3(min.x, min.y, min.z),
@@ -38,7 +38,7 @@ end
 -- Draws a line in 3D space
 ---@param start Vector3
 ---@param finish Vector3
-function Draw3D.Line(start, finish)
+function draw3d.line(start, finish)
     local screenA = client.WorldToScreen(start)
     local screenB = client.WorldToScreen(finish)
 
@@ -51,7 +51,7 @@ end
 ---@param texture TextureID
 ---@param min Vector3
 ---@param max Vector3
-function Draw3D.Texture(texture, min, max)
+function draw3d.texture(texture, min, max)
     -- Vertices
     local vertices = {
         Vector3(min.x, min.y, min.z),
@@ -78,7 +78,7 @@ function Draw3D.Texture(texture, min, max)
     draw.TexturedPolygon(texture, texVert, false)
 end
 
-function Draw3D.TextureBox(texture, min, max)
+function draw3d.texcube(texture, min, max)
     -- Vertices
     local vertices = {
         Vector3(min.x, min.y, min.z),
@@ -122,4 +122,4 @@ function Draw3D.TextureBox(texture, min, max)
     end
 end
 
-return Draw3D
+return draw3d

@@ -10,7 +10,6 @@ Stack = {
     _size = 0
 }
 Stack.__index = Stack
-setmetatable(Stack, Stack)
 
 -- Creates a new stack.
 ---@param items? any[]
@@ -59,5 +58,5 @@ end
 -- Returns the items in the stack
 ---@return any[]
 function Stack:items()
-    return table.readOnly(self._items)
+    return table.readonly(self._items)
 end

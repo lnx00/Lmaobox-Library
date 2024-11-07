@@ -3,13 +3,13 @@
 ]]
 
 ---@class FileSystem
-local FileSystem = {}
+local fs = {}
 local WorkDir = engine.GetGameDir() .. "/../LmaoLib/"
 
 -- Reads a file and returns its contents
 ---@param path string
 ---@return any
-function FileSystem.Read(path)
+function fs.read(path)
     local file = io.open(path, "rb") -- r read mode and b binary mode
     if not file then return nil end
     local content = file:read "*a" -- *a or *all reads the whole file
@@ -17,11 +17,11 @@ function FileSystem.Read(path)
     return content
 end
 
--- Writes the given content to the given file path
+---Writes the given content to the given file path
 ---@param path string
 ---@param content any
 ---@return boolean
-function FileSystem.Write(path, content)
+function fs.write(path, content)
     local file = io.open(path, "wb") -- w write mode and b binary mode
     if not file then return false end
     file:write(content)
@@ -29,30 +29,30 @@ function FileSystem.Write(path, content)
     return true
 end
 
--- Deletes the file at the given path
+---Deletes the file at the given path
 ---@param path string
 ---@return boolean
-function FileSystem.Delete(path)
+function fs.delete(path)
     return os.remove(path)
 end
 
--- Returns whether the given file/directory exists
+---Returns whether the given file/directory exists
 ---@param path string
 ---@return boolean
-function FileSystem.Exists(path)
+function fs.exists(path)
     local file = io.open(path, "rb")
     if file then file:close() end
     return file ~= nil
 end
 
--- Returns the working directory
+---Returns the working directory
 ---@return string
-function FileSystem.GetWorkDir()
-    if not FileSystem.Exists(WorkDir) then
+function fs.get_work_dir()
+    if not fs.exists(WorkDir) then
         filesystem.CreateDirectory(WorkDir)
     end
 
     return WorkDir
 end
 
-return FileSystem
+return fs

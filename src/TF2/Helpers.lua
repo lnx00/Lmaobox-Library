@@ -3,14 +3,14 @@
 ]]
 
 ---@class Helpers
-local Helpers = {}
+local helpers = {}
 
 -- Computes the move vector between two points
 ---@param userCmd UserCmd
 ---@param a Vector3
 ---@param b Vector3
 ---@return Vector3
-local function ComputeMove(userCmd, a, b)
+local function compute_move(userCmd, a, b)
     local diff = (b - a)
     if diff:Length() == 0 then return Vector3(0, 0, 0) end
 
@@ -31,9 +31,9 @@ end
 ---@param userCmd UserCmd
 ---@param localPlayer Entity
 ---@param destination Vector3
-function Helpers.WalkTo(userCmd, localPlayer, destination)
+function helpers.walk_to(userCmd, localPlayer, destination)
     local localPos = localPlayer:GetAbsOrigin()
-    local result = ComputeMove(userCmd, localPos, destination)
+    local result = compute_move(userCmd, localPos, destination)
 
     userCmd:SetForwardMove(result.x)
     userCmd:SetSideMove(result.y)
@@ -42,7 +42,7 @@ end
 -- Returns if the weapon can shoot
 ---@param weapon Entity
 ---@return boolean
-function Helpers.CanShoot(weapon)
+function helpers.can_shoot(weapon)
     local lPlayer = entities.GetLocalPlayer()
     if not lPlayer or weapon:IsMeleeWeapon() then return false end
 
@@ -58,9 +58,9 @@ end
 ---@param from Vector3
 ---@param to Vector3
 ---@return boolean
-function Helpers.VisPos(target, from, to)
+function helpers.can_see(target, from, to)
     local trace = engine.TraceLine(from, to, MASK_SHOT | CONTENTS_GRATE)
     return (trace.entity == target) or (trace.fraction > 0.99)
 end
 
-return Helpers
+return helpers

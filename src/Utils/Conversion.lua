@@ -3,12 +3,12 @@
 ]]
 
 ---@class Conversion
-local Conversion = {}
+local conversion = {}
 
--- Converts a given SteamID 3 to SteamID 64 [Credits: Link2006]
+---Converts a given SteamID 3 to SteamID 64 [Credits: Link2006]
 ---@param steamID3 string|number
----@return string|boolean, string?
-function Conversion.ID3_to_ID64(steamID3)
+---@return string?, string?
+function conversion.id3_to_id64(steamID3)
     if tonumber(steamID3) then
         -- XXX format
         return tostring(tonumber(steamID3) + 0x110000100000000)
@@ -17,49 +17,49 @@ function Conversion.ID3_to_ID64(steamID3)
         return tostring(tonumber(steamID3:match("%[U:1:(%d+)%]")) + 0x110000100000000)
     end
 
-     return false, "Invalid SteamID"
+     return nil, "Invalid SteamID"
 end
 
--- Converts a given SteamID 64 to a SteamID 3 [Credits: Link2006]
----@return string|boolean, string?
-function Conversion.ID64_to_ID3(steamID64)
+---Converts a given SteamID 64 to a SteamID 3 [Credits: Link2006]
+---@return string?, string?
+function conversion.id64_to_id3(steamID64)
     if not tonumber(steamID64) then
-        return false, "Invalid SteamID"
+        return nil, "Invalid SteamID"
     end
 
     local steamID = tonumber(steamID64)
     if (steamID - 0x110000100000000) < 0 then
-        return false, "Not a SteamID64"
+        return nil, "Not a SteamID64"
     end
 
     return ("[U:1:%d]"):format(steamID - 0x110000100000000)
 end
 
--- Converts a given Hex Color to RGB
+---Converts a given Hex Color to RGB
 ---@param pHex string
 ---@return number, number, number
-function Conversion.Hex_to_RGB(pHex)
+function conversion.hex_to_rgb(pHex)
     local r = tonumber(string.sub(pHex, 1, 2), 16)
     local g = tonumber(string.sub(pHex, 3, 4), 16)
     local b = tonumber(string.sub(pHex, 5, 6), 16)
     return r, g, b
 end
 
--- Converts a given RGB Color to Hex
+---Converts a given RGB Color to Hex
 ---@param r integer
 ---@param g integer
 ---@param b integer
 ---@return string
-function Conversion.RGB_to_Hex(r, g, b)
+function conversion.rgb_to_hex(r, g, b)
     return string.format("%02x%02x%02x", r, g, b)
 end
 
--- Converts a given HSV Color to RGB
+---Converts a given HSV Color to RGB
 ---@param h number
 ---@param s number
 ---@param v number
 ---@return number, number, number
-function Conversion.HSV_to_RGB(h, s, v)
+function conversion.hsv_to_rgb(h, s, v)
     local r, g, b
 
     local i = math.floor(h * 6);
@@ -87,12 +87,12 @@ function Conversion.HSV_to_RGB(h, s, v)
     return math.floor(r * 255), math.floor(g * 255), math.floor(b * 255)
 end
 
--- Converts a given RGB Color to HSV
+---Converts a given RGB Color to HSV
 ---@param r integer
 ---@param g integer
 ---@param b integer
 ---@return number, number, number
-function Conversion.RGB_to_HSV(r, g, b)
+function conversion.rgb_to_hsv(r, g, b)
     r, g, b = r / 255, g / 255, b / 255
     local max, min = math.max(r, g, b), math.min(r, g, b)
     local h, s, v
@@ -124,18 +124,18 @@ function Conversion.RGB_to_HSV(r, g, b)
     return h, s, v
 end
 
--- Converts time to game ticks
+---Converts time to game ticks
 ---@param time number
 ---@return integer
-function Conversion.Time_to_Ticks(time)
+function conversion.time_to_ticks(time)
     return math.floor(0.5 + time / globals.TickInterval())
 end
 
--- Converts game ticks to time
+---Converts game ticks to time
 ---@param ticks integer
 ---@return number
-function Conversion.Ticks_to_Time(ticks)
+function conversion.ticks_to_time(ticks)
     return ticks * globals.TickInterval()
 end
 
-return Conversion
+return conversion

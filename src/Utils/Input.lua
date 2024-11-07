@@ -3,7 +3,7 @@
 ]]
 
 ---@class Input
-local Input = {}
+local keys = {}
 
 -- Contains pairs of keys and their names
 ---@type table<integer, string>
@@ -78,30 +78,30 @@ for i = KEY_A, KEY_Z do KeyNames[i], KeyValues[i] = D(string.char(i - KEY_A + 65
 for i = KEY_PAD_0, KEY_PAD_9 do KeyNames[i], KeyValues[i] = "KP_" .. (i - KEY_PAD_0), tostring(i - KEY_PAD_0) end -- KP_0 - KP_9
 for i = KEY_F1, KEY_F1 do KeyNames[i] = "F" .. (i - KEY_F1 + 1) end
 
--- Returns the name of a keycode
+---Returns the name of a keycode
 ---@param key integer
 ---@return string?
-function Input.GetKeyName(key)
+function keys.get_key_name(key)
     return KeyNames[key]
 end
 
--- Returns the string value of a keycode
----@param key integer
+---Returns the string value of a keycode
+---@param key E_ButtonCode
 ---@return string?
-function Input.KeyToChar(key)
+function keys.key_to_char(key)
     return KeyValues[key]
 end
 
--- Returns the keycode of a string value
+---Returns the keycode of a string value
 ---@param char string
 ---@return integer?
-function Input.CharToKey(char)
+function keys.char_to_key(char)
     return table.find(KeyValues, string.upper(char))
 end
 
--- Returns the currently pressed key
+---Returns the currently pressed key
 ---@return integer?
-function Input.GetPressedKey()
+function keys.get_pressed_key()
     for i = KEY_FIRST, KEY_LAST do
         if input.IsButtonDown(i) then return i end
     end
@@ -109,26 +109,26 @@ function Input.GetPressedKey()
     return nil
 end
 
--- Returns all currently pressed keys as a table
+---Returns all currently pressed keys as a table
 ---@return integer[]
-function Input.GetPressedKeys()
-    local keys = {}
+function keys.get_pressed_keys()
+    local pressed_keys = {}
     for i = KEY_FIRST, KEY_LAST do
-        if input.IsButtonDown(i) then table.insert(keys, i) end
+        if input.IsButtonDown(i) then table.insert(pressed_keys, i) end
     end
 
-    return keys
+    return pressed_keys
 end
 
--- Returns if the cursor is in the given bounds
+---Returns if the cursor is in the given bounds
 ---@param x1 integer
 ---@param y1 integer
 ---@param x2 integer
 ---@param y2 integer
 ---@return boolean
-function Input.MouseInBounds(x1, y1, x2, y2)
+function keys.mouse_in_bounds(x1, y1, x2, y2)
     local mx, my = table.unpack(input.GetMousePos())
     return mx >= x1 and mx <= x2 and my >= y1 and my <= y2
 end
 
-return Input
+return keys

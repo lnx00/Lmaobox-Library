@@ -3,7 +3,7 @@
 ]]
 
 ---@class Math
-local Math = {}
+local mathx = {}
 
 local M_RADPI = 180 / math.pi
 
@@ -12,7 +12,7 @@ local function isNaN(x) return x ~= x end
 -- Normalizes an angle to be between -180 and 180
 ---@param angle number
 ---@return number
-function Math.NormalizeAngle(angle)
+function mathx.norm_angle(angle)
     angle = angle % 360
     if angle > 180 then
         angle = angle - 360
@@ -21,30 +21,30 @@ function Math.NormalizeAngle(angle)
     return angle
 end
 
--- Remaps a value from one range to another
----@param val number
----@param A number
----@param B number
----@param C number
----@param D number
+-- Remaps a value x from one range to another
+---@param x number
+---@param a number
+---@param b number
+---@param c number
+---@param d number
 ---@return number
-function Math.RemapValClamped(val, A, B, C, D)
-    if A == B then
-        return val >= B and D or C
+function mathx.remap_clamp(x, a, b, c, d)
+    if a == b then
+        return x >= b and d or c
     end
 
-    local cVal = (val - A) / (B - A)
+    local cVal = (x - a) / (b - a)
     cVal = math.clamp(cVal, 0, 1)
 
-    return C + (D - C) * cVal
+    return c + (d - c) * cVal
 end
 
 -- Calculates the angle between two vectors
----@param source Vector3
----@param dest Vector3
+---@param a Vector3
+---@param b Vector3
 ---@return EulerAngles angles
-function Math.PositionAngles(source, dest)
-    local delta = source - dest
+function mathx.vec_angle(a, b)
+    local delta = a - b
 
     local pitch = math.atan(delta.z / delta:Length2D()) * M_RADPI
     local yaw = math.atan(delta.y / delta.x) * M_RADPI
@@ -63,7 +63,7 @@ end
 ---@param vFrom EulerAngles
 ---@param vTo EulerAngles
 ---@return number fov
-function Math.AngleFov(vFrom, vTo)
+function mathx.angle_fov(vFrom, vTo)
     local vSrc = vFrom:Forward()
     local vDst = vTo:Forward()
     
@@ -79,7 +79,7 @@ end
 ---@param speed number
 ---@param gravity number
 ---@return { angles: EulerAngles, time: number }?
-function Math.SolveProjectile(origin, dest, speed, gravity)
+function mathx.solve_projectile(origin, dest, speed, gravity)
     local _, sv_gravity = client.GetConVar("sv_gravity")
     local v = dest - origin
     local v0 = speed
@@ -87,7 +87,7 @@ function Math.SolveProjectile(origin, dest, speed, gravity)
     local g = sv_gravity * gravity
     if g == 0 then
         -- Straight line
-        local angles = Math.PositionAngles(origin, dest)
+        local angles = mathx.vec_angle(origin, dest)
         local time = v:Length() / v0
         return { angles = angles, time = time }
     else
@@ -108,4 +108,4 @@ function Math.SolveProjectile(origin, dest, speed, gravity)
     end
 end
 
-return Math
+return mathx

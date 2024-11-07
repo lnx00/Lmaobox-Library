@@ -11,7 +11,6 @@ Deque = {
     _size = 0
 }
 Deque.__index = Deque
-setmetatable(Deque, Deque)
 
 -- Creates a new deque.
 ---@param items? any[]
@@ -26,36 +25,36 @@ function Deque.new(items)
 end
 
 ---@param item any
-function Deque:pushFront(item)
+function Deque:push_front(item)
     table.insert(self._items, 1, item)
     self._size = self._size + 1
 end
 
 ---@param item any
-function Deque:pushBack(item)
+function Deque:push_back(item)
     self._size = self._size + 1
     self._items[self._size] = item
 end
 
 ---@return any
-function Deque:popFront()
+function Deque:pop_front()
     self._size = self._size - 1
     return table.remove(self._items, 1)
 end
 
 ---@return any
-function Deque:popBack()
+function Deque:pop_back()
     self._size = self._size - 1
     return table.remove(self._items)
 end
 
 ---@return any
-function Deque:peekFront()
+function Deque:peek_front()
     return self._items[1]
 end
 
 ---@return any
-function Deque:peekBack()
+function Deque:peek_back()
     return self._items[self._size]
 end
 
@@ -77,5 +76,5 @@ end
 -- Returns the items table as read-only
 ---@return any[]
 function Deque:items()
-    return table.readOnly(self._items)
+    return table.readonly(self._items)
 end
