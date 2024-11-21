@@ -3,14 +3,14 @@
 ]]
 
 ---@class PlayerUtils
-local player_util = {}
+local playerutil = {}
 
 --[[ Wrapper functions ]]
 
 -- Returns whether the player is on the ground
 ---@param player Entity
 ---@return boolean
-function player_util.is_on_ground(player)
+function playerutil.on_ground(player)
     local pFlags = player:GetPropInt("m_fFlags")
     return (pFlags & FL_ONGROUND) == 1
 end
@@ -18,27 +18,27 @@ end
 -- Returns the active weapon
 ---@param player Entity
 ---@return Entity?
-function player_util.get_active_weapon(player)
+function playerutil.active_weapon(player)
     return player:GetPropEntity("m_hActiveWeapon")
 end
 
 ---@param player Entity
 ---@return number
-function player_util.get_observer_mode(player)
+function playerutil.observer_mode(player)
     return player:GetPropInt("m_iObserverMode")
 end
 
 -- Returns the spectated target
 ---@param player Entity
 ---@return Entity?
-function player_util.get_observer_target(player)
+function playerutil.observer_target(player)
     return player:GetPropEntity("m_hObserverTarget")
 end
 
 -- Returns when the player can attack again
 ---@param player Entity
 ---@return number
-function player_util.get_next_attack(player)
+function playerutil.next_attack(player)
     return player:GetPropFloat("m_flNextAttack")
 end
 
@@ -46,7 +46,7 @@ end
 ---@param player Entity
 ---@param hitboxID number
 ---@return Vector3?
-function player_util.get_hitpox_pos(player, hitboxID)
+function playerutil.hitpox_pos(player, hitboxID)
     local hitbox = player:GetHitboxes()[hitboxID]
     if not hitbox then return nil end
 
@@ -56,20 +56,20 @@ end
 ---Returns the player's view offset from his feets
 ---@param player Entity
 ---@return Vector3
-function player_util.get_view_offset(player)
+function playerutil.view_offset(player)
     return player:GetPropVector("localdata", "m_vecViewOffset[0]")
 end
 
 ---Returns the player's eye position in world space
 ---@param player Entity
 ---@return Vector3
-function player_util.get_eye_pos(player)
-    return player:GetAbsOrigin() + player_util.get_view_offset(player)
+function playerutil.eye_pos(player)
+    return player:GetAbsOrigin() + playerutil.view_offset(player)
 end
 
 ---@param player Entity
 ---@return EulerAngles
-function player_util.get_eye_angles(player)
+function playerutil.eye_angles(player)
     local angles = player:GetPropVector("tfnonlocaldata", "m_angEyeAngles[0]")
     return EulerAngles(angles.x, angles.y, angles.z)
 end
@@ -77,9 +77,9 @@ end
 -- Returns the position the player is looking at
 ---@param player Entity
 ---@return Vector3
-function player_util.get_view_pos(player)
-    local eyePos = player_util.get_eye_pos(player)
-    local targetPos = eyePos + player_util.get_eye_angles(player):Forward() * 8192
+function playerutil.view_pos(player)
+    local eyePos = playerutil.eye_pos(player)
+    local targetPos = eyePos + playerutil.eye_angles(player):Forward() * 8192
     local trace = engine.TraceLine(eyePos, targetPos, MASK_SHOT)
 
     return trace.endpos
@@ -88,10 +88,10 @@ end
 -- Returns the screen bounding box of the player (or nil if the player is not visible)
 ---@param player Entity
 ---@return {x:number, y:number, w:number, h:number}?
-function player_util.get_bbox(player)
+function playerutil.bbox(player)
     local padding = Vector3(0, 0, 10)
     local feetPos = player:GetAbsOrigin() - padding
-    local headPos = player_util.get_eye_pos(player) + padding
+    local headPos = playerutil.eye_pos(player) + padding
 
     local headScreenPos = client.WorldToScreen(headPos)
     local feetScreenPos = client.WorldToScreen(feetPos)
@@ -108,4 +108,4 @@ function player_util.get_bbox(player)
     }
 end
 
-return player_util
+return playerutil

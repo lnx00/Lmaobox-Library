@@ -10,9 +10,9 @@ local tf2 = {
     pred = require("src/TF2/Prediction"),
     pr = require("src/TF2/PlayerResource"),
 
-    EntityUtils = require("src/TF2/Entities/EntityUtils"),
-    PlayerUtils = require("src/TF2/Entities/PlayerUtils"),
-    WeaponUtils = require("src/TF2/Entities/WeaponUtils")
+    entityutil = require("src/TF2/Entities/EntityUtils"),
+    playerutil = require("src/TF2/Entities/PlayerUtils"),
+    weaponutil = require("src/TF2/Entities/WeaponUtils")
 }
 
 function tf2.exit()
@@ -23,7 +23,7 @@ end
 ---@param playerIndex integer
 ---@param inParty boolean?
 ---@return boolean
-function tf2.is_Friend(playerIndex, inParty)
+function tf2.is_friend(playerIndex, inParty)
     if playerIndex == client.GetLocalPlayerIndex() then return true end
 
     -- Check if the target is a friend or ignored

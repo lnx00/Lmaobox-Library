@@ -7,40 +7,40 @@ local helpers = require("src/TF2/Helpers")
 
 ---@class EntityUtils
 ---@field private Entity Entity?
-local entity_util = {}
+local entityutil = {}
 
 -- Returns if the entities are equal (same index)
 ---@param ent Entity
 ---@param other Entity
-function entity_util.equals(ent, other)
+function entityutil.equals(ent, other)
     return ent:GetIndex() == other:GetIndex()
 end
 
 -- Returns the distance to the given entity
 ---@param ent Entity
 ---@param other Entity
-function entity_util.dist_to(ent, other)
+function entityutil.dist(ent, other)
     return (other:GetAbsOrigin() - ent:GetAbsOrigin()):Length()
 end
 
 ---@param ent Entity
 ---@return number
-function entity_util.get_sim_time(ent)
+function entityutil.sim_time(ent)
     return ent:GetPropFloat("m_flSimulationTime")
 end
 
 ---@param ent Entity
 ---@param t number
 ---@return Vector3
-function entity_util.extrapolate(ent, t)
+function entityutil.extrapolate(ent, t)
     return ent:GetAbsOrigin() + ent:EstimateAbsVelocity() * t
 end
 
 -- Returns whether the entity can be seen from the given entity
 ---@param ent Entity
 ---@param fromEntity Entity
-function entity_util.is_visible(ent, fromEntity)
+function entityutil.visible(ent, fromEntity)
     return helpers.can_see(ent, fromEntity:GetAbsOrigin(), ent:GetAbsOrigin())
 end
 
-return entity_util
+return entityutil

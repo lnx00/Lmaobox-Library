@@ -6,7 +6,7 @@
 local mathx = require("src/Utils/Math")
 
 ---@class WeaponUtils
-local weapon_util = {}
+local weaponutil = {}
 
 -- Projectile info by definition index
 local projInfo = {
@@ -50,38 +50,32 @@ local projInfoSpecial = {
 
 ---@param weapon Entity
 ---@return Entity
-function weapon_util.get_owner(weapon)
+function weaponutil.owner(weapon)
     return weapon:GetPropEntity("m_hOwner")
 end
 
 ---@param weapon Entity
 ---@return number
-function weapon_util.get_def_index(weapon)
+function weaponutil.def_index(weapon)
     return weapon:GetPropInt("m_iItemDefinitionIndex")
 end
 
 ---@param weapon Entity
 ---@return number
-function weapon_util.get_next_primary_attack(weapon)
+function weaponutil.next_primary_attack(weapon)
     return weapon:GetPropFloat("m_flNextPrimaryAttack")
 end
 
 ---@param weapon Entity
 ---@return number
-function weapon_util.get_charge_begin_time(weapon)
-    return weapon:GetPropFloat("m_flChargeBeginTime")
-end
-
----@param weapon Entity
----@return number
-function weapon_util.get_charged_dmg(weapon)
+function weaponutil.charged_dmg(weapon)
     return weapon:GetPropFloat("m_flChargedDamage")
 end
 
 -- Returns the projectile speed and gravity of the weapon
 ---@param weapon Entity
 ---@return table<number, number>?
-function weapon_util.get_proj_info(weapon)
+function weaponutil.proj_info(weapon)
     local id = weapon:GetWeaponID()
     local defIndex = weapon:ToInventoryItem():GetDefIndex()
 
@@ -93,4 +87,4 @@ function weapon_util.get_proj_info(weapon)
     return projInfo[defIndex] or projInfoID[id]
 end
 
-return weapon_util
+return weaponutil

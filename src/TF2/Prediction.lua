@@ -25,7 +25,7 @@ function pred.player(player, t, d, shouldHitEntity)
     local _out = {
         pos = { [0] = player:GetAbsOrigin() },
         vel = { [0] = player:EstimateAbsVelocity() },
-        onGround = { [0] = PlayerUtils.is_on_ground(player) }
+        onGround = { [0] = PlayerUtils.on_ground(player) }
     }
 
     -- Perform the prediction
@@ -116,8 +116,8 @@ end
 ---@param t integer
 ---@return { pos: Vector3[], vel: Vector3[] }?
 function pred.projectile(player, speed, gravity, t)
-    local shootPos = PlayerUtils.get_eye_pos(player)
-    local shootAngles = PlayerUtils.get_eye_angles(player)
+    local shootPos = PlayerUtils.eye_pos(player)
+    local shootAngles = PlayerUtils.eye_angles(player)
     local shootDir = shootAngles:Forward()
     local _, sv_gravity = client.GetConVar("sv_gravity")
     gravity = sv_gravity * gravity

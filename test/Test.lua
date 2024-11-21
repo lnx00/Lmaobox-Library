@@ -168,8 +168,24 @@ Test("Extrapolate is correct", function ()
     Mockagne.when(entity:EstimateAbsVelocity()).thenAnswer(Vector3(1, 2, 3))
 
     -- Act
-    local result = lib.tf2.EntityUtils.extrapolate(entity, 2)
+    local result = lib.tf2.entityutil.extrapolate(entity, 2)
 
     -- Assert
     lu.assertEquals(result, Vector3(5, 6, 7))
+end)
+
+-- Equals
+Test("Equals is correct", function ()
+    -- Arrange
+    local entity1 = Mockagne.getMock("Entity")
+    Mockagne.when(entity1:GetIndex()).thenAnswer(1)
+
+    local entity2 = Mockagne.getMock("Entity")
+    Mockagne.when(entity2:GetIndex()).thenAnswer(1)
+
+    -- Act
+    local result = lib.tf2.entityutil.equals(entity1, entity2)
+
+    -- Assert
+    lu.assertTrue(result)
 end)
