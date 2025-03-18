@@ -23,7 +23,7 @@ end
 
 -- Unloads the entire library. Useful for debugging.
 _G["_DEBUG_UNLOAD_LMAOLIB"] = function ()
-    lib.utils.UnloadPackages("LmaoLib")
+    lib.utils.unload_packages("LmaoLib")
 end
 
 -- Library loaded

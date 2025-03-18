@@ -7,24 +7,24 @@
 ---@field public mathx Math
 ---@field public Timer Timer
 ---@field public Config Config
----@field public Commands Commands
+---@field public commands Commands
 local utils = {
     conversion = require("src/Utils/Conversion"),
     fs = require("src/Utils/FileSystem"),
     keys = require("src/Utils/Input"),
     kv = require("src/Utils/KeyValues"),
-    Logger = require("src/Utils/Logger"),
     mathx = require("src/Utils/Math"),
-    Commands = require("src/Utils/Commands"),
+    commands = require("src/Utils/Commands"),
     Config = require("src/Utils/Config"),
     KeyHelper = require("src/Utils/KeyHelper"),
-    Timer = require("src/Utils/Timer")
+    Logger = require("src/Utils/Logger"),
+    Timer = require("src/Utils/Timer"),
 }
 
 -- Removes all special characters from a string
 ---@param str string
 ---@return string
-function utils.Sanitize(str)
+function utils.sanitize(str)
     str = string.gsub(str, "[%p%c]", "")
     str = string.gsub(str, '"', "'")
     return str
@@ -33,7 +33,7 @@ end
 -- Generates a rainbow color
 ---@param offset number
 ---@return integer, integer, integer
-function utils.Rainbow(offset)
+function utils.rainbow(offset)
     local r = math.floor(math.sin(offset + 0) * 127 + 128)
     local g = math.floor(math.sin(offset + 2) * 127 + 128)
     local b = math.floor(math.sin(offset + 4) * 127 + 128)
@@ -43,7 +43,7 @@ end
 -- Unloads all packages that contain the given name
 ---@param libName string
 ---@return integer
-function utils.UnloadPackages(libName)
+function utils.unload_packages(libName)
     local unloadCount = 0
     for name, _ in pairs(package.loaded) do
         if string.find(name, libName) then
