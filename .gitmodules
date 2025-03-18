@@ -1,0 +1,3 @@
+[submodule "test/MockApi"]
+	path = test/MockApi
+	url = https://github.com/lnx00/Lmaobox-MockAPI.git
