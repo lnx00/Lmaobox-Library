@@ -1,3 +1,5 @@
+---@diagnostic disable: duplicate-set-field
+
 Mockagne = require("MockAPI.mockagne")
 
 local function Log(message)
@@ -13,6 +15,7 @@ dofile("MockAPI/Classes/Vector3.lua")
 dofile("MockAPI/Classes/EulerAngles.lua")
 
 -- Libraries
+aimbot = Mockagne.getMock("Aimbot")
 callbacks = Mockagne.getMock("Callbacks")
 client = Mockagne.getMock("Client")
 clientstate = Mockagne.getMock("Clientstate")
@@ -24,19 +27,25 @@ gamecoordinator = Mockagne.getMock("GameCoordinator")
 gamerules = Mockagne.getMock("GameRules")
 globals = Mockagne.getMock("Globals")
 gui = Mockagne.getMock("GUI")
+http = Mockagne.getMock("HTTP")
 input = Mockagne.getMock("Input")
 inventory = Mockagne.getMock("Inventory")
 itemschema = Mockagne.getMock("ItemSchema")
 materials = Mockagne.getMock("Materials")
+models = Mockagne.getMock("Models")
 party = Mockagne.getMock("Party")
+physics = Mockagne.getMock("Physics")
 playerlist = Mockagne.getMock("PlayerList")
 steam = Mockagne.getMock("Steam")
+warp = Mockagne.getMock("Warp")
 
 ---@class MockAPI
 ---@field callbacks table<string, table<string, fun(...)>>
 local MockAPI = {
-    callbacks = {}
+    callbacks = {},
 }
+
+--[[ Callback invocation ]]
 
 function MockAPI:InvokeCallback(id, ...)
     if self.callbacks[id] == nil then
