@@ -1,7 +1,7 @@
-package.path = package.path .. ";../?.lua"
+package.path = package.path .. ";../?.lua;MockApi/?.lua"
 
 local lu = require("luaunit")
-local mockAPI = require("MockAPI.MockAPI")
+local mockAPI = require("MockApi.MockAPI.MockAPI")
 
 -- Mock required functions
 Mockagne.when(engine.GetGameDir()).thenAnswer("Test")
