@@ -18,6 +18,9 @@ const bundledLua = bundle(config.inputFile, {
     },
 });
 
+// Ensure the output directory exists
+fs.mkdirSync("./out", { recursive: true });
+
 // Write the output to a file
 fs.writeFile(config.outputFile, bundledLua, (err) => {
     if (err) {
